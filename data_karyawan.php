@@ -1,5 +1,5 @@
 <?php
-include "koneksi.php" ;
+include "koneksi.php";
 
 session_start();
 ?>
@@ -8,35 +8,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.bundle.min.js"></script>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Employee Information</title>
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
-    <link href="vendor/woff/font.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-    <!-- CSS dan JS sweetalert -->
-    <script src="vendor/sweetalert/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="vendor/sweetalert/sweetalert2.min.css">
-
-</head>
+<?php require_once "templates/header.php" ?>
 
 <body id="page-top">
 
@@ -44,164 +16,18 @@ session_start();
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand" href="index.html">
-                <div class="sidebar-brand-icon">
-                    <i class="fa-solid fa-user-shield fa-lg"></i>
-                </div>
-                <div class="sidebar-brand-text mx-1">Administrasi Security</div>
-            </a>
-
-            <br>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Home -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fa-solid fa-house"></i>
-                        <span>Home</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Master Data
-            </div>
-
-            <!-- Nav Item - MASTER DATA -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasterData" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-wrench"></i>
-                    <span>Master Data</span>
-                </a>
-                <div id="collapseMasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Master Data :</h6>
-                        <a class="collapse-item" href="data_karyawan.php">Senior Staff</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Jenis Register
-            </div>
-
-            <!-- Nav Item - AKTIVITAS KARYAWAN -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Aktivitas Karyawan</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="absensi.php">Absensi</a>
-                        <a class="collapse-item" href="#">Kejadian & Pelanggaran</a>
-                        <a class="collapse-item" href="#">Orientasi</a>
-                    </div>
-                </div>
-            </li>
-            
-            <!-- Nav Item - MUTASI -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-book"></i>
-                    <span>Mutasi</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="#">Mutasi Malam</a>
-                        <a class="collapse-item" href="#">Mutasi GS</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - PATROLI -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie" aria-expanded="true" aria-controls="collapseUtilitie">
-                    <i class="fa-solid fa-building-circle-check"></i>
-                        <span>Patroli & Facility</span>
-                </a>
-                <div id="collapseUtilitie" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="#">Keamanan</a>
-                        <a class="collapse-item" href="#">Fasilitas</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - STORE -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie1" aria-expanded="true" aria-controls="collapseUtilitie1">
-                    <i class="fa-solid fa-store"></i>
-                        <span>Store</span>
-                </a>
-                <div id="collapseUtilitie1" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="#">Bongkar</a>
-                        <a class="collapse-item" href="#">Loading</a>
-                        <a class="collapse-item" href="#">Administrasi</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - TAMU -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie2" aria-expanded="true" aria-controls="collapseUtilitie2">
-                    <i class="fa-solid fa-address-card"></i>
-                        <span>Pos Induk</span>
-                </a>
-                <div id="collapseUtilitie2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="#">Fasilitas</a>
-                        <a class="collapse-item" href="data_tamu.php">Tamu</a>
-                        <a class="collapse-item" href="#">Administrasi</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - TRANSFER -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie3" aria-expanded="true" aria-controls="collapseUtilitie3">
-                    <i class="fa-solid fa-truck"></i>
-                        <span>Transfer</span>
-                </a>
-                <div id="collapseUtilitie3" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Administrasi :</h6>
-                        <a class="collapse-item" href="#">Gatepass</a>
-                        <a class="collapse-item" href="#">Kartu Shipment</a>
-                        <a class="collapse-item" href="#">Transfer Barang</a>
-                    </div>
-                </div>
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
+        <?php require_once "templates/sidebar.php" ?>
         <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <?php require_once "templates/topbar.php" ?>
+                <!-- End of Topbar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
