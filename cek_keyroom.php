@@ -136,39 +136,24 @@ session_start();
                                                         <td><?php echo $listKeyRoom['status']; ?></td>
                                                         <td>
 
-                                                            <?php
-                                                            if ($listKeyRoom['status'] == 'PENGAMBILAN') {
-                                                            ?>
+                                                        <?php
+if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
+    if ($data_item_array[3] == 1) {
+        // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
+        echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
+    } else {
+        // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
+        echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
+    }
+} elseif ($listKeyRoom['status'] == 'PENGAMBILAN') {
+    // For 'PENGAMBILAN' status, proceed to 'PENGEMBALIAN'
+    echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
+} else {
+    // For other statuses, show a success button
+    echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
+}
+?>
 
-                                                                <!-- <button type="button" name="tombol_enable_change_status_keyroom_to_pengembalian" class="btn btn-secondary" disabled>
-                                                                    <i class="fa-solid fa-person-circle-check"></i>
-                                                                </button> -->
-                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="<?php echo $listKeyRoom['ID_kunci_ruangan']; ?>">
-                                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                                </button>
-
-
-                                                            <?php
-                                                            } elseif ($listKeyRoom['status'] == 'PENGEMBALIAN') {
-                                                            ?>
-
-                                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="<?php echo $listKeyRoom['ID_kunci_ruangan']; ?>">
-                                                                    <i class="fa-solid fa-handshake"></i>
-                                                                </button>
-                                                                <!-- <button type="button" name="tombol_disable_cctv" class="btn btn-secondary" disabled>
-                                                                    <i class="fa-solid fa-person-circle-minus"></i>
-                                                                </button> -->
-
-                                                            <?php
-                                                            } else {
-                                                            ?>
-                                                                <button class="btn btn-success">
-                                                                    <i class="fa-solid fa-check"></i>
-                                                                </button>
-
-                                                            <?php
-                                                            }
-                                                            ?>
 
                                                         </td>
                                                     </tr>
@@ -198,7 +183,7 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="cetak_cek_cctv.php" target="_blank">
+                                <form method="POST" action="print_data_kunci_ruangan.php" target="_blank">
                                     <div class="modal-body">
                                         <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
@@ -208,7 +193,7 @@ session_start();
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_pdf_keyroom_by_date" target="_blank" class="btn btn-success">Export</button>
+                                        <button type="submit" target="_blank" class="btn btn-success">Export</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>

@@ -419,7 +419,7 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {
                         status = '$status',
                         date_returned = '$date_returned', 
                         time_returned = '$time_returned', 
-                        worker_returned = '$worker_returned', 
+                        worker_returned = UPPER('$worker_returned'), 
                         amount_returned = '$amount_returned', 
                         signature_returned = '$signature_returned'  
                     WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'";
