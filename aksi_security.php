@@ -372,34 +372,48 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
     }
 }
 
+
 if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     // Assuming $koneksi is your database connection
+
+    // You may want to validate the input data before proceeding with database operations
+
+    // Generate a unique ID for the new record
     $genUID = mysqli_query($koneksi, "SELECT MAX(ID_kunci_ruangan) AS max_id FROM tb_kunci_ruangan");
     $row = mysqli_fetch_assoc($genUID);
     $lastId = $row['max_id'];
 
-    // Extracting the numeric part of the last ID and incrementing it
+    // Extract the numeric part of the last ID and increment it
     $noUrut = (int) substr($lastId, 9) + 1;
 
-    // Generating the new ID
+    // Generate the new ID
     $register = "keyruang" . sprintf("%03s", $noUrut);
 
-    $tambahQuery = mysqli_query(
-        $koneksi,
+    // Get the selected key details based on the selected id_key_room
+    $selected_key_id = $_POST['id_key_room'];
+    $key_query = mysqli_query($koneksi, "SELECT name_of_key, amount_of_key FROM tb_list_key_room WHERE id_key_room = '$selected_key_id'");
+    $key_row = mysqli_fetch_assoc($key_query);
+    $selected_name_of_key = $key_row['name_of_key'];
+    $selected_amount_of_key = $key_row['amount_of_key'];
+
+    // Prepare the INSERT query
+    $tambahQuery = mysqli_query($koneksi,
         "INSERT INTO tb_kunci_ruangan (ID_kunci_ruangan, id_key_room, name_of_key, amount_of_key, part_operasional, status, date_retrieval, time_retrieval, worker_retrieval, amount_retrieval, signature_retrieval, date_returned, time_returned, worker_returned, amount_returned, signature_returned, date_handover, time_handover, handover_to, amount_handover, signature_handover)
-SELECT '$register', id_key_room, name_of_key, amount_of_key, UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), UPPER('$_POST[date_retrieval]'), '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$_POST[amount_retrieval]', '$_POST[signature_retrieval]', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$_POST[amount_returned]', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$_POST[amount_handover]', '$_POST[signature_handover]'
-FROM tb_list_key_room;"
-    );
+        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$_POST[signature_retrieval]', '', '', '', '', '', '', '', '', '', '')");
 
     if ($tambahQuery) {
-        $_SESSION['sukses'] = 'data added successfully';
-        header('Location:cek_keyroom.php');
+        $_SESSION['sukses'] = 'Data added successfully';
+        header('Location: cek_keyroom.php'); // Redirect after successful insertion
         exit;
     } else {
-        $_SESSION['gagal'] = 'data cannot be added';
-        header('Location:cek_keyroom.php');
+        $_SESSION['gagal'] = 'Failed to add data';
+        header('Location: cek_keyroom.php'); // Redirect after failure
         exit;
     }
+} else {
+    $_SESSION['gagal'] = 'Form submission failed';
+    header('Location: cek_keyroom.php'); // Redirect if form submission fails
+    exit;
 }
 
 if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {

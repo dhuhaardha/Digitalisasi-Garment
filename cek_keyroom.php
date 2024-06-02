@@ -53,9 +53,9 @@ session_start();
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Export PDF Pada Tanggal
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Hari Ini
+                                            Input Operasional Kunci Ruangan Hari Ini
                                         </button>
                                     </div>
                                 </div>
@@ -296,12 +296,32 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Pengambilan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_retrieval">
-                                                </div>
-                                            </div>
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Kunci</label>
+                <div class="col-sm-10">
+                    <!-- Add select options for name_of_key from tb_list_keyroom -->
+                    <select class="form-control" name="id_key_room">
+                        <?php
+
+                        $sql = "SELECT id_key_room, name_of_key, amount_of_key FROM tb_list_key_room";
+                        $result = mysqli_query($koneksi, $sql);
+                        
+                        // Populate select options
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['id_key_room'] . "''>" . $row['name_of_key'] . " - " . $row['amount_of_key'] . " Pcs</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No keys available</option>";
+                        }
+                        // Close database connection
+                        $koneksi->close();
+                        ?>
+                    </select>
+                    
+                </div>
+            </div>
+
+
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengambilan</label>
