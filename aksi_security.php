@@ -373,6 +373,21 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
 }
 
 if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
+    $file = "";
+
+	$folderPath = "upload/";
+	$image_parts = explode(";base64,", $_POST['signatureData']);
+	$image_type_aux = explode("image/", $image_parts[0]);
+
+	$image_type = 'PNG';
+
+	$image_base64 = base64_decode($image_parts[1]);
+
+	$file = $folderPath . $register . "_" . uniqid() . '.' . $image_type;
+
+	file_put_contents($file, $image_base64);
+    
+
     // Assuming $koneksi is your database connection
     $genUID = mysqli_query($koneksi, "SELECT MAX(ID_kunci_ruangan) AS max_id FROM tb_kunci_ruangan");
     $row = mysqli_fetch_assoc($genUID);
@@ -390,6 +405,8 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     $key_row = mysqli_fetch_assoc($key_query);
     $selected_name_of_key = $key_row['name_of_key'];
     $selected_amount_of_key = $key_row['amount_of_key'];
+
+    
 
     $tambahQuery = mysqli_query(
         $koneksi,
@@ -415,7 +432,7 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
          handover_to, 
          amount_handover, 
          signature_handover)
-        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$_POST[signature_retrieval]', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
+        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$file', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
     );
     
 

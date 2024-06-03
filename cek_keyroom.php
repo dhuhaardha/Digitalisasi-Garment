@@ -236,9 +236,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="operational1Type" class="col-sm-2 col-form-label">Type</label>
                                                 <div class="col-sm-10">
                                                     <select id="operational1Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option selected disabled>Choose Type...</option>
                                                         <option value="pengambilan">Pengambilan</option>
-                                                        <option value="pengembalian">Pengembalian</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -248,10 +246,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="operational2Type" class="col-sm-2 col-form-label">Type</label>
                                                 <div class="col-sm-10">
                                                     <select id="operational2Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option selected disabled>Choose Type...</option>
                                                         <option value="pengambilan">Pengambilan</option>
-                                                        <option value="pengembalian">Pengembalian</option>
-                                                        <option value="serah terima">Serah Terima</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -333,7 +328,15 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengambilan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_name" name="signature_retrieval">
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                
+                                                    </style>
+                                                <div class="col-sm-10">
+                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureData" name="signatureData">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to pengambilan here -->
@@ -370,7 +373,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengembalian</label>
-                                                <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="input_name" name="signature_returned">
                                                 </div>
                                             </div>
@@ -417,6 +419,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" name="tombol_tambah_operasional_keyroom" class="btn btn-success">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
@@ -765,6 +768,86 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                 });
             });
         </script>
+        <script>
+    var canvas = document.getElementById('signatureCanvas');
+    var ctx = canvas.getContext('2d');
+    var isDrawing = false;
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('touchstart', startDrawingTouch);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchmove', drawTouch);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function startDrawing(event) {
+        isDrawing = true;
+        draw(event);
+    }
+
+    function startDrawingTouch(event) {
+        event.preventDefault();
+        isDrawing = true;
+        var touch = event.touches[0];
+        var offsetX = touch.pageX - canvas.offsetLeft;
+        var offsetY = touch.pageY - canvas.offsetTop;
+        draw({
+            offsetX,
+            offsetY
+        });
+    }
+
+    function draw(event) {
+        if (!isDrawing) return;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX, event.offsetY);
+    }
+
+    function drawTouch(event) {
+        event.preventDefault();
+        if (!isDrawing) return;
+        var touch = event.touches[0];
+        var offsetX = touch.pageX - canvas.offsetLeft;
+        var offsetY = touch.pageY - canvas.offsetTop;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+        ctx.lineTo(offsetX, offsetY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+
+    var clearButton = document.getElementById('clear_signature');
+
+    clearButton.addEventListener('click', function() {
+        clearSignature();
+    });
+
+    function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+
+    // Function to convert canvas to data URL and store it in hidden input field
+    function saveSignature() {
+        var dataURL = canvas.toDataURL("image/png");
+        document.getElementById('signatureData').value = dataURL;
+    }
+
+    // Call saveSignature() when the form is submitted
+    document.querySelector('form').addEventListener('submit', saveSignature);
+    </script>
         
         <?php require_once "templates/footer.php" ?>
 </body>
