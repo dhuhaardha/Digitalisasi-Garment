@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2024 at 03:39 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jun 03, 2024 at 11:01 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `tb_absensi` (
   `tba_masuk` time DEFAULT NULL,
   `tba_keluar` time DEFAULT NULL,
   `tba_detail` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_absensi`
@@ -56,7 +56,7 @@ CREATE TABLE `tb_dept` (
   `td_unit` varchar(40) NOT NULL,
   `td_dept` varchar(40) NOT NULL,
   `td_status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_dept`
@@ -95,7 +95,7 @@ CREATE TABLE `tb_jenis_tamu` (
   `tbjt_uid` varchar(3) NOT NULL,
   `tbjt_kode` varchar(10) DEFAULT NULL,
   `tbjt_jenis` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_jenis_tamu`
@@ -122,7 +122,7 @@ CREATE TABLE `tb_karyawan` (
   `tbk_nama` varchar(60) NOT NULL,
   `tbk_dept` varchar(25) NOT NULL,
   `tbk_status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_karyawan`
@@ -154,7 +154,7 @@ CREATE TABLE `tb_kendaraan` (
   `tbrk_no_sim` varchar(20) DEFAULT NULL,
   `tbrk_no_card` varchar(10) DEFAULT NULL,
   `tbrk_ttd` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_kendaraan`
@@ -176,6 +176,8 @@ INSERT INTO `tb_kendaraan` (`tbrk_uid`, `tbrk_tanggal`, `tbrk_masuk`, `tbrk_kelu
 CREATE TABLE `tb_kunci_kendaraan` (
   `id_vehicle_key` varchar(11) NOT NULL,
   `no_police` varchar(10) NOT NULL,
+  `kawasan_no_pol` varchar(35) NOT NULL,
+  `status` varchar(30) NOT NULL,
   `date_taken` date NOT NULL,
   `time_taken` time NOT NULL,
   `name_taken` varchar(255) NOT NULL,
@@ -189,9 +191,8 @@ CREATE TABLE `tb_kunci_kendaraan` (
   `signature_returned` text NOT NULL,
   `recieved_to` varchar(255) NOT NULL,
   `amount_returned` int(32) NOT NULL,
-  `keterangan_returned` text NOT NULL,
-  `bagian` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `keterangan_returned` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -221,7 +222,7 @@ CREATE TABLE `tb_kunci_ruangan` (
   `handover_to` varchar(255) NOT NULL,
   `amount_handover` int(11) NOT NULL,
   `signature_handover` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_kunci_ruangan`
@@ -344,7 +345,158 @@ INSERT INTO `tb_kunci_ruangan` (`ID_kunci_ruangan`, `id_key_room`, `name_of_key`
 ('keyruang009', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-05-30', '13:54:09', 'YUDHO', 12, 'ertyuio', '2024-05-30', '13:54:28', 'ardha', 3, 'fghjl', '2024-05-30', '13:52:39', '', 0, ''),
 ('keyruang009', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-05-30', '13:54:09', 'YUDHO', 12, 'ertyuio', '2024-05-30', '13:54:28', 'ardha', 3, 'fghjl', '2024-05-30', '13:52:39', '', 0, ''),
 ('keyruang009', 'KeyR012', 'GGT', 7, '1', 'PENGEMBALIAN', '2024-05-30', '13:54:09', 'YUDHO', 12, 'ertyuio', '2024-05-30', '13:54:28', 'ardha', 3, 'fghjl', '2024-05-30', '13:52:39', '', 0, ''),
-('keyruang009', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-05-30', '13:54:09', 'YUDHO', 12, 'ertyuio', '2024-05-30', '13:54:28', 'ardha', 3, 'fghjl', '2024-05-30', '13:52:39', '', 0, '');
+('keyruang009', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-05-30', '13:54:09', 'YUDHO', 12, 'ertyuio', '2024-05-30', '13:54:28', 'ardha', 3, 'fghjl', '2024-05-30', '13:52:39', '', 0, ''),
+('keyruang010', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR002', 'DRESS 1', 23, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR008', 'BEA CUKAI', 2, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR012', 'GGT', 7, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang010', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-05-31', '08:52:59', 'SURIPTO', 12, 'qwert', '2024-05-31', '08:53:18', 'Salimin', 12, 'qwert', '2024-05-31', '08:50:36', '', 0, ''),
+('keyruang011', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR002', 'DRESS 1', 23, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR008', 'BEA CUKAI', 2, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR012', 'GGT', 7, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang011', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-05-31', '15:35:39', 'ARDHA', 12, 'qwer', '2024-05-31', '15:37:36', 'SOLIHIN', 12, 'qwer', '2024-05-31', '15:35:12', '', 0, ''),
+('keyruang012', 'KeyR001', 'SHIRT', 12, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR002', 'DRESS 1', 23, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR003', 'DRESS 2', 25, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR004', 'STORE FABRIC', 8, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR005', 'STORE ACCESSORIS', 10, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR006', 'OFFICE', 9, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR007', 'POLY', 9, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR008', 'BEA CUKAI', 2, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR009', 'LT.2 POSKO', 5, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR010', 'R.BUYER', 4, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR011', 'LABORAT', 1, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR012', 'GGT', 7, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang012', 'KeyR013', 'COBA', 14, '2', 'SERAH TERIMA', '2024-05-31', '15:37:58', 'YUDHO', 9, 'qert', '2024-05-31', '15:38:14', 'FIRA', 9, 'sfsd', '2024-05-31', '15:38:29', 'rudi', 9, 'qeqwe'),
+('keyruang013', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR002', 'DRESS 1', 23, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR008', 'BEA CUKAI', 2, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR012', 'GGT', 7, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang013', 'KeyR014', 'UJI', 9, '1', 'PENGEMBALIAN', '2024-05-31', '16:11:06', 'REI', 9, 'Yui', '2024-05-31', '16:12:22', 'YULI', 9, 'Ukj', '2024-05-31', '16:01:57', '', 0, ''),
+('keyruang014', 'KeyR001', 'SHIRT', 12, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR002', 'DRESS 1', 23, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR003', 'DRESS 2', 25, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR004', 'STORE FABRIC', 8, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR005', 'STORE ACCESSORIS', 10, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR006', 'OFFICE', 9, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR007', 'POLY', 9, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR008', 'BEA CUKAI', 2, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR009', 'LT.2 POSKO', 5, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR010', 'R.BUYER', 4, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR011', 'LABORAT', 1, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR012', 'GGT', 7, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR013', 'COBA', 14, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang014', 'KeyR014', 'UJI', 9, '2', 'SERAH TERIMA', '2024-05-31', '16:13:03', 'UJI', 6, 'Yuo', '2024-05-31', '16:13:29', 'JIKO', 6, 'Ukk', '2024-05-31', '16:13:57', 'Opo', 6, 'Ujk'),
+('keyruang015', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-06-03', '08:01:04', 'DANI', 12, 'wertyu', '2024-06-03', '08:57:06', 'KANIA', 12, 'qwer', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang016', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR002', 'DRESS 1', 23, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR008', 'BEA CUKAI', 2, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR012', 'GGT', 7, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR013', 'COBA', 14, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang016', 'KeyR014', 'UJI', 9, '1', 'PENGEMBALIAN', '2024-06-03', '09:05:56', 'KUAT', 0, 'wertyu', '2024-06-03', '09:17:24', 'JARWO', 12, 'qwer', '2024-06-03', '09:05:40', '', 0, ''),
+('keyruang017', 'KeyR001', 'SHIRT', 12, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR002', 'DRESS 1', 23, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR003', 'DRESS 2', 25, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR004', 'STORE FABRIC', 8, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR005', 'STORE ACCESSORIS', 10, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR006', 'OFFICE', 9, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR007', 'POLY', 9, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR008', 'BEA CUKAI', 2, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR009', 'LT.2 POSKO', 5, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR010', 'R.BUYER', 4, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR011', 'LABORAT', 1, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR012', 'GGT', 7, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR013', 'COBA', 14, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang017', 'KeyR014', 'UJI', 9, '2', 'SERAH TERIMA', '2024-06-03', '09:19:45', 'KUAT', 0, 'wertyu', '2024-06-03', '09:54:31', 'YUDHO', 0, 'qwer', '2024-06-03', '10:37:46', 'rateri', 12, 'qwerqr'),
+('keyruang018', 'KeyR008', 'BEA CUKAI', 2, '2', 'SERAH TERIMA', '2024-06-03', '09:38:15', 'ARDHA', 2, 'sadasf', '2024-06-03', '09:56:20', 'YUDHO', 0, 'qwer', '2024-06-03', '11:24:53', 'RUDI', 2, 'qeqwe'),
+('keyruang019', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-06-03', '09:59:06', 'ARDHA', 1, 'sadasf', '2024-06-03', '10:33:56', 'kania', 0, 'qwer', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang020', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-06-03', '10:05:38', 'KUAT', 9, 'wertyu', '2024-06-03', '10:35:10', 'yudho', 0, 'qwer', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang021', 'KeyR003', 'DRESS 2', 25, '1', 'PENGEMBALIAN', '2024-06-03', '10:39:19', 'ARDHA', 0, 'wertyu', '2024-06-03', '11:06:31', 'fira', 0, 'sfsd', '2024-06-03', '10:37:46', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang022', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '10:39:39', 'ARDHA', 0, 'sadasf', '2024-06-03', '11:17:03', 'solihin', 12, 'qwer', '2024-06-03', '10:39:21', '', 0, ''),
+('keyruang023', 'KeyR001', 'SHIRT', 12, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR002', 'DRESS 1', 23, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR003', 'DRESS 2', 25, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR006', 'OFFICE', 9, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR007', 'POLY', 9, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR008', 'BEA CUKAI', 2, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR011', 'LABORAT', 1, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR012', 'GGT', 7, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, '');
+INSERT INTO `tb_kunci_ruangan` (`ID_kunci_ruangan`, `id_key_room`, `name_of_key`, `amount_of_key`, `part_operasional`, `status`, `date_retrieval`, `time_retrieval`, `worker_retrieval`, `amount_retrieval`, `signature_retrieval`, `date_returned`, `time_returned`, `worker_returned`, `amount_returned`, `signature_returned`, `date_handover`, `time_handover`, `handover_to`, `amount_handover`, `signature_handover`) VALUES
+('keyruang023', 'KeyR013', 'COBA', 14, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang023', 'KeyR014', 'UJI', 9, '1', 'PENGAMBILAN', '2024-06-03', '11:00:51', 'RANI', 0, 'qwer', '2024-06-03', '10:59:39', '', 0, '', '2024-06-03', '10:59:39', '', 0, ''),
+('keyruang024', 'KeyR009', 'LT.2 POSKO', 5, '1', 'PENGEMBALIAN', '2024-06-03', '11:08:55', 'JOKO', 5, 'yui', '2024-06-03', '11:13:47', 'solihin', 0, 'sfsd', '2024-06-03', '11:08:38', '', 5, ''),
+('keyruang025', 'KeyR009', 'LT.2 POSKO', 5, '2', 'SERAH TERIMA', '2024-06-03', '11:18:35', 'JOKO', 5, 'yui', '2024-06-03', '11:19:14', 'fira', 5, 'qwer', '2024-06-03', '11:22:40', 'rudi', 5, 'qeqwe'),
+('keyruang026', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-06-03', '13:54:14', 'RIFA', 9, 'keyruang026665d6897230d3.png', '2024-06-03', '14:40:26', 'FIRA', 9, 'sfsd', '2024-06-03', '13:53:58', '', 9, ''),
+('keyruang027', 'KeyR010', 'R.BUYER', 4, '2', 'PENGAMBILAN', '2024-06-03', '14:08:53', 'KANTI', 4, '665d6c061d92f.png', '2024-06-03', '14:08:34', '', 4, '', '2024-06-03', '14:08:34', '', 4, ''),
+('keyruang028', 'KeyR004', 'STORE FABRIC', 8, '1', 'PENGAMBILAN', '2024-06-03', '14:13:16', 'TATI', 8, '665d6d0d6a376.png', '2024-06-03', '14:13:04', '', 8, '', '2024-06-03', '14:13:04', '', 8, ''),
+('keyruang029', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '14:27:25', 'AGE', 12, 'upload/_665d705e5bc79.', '2024-06-03', '14:41:00', 'ARDHA', 12, 'fgh', '2024-06-03', '14:27:17', '', 12, ''),
+('keyruang030', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '14:29:12', 'NESSA', 12, 'upload/_665d70c9637c9.PNG', '2024-06-03', '14:40:42', 'FIRA', 12, 'qwer', '2024-06-03', '14:27:26', '', 12, ''),
+('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, 'upload/_665d733467ac9.PNG', '2024-06-03', '14:29:13', '', 4, '', '2024-06-03', '14:29:13', '', 4, ''),
+('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, '', '0000-00-00', '00:00:00', '', 0, '', '0000-00-00', '00:00:00', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -356,7 +508,7 @@ CREATE TABLE `tb_list_card` (
   `tblic_uid` varchar(10) DEFAULT NULL,
   `tblic_no_id` varchar(10) DEFAULT NULL,
   `tblic_status` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_list_card`
@@ -382,14 +534,14 @@ CREATE TABLE `tb_list_cctv` (
   `tblc_nama_cctv` varchar(50) NOT NULL,
   `tblc_status` varchar(10) NOT NULL,
   `tblc_cek_cctv` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_list_cctv`
 --
 
 INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_status`, `tblc_cek_cctv`) VALUES
-('PTU1/001', 'PTU1', 'POS INDUK', 'ACTIVE', '2024-05-29'),
+('PTU1/001', 'PTU1', 'POS INDUK', 'ACTIVE', '2024-05-31'),
 ('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', '2024-05-24'),
 ('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'INACTIVE', '2024-05-24'),
 ('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', '2024-05-22'),
@@ -447,7 +599,7 @@ CREATE TABLE `tb_list_kendaraan` (
   `tblk_uid` varchar(10) NOT NULL,
   `tblk_tipe_kendaraan` varchar(50) NOT NULL,
   `tblk_status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_list_kendaraan`
@@ -473,7 +625,7 @@ CREATE TABLE `tb_list_key_room` (
   `id_key_room` varchar(11) NOT NULL,
   `name_of_key` varchar(30) NOT NULL,
   `amount_of_key` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_list_key_room`
@@ -492,7 +644,55 @@ INSERT INTO `tb_list_key_room` (`id_key_room`, `name_of_key`, `amount_of_key`) V
 ('KeyR010', 'R.BUYER', 4),
 ('KeyR011', 'LABORAT', 1),
 ('KeyR012', 'GGT', 7),
-('KeyR013', 'COBA', 14);
+('KeyR013', 'COBA', 14),
+('KeyR014', 'UJI', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_list_key_vehicle`
+--
+
+CREATE TABLE `tb_list_key_vehicle` (
+  `id_no_pol` varchar(35) NOT NULL,
+  `kode_kawasan` varchar(2) NOT NULL,
+  `seriesnumber` int(5) NOT NULL,
+  `back_kode` varchar(4) NOT NULL,
+  `kawasan_no_pol` varchar(35) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_list_key_vehicle`
+--
+
+INSERT INTO `tb_list_key_vehicle` (`id_no_pol`, `kode_kawasan`, `seriesnumber`, `back_kode`, `kawasan_no_pol`) VALUES
+('KeyV001', 'B', 1809, 'SYN', 'UNGARAN'),
+('KeyV002', 'B', 1671, 'SYO', 'UNGARAN'),
+('KeyV003', 'B', 1492, 'SZH', 'UNGARAN'),
+('KeyV004', 'B', 1440, 'SZC', 'UNGARAN'),
+('KeyV005', 'B', 2332, 'SZV', 'UNGARAN'),
+('KeyV006', 'B', 2734, 'SZX', 'UNGARAN'),
+('KeyV007', 'B', 1993, 'SAO', 'UNGARAN'),
+('KeyV008', 'H', 8402, 'HC', 'UNGARAN'),
+('KeyV009', 'H', 1077, 'WL', 'UNGARAN'),
+('KeyV010', 'H', 8401, 'GC', 'UNGARAN'),
+('KeyV011', 'H', 8400, 'GC', 'UNGARAN'),
+('KeyV012', 'B', 2550, 'SZL', 'CONGOL'),
+('KeyV013', 'B', 2463, 'SZP', 'PRINGAPUS'),
+('KeyV014', 'B', 2736, 'SZX', 'PRINGAPUS'),
+('KeyV015', 'B', 2549, 'SZX', 'PRINGAPUS'),
+('KeyV016', 'H', 8209, 'HC', 'BOX UNGARAN'),
+('KeyV017', 'H', 8845, 'HC', 'BOX UNGARAN'),
+('KeyV018', 'H', 1624, 'SC', 'BOX UNGARAN'),
+('KeyV019', 'H', 1896, 'NC', 'BOX UNGARAN'),
+('KeyV020', 'H', 8183, 'CC', 'BOX UNGARAN'),
+('KeyV021', 'H', 8697, 'GC', 'BOX CONGOL'),
+('KeyV022', 'H', 9651, 'GC', 'BOX PRINGAPUS'),
+('KeyV023', 'H', 9652, 'GC', 'BOX PRINGAPUS'),
+('KeyV024', 'H', 1725, 'QC', 'OTHER'),
+('KeyV025', 'B', 8832, 'SP', 'OTHER'),
+('KeyV026', 'B', 8014, 'SP', 'OTHER'),
+('KeyV027', 'B', 1254, 'EW', 'OTHER');
 
 -- --------------------------------------------------------
 
@@ -505,7 +705,7 @@ CREATE TABLE `tb_report_cctv` (
   `tbrc_uid_cctv` varchar(10) NOT NULL,
   `tbrc_tgl_cek` date NOT NULL,
   `tbrc_status_cek` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_report_cctv`
@@ -526,7 +726,8 @@ INSERT INTO `tb_report_cctv` (`tbrc_uid`, `tbrc_uid_cctv`, `tbrc_tgl_cek`, `tbrc
 ('REPCCTV/PTU1/2024/05/24', 'PTU1/012', '2024-05-24', 'OK'),
 ('REPCCTV/PTU1/2024/05/25', 'PTU1/001', '2024-05-25', 'OK'),
 ('REPCCTV/PTU1/2024/05/28', 'PTU1/001', '2024-05-28', 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/001', '2024-05-29', 'OK');
+('REPCCTV/PTU1/2024/05/29', 'PTU1/001', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/001', '2024-05-31', 'OK');
 
 -- --------------------------------------------------------
 
@@ -548,7 +749,7 @@ CREATE TABLE `tb_tamu` (
   `tbt_ktp` varchar(30) DEFAULT NULL,
   `tbt_id_card` varchar(3) DEFAULT NULL,
   `tbt_paraf` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_tamu`
@@ -569,7 +770,7 @@ CREATE TABLE `tb_unit` (
   `tbu_kd_unit` varchar(10) NOT NULL,
   `tbu_nama_unit` varchar(50) NOT NULL,
   `tbu_status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tb_unit`
@@ -595,6 +796,12 @@ ALTER TABLE `tb_jenis_tamu`
 --
 ALTER TABLE `tb_list_key_room`
   ADD PRIMARY KEY (`id_key_room`);
+
+--
+-- Indexes for table `tb_list_key_vehicle`
+--
+ALTER TABLE `tb_list_key_vehicle`
+  ADD PRIMARY KEY (`id_no_pol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
