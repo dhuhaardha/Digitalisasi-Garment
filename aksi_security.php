@@ -372,7 +372,6 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
     }
 }
 
-
 if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     $file = "";
 
@@ -380,28 +379,43 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
 	$image_parts = explode(";base64,", $_POST['signatureData']);
 	$image_type_aux = explode("image/", $image_parts[0]);
 
-	$image_type = 'PNG';
+	$image_type = $image_type_aux[1];
 
 	$image_base64 = base64_decode($image_parts[1]);
 
-	$file = $folderPath . $register . "_" . uniqid() . '.' . $image_type;
+	$file = $folderPath . $name . "_" . uniqid() . '.' . $image_type;
 
 	file_put_contents($file, $image_base64);
+    // Get the data URL of the canvas
+    $dataURL = $_POST['signatureData'];
     
+    // Remove the "data:image/png;base64," part from the data URL
+    $data = substr($dataURL, strpos($dataURL, ",") + 1);
+    
+    // Decode the base64-encoded image data
+    $imageData = base64_decode($data);
+    
+    // Generate a unique filename for the image
+    $filename = $register . uniqid() . '.png';
+    
+    // Specify the folder path to store the images
+    $folderPath = "upload/";
+    
+    // Combine the folder path and filename to create the full path
+    $filePath = $folderPath . $filename;
+    
+    // Save the image data to a file
+    file_put_contents($filePath, $imageData);
 
     // Assuming $koneksi is your database connection
-
-    // You may want to validate the input data before proceeding with database operations
-
-    // Generate a unique ID for the new record
     $genUID = mysqli_query($koneksi, "SELECT MAX(ID_kunci_ruangan) AS max_id FROM tb_kunci_ruangan");
     $row = mysqli_fetch_assoc($genUID);
     $lastId = $row['max_id'];
 
-    // Extract the numeric part of the last ID and increment it
+    // Extracting the numeric part of the last ID and incrementing it
     $noUrut = (int) substr($lastId, 9) + 1;
 
-    // Generate the new ID
+    // Generating the new ID
     $register = "keyruang" . sprintf("%03s", $noUrut);
 
     // Get the selected key details based on the selected id_key_room
@@ -411,7 +425,6 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     $selected_name_of_key = $key_row['name_of_key'];
     $selected_amount_of_key = $key_row['amount_of_key'];
 
-<<<<<<< HEAD
     
 
     $tambahQuery = mysqli_query(
@@ -438,29 +451,19 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
          handover_to, 
          amount_handover, 
          signature_handover)
-        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$file', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
+        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
     );
     
-=======
-    // Prepare the INSERT query
-    $tambahQuery = mysqli_query($koneksi,
-        "INSERT INTO tb_kunci_ruangan (ID_kunci_ruangan, id_key_room, name_of_key, amount_of_key, part_operasional, status, date_retrieval, time_retrieval, worker_retrieval, amount_retrieval, signature_retrieval, date_returned, time_returned, worker_returned, amount_returned, signature_returned, date_handover, time_handover, handover_to, amount_handover, signature_handover)
-        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$_POST[signature_retrieval]', '', '', '', '', '', '', '', '', '', '')");
->>>>>>> 6e5e57ef883889dd0918d8a5ac56a6e785089b58
 
     if ($tambahQuery) {
-        $_SESSION['sukses'] = 'Data added successfully';
-        header('Location: cek_keyroom.php'); // Redirect after successful insertion
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_keyroom.php');
         exit;
     } else {
-        $_SESSION['gagal'] = 'Failed to add data';
-        header('Location: cek_keyroom.php'); // Redirect after failure
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_keyroom.php');
         exit;
     }
-} else {
-    $_SESSION['gagal'] = 'Form submission failed';
-    header('Location: cek_keyroom.php'); // Redirect if form submission fails
-    exit;
 }
 
 if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {
@@ -541,6 +544,39 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_serahterima'])) {
     } else {
         $_SESSION['gagal'] = 'Data cannot be updated';
         header('Location: cek_keyroom.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_tambah_key_vehicle'])) {
+
+    if ($_POST['kawasan_no_pol'] == '') {
+        $_SESSION['gagal'] = 'kendaraan has not been filled';
+        header('Location:data_key_vehicle.php');
+        exit;
+    }
+
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_no_pol) AS max_id FROM tb_list_key_vehicle");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extracting the numeric part of the last ID and incrementing it
+    $noUrut = (int) substr($lastId, 5)+1;
+
+    // Generating the new ID
+    $register = "KeyV" . sprintf("%03s", $noUrut);
+
+    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_list_key_vehicle VALUES ('$register', UPPER('$_POST[kode_kawasan]'), '$_POST[seriesnumber]', UPPER('$_POST[back_kode]'), '$_POST[kawasan_no_pol]' )");
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_key_vehicle.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_key_vehicle.php');
         exit;
     }
 }
