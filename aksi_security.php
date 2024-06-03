@@ -384,12 +384,40 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     // Generating the new ID
     $register = "keyruang" . sprintf("%03s", $noUrut);
 
+    // Get the selected key details based on the selected id_key_room
+    $selected_key_id = $_POST['id_key_room'];
+    $key_query = mysqli_query($koneksi, "SELECT name_of_key, amount_of_key FROM tb_list_key_room WHERE id_key_room = '$selected_key_id'");
+    $key_row = mysqli_fetch_assoc($key_query);
+    $selected_name_of_key = $key_row['name_of_key'];
+    $selected_amount_of_key = $key_row['amount_of_key'];
+
     $tambahQuery = mysqli_query(
         $koneksi,
-        "INSERT INTO tb_kunci_ruangan (ID_kunci_ruangan, id_key_room, name_of_key, amount_of_key, part_operasional, status, date_retrieval, time_retrieval, worker_retrieval, amount_retrieval, signature_retrieval, date_returned, time_returned, worker_returned, amount_returned, signature_returned, date_handover, time_handover, handover_to, amount_handover, signature_handover)
-SELECT '$register', id_key_room, name_of_key, amount_of_key, UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), UPPER('$_POST[date_retrieval]'), '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$_POST[amount_retrieval]', '$_POST[signature_retrieval]', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$_POST[amount_returned]', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$_POST[amount_handover]', '$_POST[signature_handover]'
-FROM tb_list_key_room;"
+        "INSERT INTO tb_kunci_ruangan
+         (ID_kunci_ruangan, 
+         id_key_room, 
+         name_of_key, 
+         amount_of_key, 
+         part_operasional, 
+         status, 
+         date_retrieval, 
+         time_retrieval, 
+         worker_retrieval, 
+         amount_retrieval, 
+         signature_retrieval, 
+         date_returned, 
+         time_returned, 
+         worker_returned, 
+         amount_returned, 
+         signature_returned, 
+         date_handover, 
+         time_handover, 
+         handover_to, 
+         amount_handover, 
+         signature_handover)
+        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$_POST[signature_retrieval]', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
     );
+    
 
     if ($tambahQuery) {
         $_SESSION['sukses'] = 'data added successfully';
@@ -407,11 +435,15 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {
     $ID_kunci_ruangan = $_POST['ID_kunci_ruangan'];
     $status = 'PENGEMBALIAN';
 
+    $key_query = mysqli_query($koneksi, "SELECT amount_of_key FROM tb_kunci_ruangan WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'");
+    $key_row = mysqli_fetch_assoc($key_query);
+    $selected_amount_of_key = $key_row['amount_of_key'];
+
     // Sanitize the form inputs to prevent SQL injection
     $date_returned = mysqli_real_escape_string($koneksi, $_POST['date_returned']);
     $time_returned = mysqli_real_escape_string($koneksi, $_POST['time_returned']);
     $worker_returned = mysqli_real_escape_string($koneksi, $_POST['worker_returned']);
-    $amount_returned = mysqli_real_escape_string($koneksi, $_POST['amount_returned']);
+    $amount_returned = $selected_amount_of_key;
     $signature_returned = mysqli_real_escape_string($koneksi, $_POST['signature_returned']);
 
     // Construct the SQL update query
@@ -444,11 +476,15 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_serahterima'])) {
     $ID_kunci_ruangan = $_POST['ID_kunci_ruangan'];
     $status = 'SERAH TERIMA';
 
+    $key_query = mysqli_query($koneksi, "SELECT amount_of_key FROM tb_kunci_ruangan WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'");
+    $key_row = mysqli_fetch_assoc($key_query);
+    $selected_amount_of_key = $key_row['amount_of_key'];
+
     // Sanitize the form inputs to prevent SQL injection
     $date_handover = mysqli_real_escape_string($koneksi, $_POST['date_handover']);
     $time_handover = mysqli_real_escape_string($koneksi, $_POST['time_handover']);
     $handover_to = mysqli_real_escape_string($koneksi, $_POST['handover_to']);
-    $amount_handover = mysqli_real_escape_string($koneksi, $_POST['amount_handover']);
+    $amount_handover = $selected_amount_of_key;
     $signature_handover = mysqli_real_escape_string($koneksi, $_POST['signature_handover']);
 
     // Construct the SQL update query
@@ -456,7 +492,7 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_serahterima'])) {
                         status = '$status',
                         date_handover = '$date_handover', 
                         time_handover = '$time_handover', 
-                        handover_to = '$handover_to', 
+                        handover_to = UPPER('$handover_to'), 
                         amount_handover = '$amount_handover', 
                         signature_handover = '$signature_handover'  
                     WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'";

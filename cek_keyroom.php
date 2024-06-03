@@ -53,9 +53,9 @@ session_start();
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Export PDF Pada Tanggal
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Hari Ini
+                                            Input Operasional Kunci Ruangan Hari Ini
                                         </button>
                                     </div>
                                 </div>
@@ -70,6 +70,8 @@ session_start();
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Part Operasional</th>
+                                                    <th>Kunci</th>
+                                                    <th>Jumlah Kunci</th>
                                                     <th>Worker(Pengambilan)</th>
                                                     <th>Worker(Pengembalian)</th>
                                                     <th>Worker(Serah Terima)</th>
@@ -102,7 +104,10 @@ session_start();
                                                         -- OR (status = 'PENGEMBALIAN' AND DATE(date_returned) = '$currentDate')
                                                         -- OR (status = 'SERAH TERIMA' AND DATE(date_handover) = '$currentDate')
                                                     GROUP BY 
-                                                        ID_kunci_ruangan;"
+                                                        ID_kunci_ruangan
+                                                        ORDER BY 
+        ID_kunci_ruangan DESC
+    LIMIT 14"
                                                 );
                                                 while ($listKeyRoom = mysqli_fetch_array($KeyRoomQuery)) {
                                                     $data_array = explode('|||', $listKeyRoom['data']);
@@ -130,6 +135,8 @@ session_start();
                                                         }
                                                         ?>
 
+                                                        <td><?php echo $data_item_array[1]; ?></td><!-- worker_retrieval -->
+                                                        <td><?php echo $data_item_array[2]; ?></td><!-- worker_retrieval -->
                                                         <td><?php echo $data_item_array[7]; ?></td><!-- worker_retrieval -->
                                                         <td><?php echo $data_item_array[12]; ?></td><!-- worker_returned -->
                                                         <td><?php echo $data_item_array[17]; ?></td><!-- handover_to -->
@@ -140,7 +147,7 @@ session_start();
 if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
     if ($data_item_array[3] == 1) {
         // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
-        echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
+        echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
     } else {
         // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
         echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
@@ -150,7 +157,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
     echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
 } else {
     // For other statuses, show a success button
-    echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
+    echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
 }
 ?>
 
@@ -296,12 +303,32 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Pengambilan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_retrieval">
-                                                </div>
-                                            </div>
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Kunci</label>
+                <div class="col-sm-10">
+                    <!-- Add select options for name_of_key from tb_list_keyroom -->
+                    <select class="form-control" name="id_key_room">
+                        <?php
+
+                        $sql = "SELECT id_key_room, name_of_key, amount_of_key FROM tb_list_key_room";
+                        $result = mysqli_query($koneksi, $sql);
+                        
+                        // Populate select options
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['id_key_room'] . "''>" . $row['name_of_key'] . " - " . $row['amount_of_key'] . " Pcs</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No keys available</option>";
+                        }
+                        // Close database connection
+                        $koneksi->close();
+                        ?>
+                    </select>
+                    
+                </div>
+            </div>
+
+
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengambilan</label>
@@ -471,7 +498,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="text" id="dateInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
+                                            <input type="hidden" id="InputID" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
                                             <div class="row mb-3">
                                                 <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
@@ -520,13 +547,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_returned">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengembalian</label>
                                                 <div class="col-sm-10">
@@ -560,7 +580,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="text" id="IDInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
+                                            <input type="hidden" id="IDInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
                                             <div class="row mb-3">
                                                 <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
@@ -606,13 +626,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                     Serah Terima</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="input_nik" name="handover_to">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Serah Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_handover">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -717,6 +730,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
             unset($_SESSION['gagal']);
         }
         ?>
+        
         <script>
             // Get all elements with the data-target attribute
             var buttons = document.querySelectorAll(
@@ -727,10 +741,10 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                 // Add click event listener to the button
                 button.addEventListener("click", function() {
                     // Get the value from the button
-                    var dateValue = button.value;
+                    var IDValue = button.value;
 
                     // Set the value to the input field
-                    document.getElementById("dateInput").value = dateValue;
+                    document.getElementById("InputID").value = IDValue;
                 });
             });
         </script>
@@ -751,6 +765,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                 });
             });
         </script>
+        
         <?php require_once "templates/footer.php" ?>
 </body>
 
