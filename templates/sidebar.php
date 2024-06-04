@@ -43,6 +43,7 @@
                 <a class="collapse-item" href="data_cctv.php">CCTV</a>
                 <a class="collapse-item" href="data_keyroom.php">Kunci Ruangan</a>
                 <a class="collapse-item" href="data_key_vehicle.php">Kunci Kendaraan</a>
+                <a class="collapse-item" href="data_barang_inventaris_shift_3.php">Barang Inventaris Pos</a>
             </div>
         </div>
     </li>
@@ -80,7 +81,7 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="#">Mutasi Malam</a>
+                <a class="collapse-item" href="cek_mutasi_shift_3.php">Mutasi Malam</a>
                 <a class="collapse-item" href="#">Mutasi GS</a>
             </div>
         </div>
@@ -132,6 +133,7 @@
                 <a class="collapse-item" href="cek_cctv.php">CCTV Check</a>
                 <a class="collapse-item" href="cek_keyroom.php">Kunci Ruangan Check</a>
                 <a class="collapse-item" href="cek_key_vehicle.php">Kunci Kendaraan Check</a>
+                <a class="collapse-item" href="cek_register_surat_dan_transit.php">Surat dan Transit Paket</a>
             </div>
         </div>
     </li>
