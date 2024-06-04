@@ -35,7 +35,7 @@ session_start();
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Kunci Ruangan Information</h3>
+                            <h3 class="m-0 text-dark">Barang Inventaris Pos Security Information</h3>
                         </div>
 
                         <div class="card-body">
@@ -44,7 +44,7 @@ session_start();
                                     <button type="button" class="btn btn-success" data-toggle="modal"
                                         data-target="#modalTambah">
                                         <i class="fa-solid fa-square-plus">&nbsp</i>
-                                        Add Kunci Kendaraan
+                                        Add Barang Inventaris Pos Security
                                     </button>
                                 </div>
                             </div>
@@ -58,8 +58,7 @@ session_start();
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Kawasan Nomor Plat Kendaraan</th>
-                                                    <th>Nomor Plat</th>
+                                                    <th>Nama Barang Inventaris</th>
                                                     <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
@@ -69,14 +68,13 @@ session_start();
                                                 <!-- data informasi karyawan dari database -->
                                                 <?php
                                                 $noUrut = 1;
-                                                $KeyVehicleQuery = mysqli_query($koneksi, "SELECT * FROM tb_list_key_vehicle");
-                                                while ($listKeyVehicle = mysqli_fetch_array($KeyVehicleQuery)) {
+                                                $KeyRoomQuery = mysqli_query($koneksi, "SELECT * FROM tb_barang_inventaris_shift_3");
+                                                while ($listKeyRoom = mysqli_fetch_array($KeyRoomQuery)) {
                                                 ?>
 
                                                 <tr>
                                                     <td><?php echo $noUrut++; ?></td>
-                                                    <td><?php echo $listKeyVehicle['kawasan_no_pol']; ?></td>
-                                                    <td><?php echo $listKeyVehicle['kode_kawasan']," " ,$listKeyVehicle['seriesnumber'], " " ,$listKeyVehicle['back_kode'] ?></td>
+                                                    <td><?php echo $listKeyRoom['barang_inventaris']; ?></td>
                                                     <!-- <td>
 
                                                             <?php
@@ -129,7 +127,7 @@ session_start();
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Enter Kunci Ruangan Data</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Enter Barang Inventaris Data</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -137,44 +135,15 @@ session_start();
                             <form method="POST" action="aksi_security.php">
                                 <div class="modal-body">
                                     <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Kendaraan</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Barang Inventaris</label>
                                         <div class="col-sm-10">
-                                        <select class="form-select" name="kawasan_no_pol"\>
-                                                    <option selected disabled>Choose Kawasan...</option>
-                                                    <option value="UNGARAN">UNGARAN</option>
-                                                    <option value="CONGOL">CONGOL</option>
-                                                    <option value="PRINGAPUS">PRINGAPUS</option>
-                                                    <option value="BOX UNGARAN">BOX UNGARAN</option>
-                                                    <option value="BOX CONGOL">BOX CONGOL</option>
-                                                    <option value="BOX PRINGAPUS">BOX PRINGAPUS</option>
-                                                    <option value="OTHER">OTHER</option>
-                                                </select>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Huruf Kode Plat (Pertama)</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control"  style="text-transform: uppercase;" 
-                                                name="kode_kawasan">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Series Number Plat</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control"
-                                                name="seriesnumber">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Baris Kode Plat (Terakhir)</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control"  style="text-transform: uppercase;"
-                                                name="back_kode">
+                                            <input type="text" class="form-control" id="barang_inventaris" style="text-transform:uppercase;"
+                                                name="barang_inventaris">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" name="tombol_tambah_key_vehicle"
+                                    <button type="submit" name="tombol_tambah_barang_inventaris"
                                         class="btn btn-success">Add</button>
                                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                 </div>

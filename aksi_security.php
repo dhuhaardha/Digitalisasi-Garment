@@ -373,19 +373,6 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
 }
 
 if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
-    $file = "";
-
-	$folderPath = "upload/";
-	$image_parts = explode(";base64,", $_POST['signatureData']);
-	$image_type_aux = explode("image/", $image_parts[0]);
-
-	$image_type = $image_type_aux[1];
-
-	$image_base64 = base64_decode($image_parts[1]);
-
-	$file = $folderPath . $name . "_" . uniqid() . '.' . $image_type;
-
-	file_put_contents($file, $image_base64);
     // Get the data URL of the canvas
     $dataURL = $_POST['signatureData'];
     
@@ -396,7 +383,7 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     $imageData = base64_decode($data);
     
     // Generate a unique filename for the image
-    $filename = $register . uniqid() . '.png';
+    $filename =  uniqid() . '.png';
     
     // Specify the folder path to store the images
     $folderPath = "upload/";
@@ -577,6 +564,39 @@ if (isset($_POST['tombol_tambah_key_vehicle'])) {
     } else {
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:data_key_vehicle.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_tambah_barang_inventaris'])) {
+
+    if ($_POST['barang_inventaris'] == '') {
+        $_SESSION['gagal'] = 'barang inventaris has not been filled';
+        header('Location:data_barang_inventaris_shift_3.php');
+        exit;
+    }
+
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_barang_inventaris_pos) AS max_id FROM tb_barang_inventaris_shift_3");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extracting the numeric part of the last ID and incrementing it
+    $noUrut = (int) substr($lastId, 5)+1;
+
+    // Generating the new ID
+    $register = "BInv" . sprintf("%03s", $noUrut);
+
+    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_barang_inventaris_shift_3 VALUES ('$register', UPPER('$_POST[barang_inventaris]') )");
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_barang_inventaris_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_barang_inventaris_shift_3.php');
         exit;
     }
 }
