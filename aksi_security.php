@@ -568,6 +568,101 @@ if (isset($_POST['tombol_tambah_key_vehicle'])) {
     }
 }
 
+if (isset($_POST['tombol_tambah_operasional_key_vehicle'])) {
+    // Get the data URL of the canvas
+    $dataURL = $_POST['signatureData'];
+    
+    // Remove the "data:image/png;base64," part from the data URL
+    $data = substr($dataURL, strpos($dataURL, ",") + 1);
+    
+    // Decode the base64-encoded image data
+    $imageData = base64_decode($data);
+    
+    // Generate a unique filename for the image
+    $filename =  uniqid() . '.png';
+    
+    // Specify the folder path to store the images
+    $folderPath = "upload/";
+    
+    // Combine the folder path and filename to create the full path
+    $filePath = $folderPath . $filename;
+    
+    // Save the image data to a file
+    file_put_contents($filePath, $imageData);
+
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_vehicle_key) AS max_id FROM tb_kunci_kendaraan");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extract the numeric part of the ID
+    $noUrut = (int)substr($lastId, 10) + 1; // Start from the 10th character to extract the numeric part
+
+    // Generating the new ID
+    $register = "keyvehicle" . sprintf("%03s", $noUrut);
+
+    // Get the selected key details based on the selected id_key_room
+    $selected_key_id = $_POST['id_no_pol'];
+    $key_query = mysqli_query($koneksi, "SELECT kode_kawasan, seriesnumber, back_kode FROM tb_list_key_vehicle WHERE id_no_pol = '$selected_key_id'");
+    $key_row = mysqli_fetch_assoc($key_query);
+    $selected_data = $key_row['kode_kawasan'] . ' ' . $key_row['seriesnumber'] . ' ' . $key_row['back_kode'];
+
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_kunci_kendaraan
+         (id_vehicle_key, 
+         id_no_pol, 
+         no_police, 
+         kawasan_no_pol, 
+         status, 
+         date_taken, 
+         time_taken, 
+         name_taken, 
+         signature_taken, 
+         submitted_to, 
+         amount_taken, 
+         keterangan_taken, 
+         date_returned, 
+         time_returned, 
+         name_returned, 
+         signature_returned, 
+         recieved_to, 
+         amount_returned, 
+         keterangan_returned)
+        VALUES (
+            '$register',
+             '$selected_key_id',
+              '$selected_data',
+               UPPER('$_POST[kawasan_no_pol]'),
+                UPPER('$_POST[status]'),
+                 '$_POST[date_taken]',
+                  '$_POST[time_taken]',
+                   UPPER('$_POST[name_taken]'),
+                    '$filename',
+                      UPPER('$_POST[submitted_to]'),
+                      '$_POST[amount_taken]',
+                       '$_POST[keterangan_taken]',
+                        '$_POST[date_returned]',
+                         '$_POST[time_returned]',
+                           UPPER('$_POST[name_returned]'),
+                             '$_POST[signature_returned]',
+                              UPPER('$_POST[recieved_to]'),
+                               '$_POST[amount_returned]',
+                                  '$_POST[keterangan_returned]')");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_key_vehicle.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_keyroom.php');
+        exit;
+    }
+}
+
 
 if (isset($_POST['tombol_tambah_barang_inventaris'])) {
 
