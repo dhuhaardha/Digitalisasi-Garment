@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2024 at 11:01 AM
+-- Generation Time: Jun 05, 2024 at 11:38 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -44,6 +44,41 @@ CREATE TABLE `tb_absensi` (
 INSERT INTO `tb_absensi` (`tba_uid`, `tba_nama`, `tba_dept`, `tba_tanggal`, `tba_masuk`, `tba_keluar`, `tba_detail`) VALUES
 ('', 'SAFIRA', 'PPMC', '2024-05-16', '16:03:00', '08:12:00', NULL),
 ('', 'YUDO', 'QC', '2024-05-16', '16:46:00', '08:22:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_barang_inventaris_shift_3`
+--
+
+CREATE TABLE `tb_barang_inventaris_shift_3` (
+  `id_barang_inventaris_pos` varchar(13) NOT NULL,
+  `barang_inventaris` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_barang_inventaris_shift_3`
+--
+
+INSERT INTO `tb_barang_inventaris_shift_3` (`id_barang_inventaris_pos`, `barang_inventaris`) VALUES
+('BInv001', 'KOMPUTER'),
+('BInv002', 'PRINTER'),
+('BInv003', 'MONITOR CCTV'),
+('BInv004', 'MONITOR E-SEAL'),
+('BInv005', 'TELEPHONE'),
+('BInv006', 'HT & CHARGER'),
+('BInv007', 'KAMERA & CHARGER'),
+('BInv008', 'JAM DINDING'),
+('BInv009', 'LAMPU EMERGENCY'),
+('BInv010', 'KIPAS ANGIN'),
+('BInv011', 'SENTER'),
+('BInv012', 'SENTER PENYEBRANGAN'),
+('BInv013', 'SEPATU BOOTS'),
+('BInv014', 'JAS HUJAN'),
+('BInv015', 'KOTAK P3K'),
+('BInv016', 'UNDER MIRROR'),
+('BInv017', 'METAL DETECTOR'),
+('BInv018', 'TONGKAT POLRI');
 
 -- --------------------------------------------------------
 
@@ -174,7 +209,8 @@ INSERT INTO `tb_kendaraan` (`tbrk_uid`, `tbrk_tanggal`, `tbrk_masuk`, `tbrk_kelu
 --
 
 CREATE TABLE `tb_kunci_kendaraan` (
-  `id_vehicle_key` varchar(11) NOT NULL,
+  `id_vehicle_key` varchar(16) NOT NULL,
+  `id_no_pol` varchar(35) NOT NULL,
   `no_police` varchar(10) NOT NULL,
   `kawasan_no_pol` varchar(35) NOT NULL,
   `status` varchar(30) NOT NULL,
@@ -193,6 +229,20 @@ CREATE TABLE `tb_kunci_kendaraan` (
   `amount_returned` int(32) NOT NULL,
   `keterangan_returned` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tb_kunci_kendaraan`
+--
+
+INSERT INTO `tb_kunci_kendaraan` (`id_vehicle_key`, `id_no_pol`, `no_police`, `kawasan_no_pol`, `status`, `date_taken`, `time_taken`, `name_taken`, `signature_taken`, `submitted_to`, `amount_taken`, `keterangan_taken`, `date_returned`, `time_returned`, `name_returned`, `signature_returned`, `recieved_to`, `amount_returned`, `keterangan_returned`) VALUES
+('keyvehicle001', '', '', '', '', '0000-00-00', '00:00:00', '', '', '', 0, '', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle002', 'KeyV013', 'B 2463 SZP', 'PRINGAPUS', '', '2024-06-04', '16:50:57', 'ARDHA', '665ee381a0430.png', 'YUDHO', 1, 'mantap', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle003', 'KeyV009', 'H 1077 WL', 'UNGARAN', '', '2024-06-05', '08:12:05', 'ARDHA', '665fbb6685a42.png', 'YUDHO', 1, 'mantap', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle004', 'KeyV002', 'B 1671 SYO', 'UNGARAN', '', '2024-06-05', '08:32:37', 'WEW', '665fc03716936.png', 'YUDHO', 1, 'qeq', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle005', 'KeyV001', 'B 1809 SYN', 'UNGARAN', '', '2024-06-05', '09:32:46', 'KUAT', '665fceaff154f.png', 'YUDHO', 1, 'mantap', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle006', 'KeyV004', 'B 1440 SZC', 'UNGARAN', 'DISERAHKAN', '2024-06-05', '09:35:34', 'ARDHA', '665fcef7ad5bc.png', 'YUDHO', 1, 'mantap', '2024-06-05', '15:50:36', '', '', '', 1, ''),
+('keyvehicle007', 'KeyV014', 'B 2736 SZX', 'PRINGAPUS', 'DISERAHKAN', '2024-06-05', '11:10:51', 'RITA', '665fe54c45c51.png', 'YUDHO', 1, 'qwrqrq', '2024-06-05', '15:46:33', '', '', '', 1, ''),
+('keyvehicle008', 'KeyV001', 'B 1809 SYN', 'UNGARAN', 'DISERAHKAN', '2024-06-05', '15:53:27', 'RITA', '6660278847f34.png', 'YUDHO', 1, 'qwrqrq', '2024-06-05', '15:54:09', 'ARDHA', '', 'DHUHA', 1, 'asda');
 
 -- --------------------------------------------------------
 
@@ -496,7 +546,10 @@ INSERT INTO `tb_kunci_ruangan` (`ID_kunci_ruangan`, `id_key_room`, `name_of_key`
 ('keyruang029', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '14:27:25', 'AGE', 12, 'upload/_665d705e5bc79.', '2024-06-03', '14:41:00', 'ARDHA', 12, 'fgh', '2024-06-03', '14:27:17', '', 12, ''),
 ('keyruang030', 'KeyR001', 'SHIRT', 12, '2', 'PENGEMBALIAN', '2024-06-03', '14:29:12', 'NESSA', 12, 'upload/_665d70c9637c9.PNG', '2024-06-03', '14:40:42', 'FIRA', 12, 'qwer', '2024-06-03', '14:27:26', '', 12, ''),
 ('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, 'upload/_665d733467ac9.PNG', '2024-06-03', '14:29:13', '', 4, '', '2024-06-03', '14:29:13', '', 4, ''),
-('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, '', '0000-00-00', '00:00:00', '', 0, '', '0000-00-00', '00:00:00', '', 0, '');
+('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, '', '0000-00-00', '00:00:00', '', 0, '', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang032', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-06-04', '08:42:10', 'ARDHA', 10, '665e70f33f0a2.png', '2024-06-04', '09:44:38', 'YUDHO', 10, 'qwer', '2024-06-04', '08:41:55', '', 10, ''),
+('keyruang033', 'KeyR011', 'LABORAT', 1, '1', 'PENGAMBILAN', '2024-06-04', '13:00:45', 'KUAT', 1, '665ead8dce672.png', '2024-06-04', '13:00:25', '', 1, '', '2024-06-04', '13:00:25', '', 1, ''),
+('keyruang034', 'KeyR004', 'STORE FABRIC', 8, '2', 'PENGAMBILAN', '2024-06-05', '08:14:40', 'KUAT', 8, '665fbc0144d66.png', '2024-06-05', '08:14:31', '', 8, '', '2024-06-05', '08:14:31', '', 8, '');
 
 -- --------------------------------------------------------
 
@@ -697,6 +750,129 @@ INSERT INTO `tb_list_key_vehicle` (`id_no_pol`, `kode_kawasan`, `seriesnumber`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_list_security`
+--
+
+CREATE TABLE `tb_list_security` (
+  `tbls_uid` varchar(10) NOT NULL,
+  `tbls_unit` varchar(10) DEFAULT NULL,
+  `tbls_nik` varchar(15) NOT NULL,
+  `tbls_nama` varchar(60) NOT NULL,
+  `tbls_status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `tb_list_security`
+--
+
+INSERT INTO `tb_list_security` (`tbls_uid`, `tbls_unit`, `tbls_nik`, `tbls_nama`, `tbls_status`) VALUES
+('PTU1/0001', 'PTU1', '', 'NAWOLO PRASETYO', 'ACTIVE'),
+('PTU1/0002', 'PTU1', '', 'M MAULANA YUSUF', 'ACTIVE'),
+('PTU1/0003', 'PTU1', '', 'DIMAS SULISTYO', 'ACTIVE'),
+('PTU1/0004', 'PTU1', '', 'ARI PRABOWO', 'ACTIVE'),
+('PTU1/0005', 'PTU1', '', 'HARDI PRAJOYO', 'ACTIVE'),
+('PTU1/0006', 'PTU1', '', 'RENDI ARGA SAPUTRA', 'ACTIVE'),
+('PTU1/0007', 'PTU1', '', 'NOVANT PRABOWO EKO. S', 'ACTIVE'),
+('PTU1/0008', 'PTU1', '', 'KUAT PURWANTO', 'ACTIVE'),
+('PTU1/0009', 'PTU1', '', 'HERU SUSANTO', 'ACTIVE'),
+('PTU1/0010', 'PTU1', '', 'M.WAHYUDI', 'ACTIVE'),
+('PTU1/0011', 'PTU1', '', 'ADIAT NUGROHO', 'ACTIVE'),
+('PTU1/0012', 'PTU1', '', 'DAVID PUTRA SETIAWAN', 'ACTIVE'),
+('PTU1/0013', 'PTU1', '', 'HARIYONO', 'ACTIVE'),
+('PTU1/0014', 'PTU1', '', 'ADI ARDIANSYAH', 'ACTIVE'),
+('PTU1/0015', 'PTU1', '', 'RIYAN ISMAWAN', 'ACTIVE'),
+('PTU1/0016', 'PTU1', '', 'MARYANTO ', 'ACTIVE'),
+('PTU1/0017', 'PTU1', '', 'SUPRIYANTO', 'ACTIVE'),
+('PTU1/0018', 'PTU1', '', 'AGUS ANGGORO ', 'ACTIVE'),
+('PTU1/0019', 'PTU1', '', 'GUNAWAN WIBOWO', 'ACTIVE'),
+('PTU1/0020', 'PTU1', '', 'LUHADI ', 'ACTIVE'),
+('PTU1/0021', 'PTU1', '', 'MULYADI', 'ACTIVE'),
+('PTU1/0022', 'PTU1', '', 'FERRY KURNIAWAN', 'ACTIVE'),
+('PTU1/0023', 'PTU1', '', 'APRILYA PUSPITASARI', 'ACTIVE'),
+('PTU1/0024', 'PTU1', '', 'SRI RAHAYU', 'ACTIVE'),
+('PTU1/0025', 'PTU1', '', 'MUJIATI', 'ACTIVE'),
+('PTU1/0026', 'PTU1', '', 'HARYANTI', 'ACTIVE'),
+('PTU1/0027', 'PTU1', '', 'W. SAPUTRO', 'ACTIVE'),
+('PTU1/0028', 'PTU1', '', 'ARTIN WAHYU NINGSIH', 'ACTIVE'),
+('PTU1/0029', 'PTU1', '', 'DINI NURINJANI', 'ACTIVE'),
+('PTU1/0030', 'PTU1', '', 'ASTI MAULINA AZAHRA', 'ACTIVE'),
+('PTU1/0031', 'PTU1', '', 'RENI HANDAYANI', 'ACTIVE'),
+('PTU1/0032', 'PTU1', '', 'ZAHRA FIRSTA OKTAVIANA', 'ACTIVE'),
+('PTU1/0033', 'PTU1', '', 'ADITYA BUDI SAPUTRA', 'ACTIVE'),
+('PTU1/0034', 'PTU1', '', 'RATNA EKAWATI', 'ACTIVE'),
+('PTU1/0035', 'PTU1', '', 'BAGAS DANISWARA', 'ACTIVE'),
+('PTU1/0036', 'PTU1', '', 'EKA MUSRIATIEN', 'ACTIVE'),
+('PTU1/0037', 'PTU1', '', 'ZAEMATUN NAVISAH', 'ACTIVE'),
+('PTU1/0038', 'PTU1', '', 'IKBAR BAYU SAPUTRO', 'ACTIVE'),
+('PTU1/0039', 'PTU1', '', 'BIMANTARA TARA SUGANDHA', 'ACTIVE'),
+('PTU1/0040', 'PTU1', '', 'IRFAN BAGUS MAULANA', 'ACTIVE'),
+('PTU1/0041', 'PTU1', '', 'BAYU SETYO ADI', 'ACTIVE'),
+('PTU1/0042', 'PTU1', '', 'ANGELIKA KUSUMA', 'ACTIVE');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_logs_activity_mutasi_shift_3`
+--
+
+CREATE TABLE `tb_logs_activity_mutasi_shift_3` (
+  `id_logs_activity_shift_3` varchar(11) NOT NULL,
+  `ID_mutasi_shift_3` varchar(13) NOT NULL,
+  `time_uraian_created` time NOT NULL,
+  `uraian` text NOT NULL,
+  `time_uraian_finished` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_mutasi_shift_3`
+--
+
+CREATE TABLE `tb_mutasi_shift_3` (
+  `ID_mutasi_shift_3` varchar(13) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `NIK` int(16) NOT NULL,
+  `jabatan` varchar(32) NOT NULL,
+  `jam_operasional` time NOT NULL,
+  `pos` varchar(6) NOT NULL,
+  `paraf` text NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_register_surat_transit`
+--
+
+CREATE TABLE `tb_register_surat_transit` (
+  `ID_register` varchar(12) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `pengirim` varchar(100) NOT NULL,
+  `kurir` varchar(100) NOT NULL,
+  `kepada` varchar(100) NOT NULL,
+  `kondisi_barang` varchar(10) NOT NULL,
+  `security_recieved` varchar(100) NOT NULL,
+  `ttd_office` text NOT NULL,
+  `person_office_recieved` varchar(100) NOT NULL,
+  `amount` int(32) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_register_surat_transit`
+--
+
+INSERT INTO `tb_register_surat_transit` (`ID_register`, `date`, `time`, `pengirim`, `kurir`, `kepada`, `kondisi_barang`, `security_recieved`, `ttd_office`, `person_office_recieved`, `amount`, `keterangan`) VALUES
+('register001', '2024-06-05', '14:37:08', 'JNE', 'AGRITO', 'ARDHA', 'BAIK', 'KUAT', '', '', 1, 'SEPATU LARI'),
+('register002', '2024-06-05', '14:51:39', 'JNT', 'MUKIDI', 'ARDHA', 'BAIK', 'KUAT', '-', '', 1, 'manatap'),
+('register003', '2024-06-05', '15:55:16', 'JNT', 'YUNI', 'YUDHO', 'BAIK', 'KUAT', 'qewewr', 'KUAT PURWANTO', 1, 'manatap');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_report_cctv`
 --
 
@@ -802,6 +978,12 @@ ALTER TABLE `tb_list_key_room`
 --
 ALTER TABLE `tb_list_key_vehicle`
   ADD PRIMARY KEY (`id_no_pol`);
+
+--
+-- Indexes for table `tb_list_security`
+--
+ALTER TABLE `tb_list_security`
+  ADD PRIMARY KEY (`tbls_uid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
