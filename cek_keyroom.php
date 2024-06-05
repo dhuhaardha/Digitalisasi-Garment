@@ -144,22 +144,22 @@ session_start();
                                                         <td>
 
                                                         <?php
-if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
-    if ($data_item_array[3] == 1) {
-        // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
-        echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
-    } else {
-        // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-        echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
-    }
-} elseif ($listKeyRoom['status'] == 'PENGAMBILAN') {
-    // For 'PENGAMBILAN' status, proceed to 'PENGEMBALIAN'
-    echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
-} else {
-    // For other statuses, show a success button
-    echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
-}
-?>
+                                                            if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
+                                                                if ($data_item_array[3] == 1) {
+                                                                    // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
+                                                                    echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
+                                                                } else {
+                                                                    // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
+                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
+                                                                }
+                                                            } elseif ($listKeyRoom['status'] == 'PENGAMBILAN') {
+                                                                // For 'PENGAMBILAN' status, proceed to 'PENGEMBALIAN'
+                                                                echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
+                                                            } else {
+                                                                // For other statuses, show a success button
+                                                                echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
+                                                            }
+                                                            ?>
 
 
                                                         </td>
