@@ -73,7 +73,7 @@ session_start();
                                                     <th>Pengirim</th>
                                                     <th>Kurir</th>
                                                     <th>Kepada(Penerima)</th>
-                                                    <th>Kondisi Barang</th>
+                                                    <th>Hasil Deteksi</th>
                                                     <th>Security(Dititipkan)</th>
                                                     <th>TTD, Person</th>
                                                     <th>Jumlah</th>

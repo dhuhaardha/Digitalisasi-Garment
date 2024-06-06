@@ -53,9 +53,17 @@ session_start();
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Export PDF Pada Tanggal
                                         </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalBarangInventarisHariIni">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            Input List Barang Inventaris
+                                        </button>
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Operasional Shift Hari Ini
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahUraian">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            Input Logs Operasional Kegiatan Hari Ini
                                         </button>
                                     </div>
                                 </div>
@@ -408,6 +416,428 @@ session_start();
                     </div>
                     <!-- End Modal -->
 
+                    <!-- Modal Tambah Uraian -->
+                    <div class="modal fade" id="modalTambahUraian" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Kunci Ruangan</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="aksi_security.php">
+                                    <div class="modal-body">
+                                        <div id="pengambilanFields">
+                                        <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>">
+                                            <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                <select class="form-control" name="nama">
+                                                        <?php
+
+                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $result = mysqli_query($koneksi, $sql);
+                        
+                                                        // Populate select options
+                                                        if (mysqli_num_rows($result) > 0) {
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
+                                                            }
+                                                        } else {
+                                                            echo "<option value=''>No security available</option>";
+                                                        }
+                                                        // Close database connection
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-10">
+                                                    <input type="hidden" class="form-control" id="time" name="time" value="<?php echo date('H:i:s'); ?>">
+                                                </div>
+                                            </div>
+                                            <script>
+                                                // Function to update the time field
+                                                function updateTime() {
+                                                    // Get the current time
+                                                    var currentTime = new Date();
+                                                    var hours = currentTime.getHours();
+                                                    var minutes = currentTime.getMinutes();
+                                                    var seconds = currentTime.getSeconds();
+
+                                                    // Format the time with leading zeros if necessary
+                                                    hours = (hours < 10 ? "0" : "") + hours;
+                                                    minutes = (minutes < 10 ? "0" : "") + minutes;
+                                                    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+                                                    // Display the formatted time in the input field
+                                                    document.getElementById("time").value = hours + ":" +
+                                                        minutes +
+                                                        ":" + seconds;
+                                                }
+
+                                                // Update the time initially and every second
+                                                updateTime(); // Initial update
+                                                setInterval(updateTime, 1000); // Update every second
+                                            </script>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" class="form-control" id="" name="NIK">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jabatan</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="" name="jabatan">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
+                                                <div class="col-sm-10">
+                                                <select id="inputState" class="form-select" name="pos_10">
+                                                    <option selected disabled>Choose POS...</option>
+                                                    <option value="K">K</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="4/5">4/5</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
+                                                    </label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                
+                                                    </style>
+                                                <div class="col-sm-10">
+                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+
+                                                </div>
+                                            </div>
+                                            <script>
+                                            var canvas = document.getElementById('signatureCanvas');
+                                            var ctx = canvas.getContext('2d');
+                                            var isDrawing = false;
+
+                                            canvas.addEventListener('mousedown', startDrawing);
+                                            canvas.addEventListener('touchstart', startDrawingTouch);
+                                            canvas.addEventListener('mousemove', draw);
+                                            canvas.addEventListener('touchmove', drawTouch);
+                                            canvas.addEventListener('mouseup', stopDrawing);
+                                            canvas.addEventListener('touchend', stopDrawing);
+
+                                            function startDrawing(event) {
+                                                isDrawing = true;
+                                                draw(event);
+                                            }
+
+                                            function startDrawingTouch(event) {
+                                                event.preventDefault();
+                                                isDrawing = true;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                draw({
+                                                    offsetX,
+                                                    offsetY
+                                                });
+                                            }
+
+                                            function draw(event) {
+                                                if (!isDrawing) return;
+                                                ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(event.offsetX, event.offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(event.offsetX, event.offsetY);
+                                            }
+
+                                            function drawTouch(event) {
+                                                event.preventDefault();
+                                                if (!isDrawing) return;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                    ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(offsetX, offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(offsetX, offsetY);
+                                            }
+
+                                            function stopDrawing() {
+                                                isDrawing = false;
+                                                ctx.beginPath();
+                                            }
+
+                                            var clearButton = document.getElementById('clear_signature');
+
+                                            clearButton.addEventListener('click', function() {
+                                                clearSignature();
+                                            });
+
+                                            function clearSignature() {
+                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                            }
+
+
+            // Function to convert canvas to data URL and store it in hidden input field
+            function saveSignature() {
+    var dataURL = canvas.toDataURL("image/png");
+    document.getElementById('signatureData').value = dataURL;
+
+    // Send an AJAX request to save the image
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "save_image.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var filename = xhr.responseText;
+            document.getElementById('signatureFilename').value = filename;
+        }
+    };
+    xhr.send("imageData=" + encodeURIComponent(dataURL));
+}
+
+
+                                           // Call saveSignature() when the form is submitted
+                                            document.querySelector('form').addEventListener('submit', saveSignature);
+                                            </script>
+                                            <!-- Add other fields related to pengambilan here -->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="tombol_tambah_shift_malam" class="btn btn-success">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
+
+                    <!-- Modal Tambah Barang Inventaris-->
+                    <div class="modal fade" id="modalBarangInventarisHariIni" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Kunci Ruangan</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="aksi_security.php">
+                                    <div class="modal-body">
+                                        <div id="pengambilanFields">
+                                            <div class="row mb-3">
+                                                    <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="id_barang_inventaris_barang_pos">
+                                                    <?php
+                                                        $sql = "SELECT id_barang_inventaris_pos, barang_inventaris FROM tb_barang_inventaris_shift_3";
+                                                        $result = mysqli_query($koneksi, $sql);
+
+                                                        // Populate select options
+                                                        if (mysqli_num_rows($result) > 0) {
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo "<option value='" . $row['id_barang_inventaris_pos'] . "''>" . $row['barang_inventaris'] . "</option>";
+                                                            }
+                                                        }                                                       else {
+                                                            echo "<option value=''>No Inventary available</option>";
+                                                        }
+                                                        // Close database connection
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-10">
+                                                    <input type="hidden" class="form-control" id="time" name="time" value="<?php echo date('H:i:s'); ?>">
+                                                </div>
+                                            </div>
+                                            <script>
+                                                // Function to update the time field
+                                                function updateTime() {
+                                                    // Get the current time
+                                                    var currentTime = new Date();
+                                                    var hours = currentTime.getHours();
+                                                    var minutes = currentTime.getMinutes();
+                                                    var seconds = currentTime.getSeconds();
+
+                                                    // Format the time with leading zeros if necessary
+                                                    hours = (hours < 10 ? "0" : "") + hours;
+                                                    minutes = (minutes < 10 ? "0" : "") + minutes;
+                                                    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+                                                    // Display the formatted time in the input field
+                                                    document.getElementById("time").value = hours + ":" +
+                                                        minutes +
+                                                        ":" + seconds;
+                                                }
+
+                                                // Update the time initially and every second
+                                                updateTime(); // Initial update
+                                                setInterval(updateTime, 1000); // Update every second
+                                            </script>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" class="form-control" id="" name="NIK">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jabatan</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="" name="jabatan">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
+                                                <div class="col-sm-10">
+                                                <select id="inputState" class="form-select" name="pos_10">
+                                                    <option selected disabled>Choose POS...</option>
+                                                    <option value="K">K</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="4/5">4/5</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
+                                                    </label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                
+                                                    </style>
+                                                <div class="col-sm-10">
+                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+
+                                                </div>
+                                            </div>
+                                            <script>
+                                            var canvas = document.getElementById('signatureCanvas');
+                                            var ctx = canvas.getContext('2d');
+                                            var isDrawing = false;
+
+                                            canvas.addEventListener('mousedown', startDrawing);
+                                            canvas.addEventListener('touchstart', startDrawingTouch);
+                                            canvas.addEventListener('mousemove', draw);
+                                            canvas.addEventListener('touchmove', drawTouch);
+                                            canvas.addEventListener('mouseup', stopDrawing);
+                                            canvas.addEventListener('touchend', stopDrawing);
+
+                                            function startDrawing(event) {
+                                                isDrawing = true;
+                                                draw(event);
+                                            }
+
+                                            function startDrawingTouch(event) {
+                                                event.preventDefault();
+                                                isDrawing = true;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                draw({
+                                                    offsetX,
+                                                    offsetY
+                                                });
+                                            }
+
+                                            function draw(event) {
+                                                if (!isDrawing) return;
+                                                ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(event.offsetX, event.offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(event.offsetX, event.offsetY);
+                                            }
+
+                                            function drawTouch(event) {
+                                                event.preventDefault();
+                                                if (!isDrawing) return;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                    ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(offsetX, offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(offsetX, offsetY);
+                                            }
+
+                                            function stopDrawing() {
+                                                isDrawing = false;
+                                                ctx.beginPath();
+                                            }
+
+                                            var clearButton = document.getElementById('clear_signature');
+
+                                            clearButton.addEventListener('click', function() {
+                                                clearSignature();
+                                            });
+
+                                            function clearSignature() {
+                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                            }
+
+
+            // Function to convert canvas to data URL and store it in hidden input field
+            function saveSignature() {
+    var dataURL = canvas.toDataURL("image/png");
+    document.getElementById('signatureData').value = dataURL;
+
+    // Send an AJAX request to save the image
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "save_image.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var filename = xhr.responseText;
+            document.getElementById('signatureFilename').value = filename;
+        }
+    };
+    xhr.send("imageData=" + encodeURIComponent(dataURL));
+}
+
+
+                                           // Call saveSignature() when the form is submitted
+                                            document.querySelector('form').addEventListener('submit', saveSignature);
+                                            </script>
+                                            <!-- Add other fields related to pengambilan here -->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="tombol_tambah_shift_malam" class="btn btn-success">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
+
 
                     <!-- Modal Ganti Serah Terima -->
                     <div class="modal fade" id="modalGantiSerahTerima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -424,22 +854,22 @@ session_start();
                                         <div>
                                             <input type="hidden" id="IDInput" class="form-control" name="ID_register" placeholder="Selected Date">
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Barang Inventaris</label>
                                                 <div class="col-sm-10">
                                                     <!-- Add select options for nama from tb_list_security -->
-                                                    <select class="form-control" name="person_office_recieved">
+                                                    <select class="form-control" name="id_barang_inventaris_pos">
                                                         <?php
 
-                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $sql = "SELECT id_barang_inventaris_pos, barang_inventaris FROM tb_barang_inventaris_shift_3";
                                                         $result = mysqli_query($koneksi, $sql);
                         
                                                         // Populate select options
                                                         if (mysqli_num_rows($result) > 0) {
                                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
+                                                                echo "<option value='" . $row['id_barang_inventaris_pos'] . "''>" . $row['barang_inventaris'] . "</option>";
                                                             }
                                                         } else {
-                                                            echo "<option value=''>No keys available</option>";
+                                                            echo "<option value=''>No Inventary available</option>";
                                                         }
                                                         // Close database connection
                                                         $koneksi->close();
