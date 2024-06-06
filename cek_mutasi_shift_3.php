@@ -30,7 +30,7 @@ session_start();
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Register Surat dan Transit Paket Checking</h3>
+                            <h3 class="m-0 text-dark">Mutasi Shift Checking</h3>
                         </div>
 
                         <div class="card-body">
@@ -55,7 +55,7 @@ session_start();
                                         </button>
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Input Operasional Surat dan Transit Hari Ini
+                                            Input Operasional Shift Hari Ini
                                         </button>
                                     </div>
                                 </div>
@@ -67,53 +67,81 @@ session_start();
                                         <br>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
+                                              <style>
+                                                th, td {
+                                                  text-align: center;
+                                                }
+                                              </style>
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>Waktu</th>
-                                                    <th>Pengirim</th>
-                                                    <th>Kurir</th>
-                                                    <th>Kepada(Penerima)</th>
-                                                    <th>Kondisi Barang</th>
-                                                    <th>Security(Dititipkan)</th>
-                                                    <th>TTD, Person</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Action</th>
+                                                    <th rowspan="2">No</th>
+                                                    <th rowspan="2">NAMA</th>
+                                                    <th rowspan="2">NIK</th>
+                                                    <th colspan="">22:00</th>
+                                                    <th colspan="">23:00</th>
+                                                    <th colspan="">00:00</th>
+                                                    <th colspan="">01:00</th>
+                                                    <th colspan="">02:00</th>
+                                                    <th colspan="">03:00</th>
+                                                    <th colspan="">04:00</th>
+                                                    <th colspan="">05:00</th>
+                                                    <th rowspan="2">Paraf</th>
+                                                    <th rowspan="2">Keterangan</th>
+                                                    <th rowspan="2">ACTION</th>
+                                                </tr>
+                                                <tr>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
+                                                  <th>POS</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-
+                                          
+                                               
                                                 <!-- data informasi karyawan dari database -->
                                                 <?php
                                                 $currentDate = date("Y-m-d");
                                                 $noUrut = 1;
-                                                $RegisterQuery = mysqli_query(
+                                                $MutasiQuery = mysqli_query(
                                                     $koneksi,
-                                                    "SELECT * FROM tb_register_surat_transit  WHERE  
+                                                    "SELECT * FROM tb_mutasi_shift_3  WHERE  
                                                     DATE(date) = '$currentDate'
-                                                        ORDER BY ID_register DESC LIMIT 14"
+                                                        ORDER BY ID_mutasi_shift_3 DESC LIMIT 14"
                                                 );
-                                                while ($Register = mysqli_fetch_array($RegisterQuery)) {
+                                                while ($Mutasi = mysqli_fetch_array($MutasiQuery)) {
                                                 ?>
-
+                                                        
                                                     <tr>
                                                         <td><?php echo $noUrut++; ?></td>
-                                                        <td><?php echo $Register['time']; ?></td>
-                                                        <td><?php echo $Register['pengirim']; ?></td>
-                                                        <td><?php echo $Register['kurir']; ?></td>
-                                                        <td><?php echo $Register['kepada']; ?></td>
-                                                        <td><?php echo $Register['kondisi_barang']; ?></td>
-                                                        <td><?php echo $Register['security_recieved']; ?></td>
-                                                        <td><?php echo $Register['ttd_office'], $Register['person_office_recieved']; ?></td>
-                                                        <td><?php echo $Register['amount']; ?></td>
-                                                        <td><?php echo $Register['keterangan']; ?></td>
+                                                        <td><?php echo $Mutasi['nama']; ?></td>
+                                                        <td><?php echo $Mutasi['NIK']; ?></td>
+                                                        <td><?php echo $Mutasi['pos_10']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_11']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_12']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_01']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_02']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_03']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_04']; ?></td>
+                                                        
+                                                        <td><?php echo $Mutasi['pos_05']; ?></td>
+                                                        <td><?php echo $Mutasi['paraf_05']; ?></td>
+                                                        <td><?php echo $Mutasi['keterangan']; ?></td>
                                                         <td>
 
                                                         <?php
-                                                            if ($Register['ttd_office'] == '-') {
+                                                            if ($Mutasi['paraf_05'] == "") {
                                                                     // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $Register['ID_register'] . '"><i class="fa-solid fa-handshake"></i></button>';
+                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i></button>';
                                                             } else {
                                                                 echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
                                                             }
@@ -131,6 +159,7 @@ session_start();
                                         </table>
                                     </form>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -180,18 +209,33 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div id="pengambilanFields">
+                                        <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>">
                                             <div class="row mb-3">
-                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Date
-                                                    Register</label>
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
+                                                    </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>">
+                                                <select class="form-control" name="nama">
+                                                        <?php
+
+                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $result = mysqli_query($koneksi, $sql);
+                        
+                                                        // Populate select options
+                                                        if (mysqli_num_rows($result) > 0) {
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
+                                                            }
+                                                        } else {
+                                                            echo "<option value=''>No security available</option>";
+                                                        }
+                                                        // Close database connection
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
-                                                    Register</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time" name="time" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="hidden" class="form-control" id="time" name="time" value="<?php echo date('H:i:s'); ?>">
                                                 </div>
                                             </div>
                                             <script>
@@ -219,57 +263,142 @@ session_start();
                                                 setInterval(updateTime, 1000); // Update every second
                                             </script>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="pengirim">
+                                                    <input type="number" class="form-control" id="" name="NIK">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Kurir</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jabatan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="kurir">
+                                                    <input type="text" class="form-control" id="" name="jabatan">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Kepada</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="kepada">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Kondisi Barang</label>
-                                                <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="kondisi_barang">
-                                                    <option selected disabled>Choose Dept...</option>
-                                                    <option value="Baik">Baik</option>
-                                                    <option value="Rusak">Rusak</option>
-                                                    <option value="Basah">Basah</option>
+                                                <select id="inputState" class="form-select" name="pos_10">
+                                                    <option selected disabled>Choose POS...</option>
+                                                    <option value="K">K</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="4/5">4/5</option>
                                                 </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Security</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
+                                                    </label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                
+                                                    </style>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="security_recieved">
+                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah</label>
-                                                <div class="col-sm-10">
-                                                    <input type="number" class="form-control" id="" name="amount" min="1" max="10">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="keterangan">
-                                                </div>
-                                            </div>
+                                            <script>
+                                            var canvas = document.getElementById('signatureCanvas');
+                                            var ctx = canvas.getContext('2d');
+                                            var isDrawing = false;
+
+                                            canvas.addEventListener('mousedown', startDrawing);
+                                            canvas.addEventListener('touchstart', startDrawingTouch);
+                                            canvas.addEventListener('mousemove', draw);
+                                            canvas.addEventListener('touchmove', drawTouch);
+                                            canvas.addEventListener('mouseup', stopDrawing);
+                                            canvas.addEventListener('touchend', stopDrawing);
+
+                                            function startDrawing(event) {
+                                                isDrawing = true;
+                                                draw(event);
+                                            }
+
+                                            function startDrawingTouch(event) {
+                                                event.preventDefault();
+                                                isDrawing = true;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                draw({
+                                                    offsetX,
+                                                    offsetY
+                                                });
+                                            }
+
+                                            function draw(event) {
+                                                if (!isDrawing) return;
+                                                ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(event.offsetX, event.offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(event.offsetX, event.offsetY);
+                                            }
+
+                                            function drawTouch(event) {
+                                                event.preventDefault();
+                                                if (!isDrawing) return;
+                                                var touch = event.touches[0];
+                                                var offsetX = touch.pageX - canvas.offsetLeft;
+                                                var offsetY = touch.pageY - canvas.offsetTop;
+                                                    ctx.lineWidth = 2;
+                                                ctx.lineCap = 'round';
+                                                ctx.strokeStyle = '#000';
+                                                ctx.lineTo(offsetX, offsetY);
+                                                ctx.stroke();
+                                                ctx.beginPath();
+                                                ctx.moveTo(offsetX, offsetY);
+                                            }
+
+                                            function stopDrawing() {
+                                                isDrawing = false;
+                                                ctx.beginPath();
+                                            }
+
+                                            var clearButton = document.getElementById('clear_signature');
+
+                                            clearButton.addEventListener('click', function() {
+                                                clearSignature();
+                                            });
+
+                                            function clearSignature() {
+                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                            }
+
+
+            // Function to convert canvas to data URL and store it in hidden input field
+            function saveSignature() {
+    var dataURL = canvas.toDataURL("image/png");
+    document.getElementById('signatureData').value = dataURL;
+
+    // Send an AJAX request to save the image
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "save_image.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var filename = xhr.responseText;
+            document.getElementById('signatureFilename').value = filename;
+        }
+    };
+    xhr.send("imageData=" + encodeURIComponent(dataURL));
+}
+
+
+                                           // Call saveSignature() when the form is submitted
+                                            document.querySelector('form').addEventListener('submit', saveSignature);
+                                            </script>
                                             <!-- Add other fields related to pengambilan here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_tambah_register_surat_transit" class="btn btn-success">Add</button>
+                                        <button type="submit" name="tombol_tambah_shift_malam" class="btn btn-success">Add</button>
                                         <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>

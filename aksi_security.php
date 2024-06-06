@@ -825,3 +825,95 @@ if (isset($_POST['tombol_enable_change_status_to_serahterima'])) {
         exit;
     }
 }
+
+
+if (isset($_POST['tombol_tambah_shift_malam'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(ID_mutasi_shift_3) AS max_id FROM tb_mutasi_shift_3");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extract the numeric part of the ID
+    $noUrut = (int)substr($lastId, 8) + 1; // Start from the 10th character to extract the numeric part
+
+    // Generating the new ID
+    $register = "register" . sprintf("%03s", $noUrut);
+
+    $jam_10 = "22:00:00";
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_mutasi_shift_3
+         (ID_mutasi_shift_3, 
+         date, 
+         nama, 
+         NIK, 
+         jabatan, 
+         jam_operasional_10, 
+         jam_operasional_11, 
+         jam_operasional_12, 
+         jam_operasional_01, 
+         jam_operasional_02, 
+         jam_operasional_03, 
+         jam_operasional_04, 
+         jam_operasional_05, 
+         pos_10,
+         paraf_10,
+         pos_11,
+         paraf_11,
+         pos_12,
+         paraf_12,
+         pos_01,
+         paraf_01,
+         pos_02,
+         paraf_02,
+         pos_03,
+         paraf_03,
+         pos_04,
+         paraf_04,
+         pos_05,
+         paraf_05,
+         keterangan)
+        VALUES (
+            '$register',
+                 '$_POST[date]',
+                  UPPER('$_POST[nama]'),
+                  '$_POST[NIK]',
+                   UPPER('$_POST[jabatan]'),
+                    '$jam_10',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '$_POST[pos_10]',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                           '')");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_mutasi_shift_3.php');
+        exit;
+    }
+}
