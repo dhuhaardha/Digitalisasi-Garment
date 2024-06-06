@@ -70,6 +70,8 @@ session_start();
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Part Operasional</th>
+                                                    <th>Kunci</th>
+                                                    <th>Jumlah Kunci</th>
                                                     <th>Worker(Pengambilan)</th>
                                                     <th>Worker(Pengembalian)</th>
                                                     <th>Worker(Serah Terima)</th>
@@ -102,7 +104,10 @@ session_start();
                                                         -- OR (status = 'PENGEMBALIAN' AND DATE(date_returned) = '$currentDate')
                                                         -- OR (status = 'SERAH TERIMA' AND DATE(date_handover) = '$currentDate')
                                                     GROUP BY 
-                                                        ID_kunci_ruangan;"
+                                                        ID_kunci_ruangan
+                                                        ORDER BY 
+        ID_kunci_ruangan DESC
+    LIMIT 14"
                                                 );
                                                 while ($listKeyRoom = mysqli_fetch_array($KeyRoomQuery)) {
                                                     $data_array = explode('|||', $listKeyRoom['data']);
@@ -130,6 +135,8 @@ session_start();
                                                         }
                                                         ?>
 
+                                                        <td><?php echo $data_item_array[1]; ?></td><!-- worker_retrieval -->
+                                                        <td><?php echo $data_item_array[2]; ?></td><!-- worker_retrieval -->
                                                         <td><?php echo $data_item_array[7]; ?></td><!-- worker_retrieval -->
                                                         <td><?php echo $data_item_array[12]; ?></td><!-- worker_returned -->
                                                         <td><?php echo $data_item_array[17]; ?></td><!-- handover_to -->
@@ -137,22 +144,22 @@ session_start();
                                                         <td>
 
                                                         <?php
-if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
-    if ($data_item_array[3] == 1) {
-        // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
-        echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
-    } else {
-        // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-        echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
-    }
-} elseif ($listKeyRoom['status'] == 'PENGAMBILAN') {
-    // For 'PENGAMBILAN' status, proceed to 'PENGEMBALIAN'
-    echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
-} else {
-    // For other statuses, show a success button
-    echo '<button class="btn btn-success"><i class="fa-solid fa-check"></i></button>';
-}
-?>
+                                                            if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
+                                                                if ($data_item_array[3] == 1) {
+                                                                    // If part_operasional == 1, the process is complete after status changes to 'PENGEMBALIAN'
+                                                                    echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
+                                                                } else {
+                                                                    // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
+                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-handshake"></i></button>';
+                                                                }
+                                                            } elseif ($listKeyRoom['status'] == 'PENGAMBILAN') {
+                                                                // For 'PENGAMBILAN' status, proceed to 'PENGEMBALIAN'
+                                                                echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalGantiPengembalian" value="' . $listKeyRoom['ID_kunci_ruangan'] . '"><i class="fa-solid fa-rotate-left"></i></button>';
+                                                            } else {
+                                                                // For other statuses, show a success button
+                                                                echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
+                                                            }
+                                                            ?>
 
 
                                                         </td>
@@ -229,9 +236,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="operational1Type" class="col-sm-2 col-form-label">Type</label>
                                                 <div class="col-sm-10">
                                                     <select id="operational1Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option selected disabled>Choose Type...</option>
                                                         <option value="pengambilan">Pengambilan</option>
-                                                        <option value="pengembalian">Pengembalian</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -241,10 +246,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="operational2Type" class="col-sm-2 col-form-label">Type</label>
                                                 <div class="col-sm-10">
                                                     <select id="operational2Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option selected disabled>Choose Type...</option>
                                                         <option value="pengambilan">Pengambilan</option>
-                                                        <option value="pengembalian">Pengembalian</option>
-                                                        <option value="serah terima">Serah Terima</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -326,7 +328,15 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengambilan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_name" name="signature_retrieval">
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                
+                                                    </style>
+                                                <div class="col-sm-10">
+                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureData" name="signatureData">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to pengambilan here -->
@@ -363,7 +373,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengembalian</label>
-                                                <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="input_name" name="signature_returned">
                                                 </div>
                                             </div>
@@ -410,6 +419,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" name="tombol_tambah_operasional_keyroom" class="btn btn-success">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
@@ -491,7 +501,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="text" id="dateInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
+                                            <input type="hidden" id="InputID" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
                                             <div class="row mb-3">
                                                 <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
@@ -540,13 +550,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_returned">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
                                                     Pengembalian</label>
                                                 <div class="col-sm-10">
@@ -580,7 +583,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="text" id="IDInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
+                                            <input type="hidden" id="IDInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
                                             <div class="row mb-3">
                                                 <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
@@ -626,13 +629,6 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                                                     Serah Terima</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="input_nik" name="handover_to">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Serah Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_handover">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -737,6 +733,7 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
             unset($_SESSION['gagal']);
         }
         ?>
+        
         <script>
             // Get all elements with the data-target attribute
             var buttons = document.querySelectorAll(
@@ -747,10 +744,10 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                 // Add click event listener to the button
                 button.addEventListener("click", function() {
                     // Get the value from the button
-                    var dateValue = button.value;
+                    var IDValue = button.value;
 
                     // Set the value to the input field
-                    document.getElementById("dateInput").value = dateValue;
+                    document.getElementById("InputID").value = IDValue;
                 });
             });
         </script>
@@ -771,6 +768,87 @@ if ($listKeyRoom['status'] == 'PENGEMBALIAN') {
                 });
             });
         </script>
+        <script>
+    var canvas = document.getElementById('signatureCanvas');
+    var ctx = canvas.getContext('2d');
+    var isDrawing = false;
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('touchstart', startDrawingTouch);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchmove', drawTouch);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function startDrawing(event) {
+        isDrawing = true;
+        draw(event);
+    }
+
+    function startDrawingTouch(event) {
+        event.preventDefault();
+        isDrawing = true;
+        var touch = event.touches[0];
+        var offsetX = touch.pageX - canvas.offsetLeft;
+        var offsetY = touch.pageY - canvas.offsetTop;
+        draw({
+            offsetX,
+            offsetY
+        });
+    }
+
+    function draw(event) {
+        if (!isDrawing) return;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX, event.offsetY);
+    }
+
+    function drawTouch(event) {
+        event.preventDefault();
+        if (!isDrawing) return;
+        var touch = event.touches[0];
+        var offsetX = touch.pageX - canvas.offsetLeft;
+        var offsetY = touch.pageY - canvas.offsetTop;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+        ctx.lineTo(offsetX, offsetY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+
+    var clearButton = document.getElementById('clear_signature');
+
+    clearButton.addEventListener('click', function() {
+        clearSignature();
+    });
+
+    function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+
+    // Function to convert canvas to data URL and store it in hidden input field
+    function saveSignature() {
+        var dataURL = canvas.toDataURL("image/png");
+        document.getElementById('signatureData').value = dataURL;
+    }
+
+    // Call saveSignature() when the form is submitted
+    document.querySelector('form').addEventListener('submit', saveSignature);
+    </script>
+        
         <?php require_once "templates/footer.php" ?>
 </body>
 

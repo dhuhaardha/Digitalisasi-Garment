@@ -2,96 +2,55 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signature Pad</title>
-    <style>
-    canvas {
-        border: 1px solid #000;
-    }
+    <!-- Add Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-    </style>
+    <!-- Add jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Add Select2 JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
 
+
 <body>
-    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+    <canvas id="canvas" width="300" height="150"></canvas>
     <br>
     <button onclick="clearSignature()">Clear Signature</button>
-    <button onclick="saveSignature()">Save Signature</button>
+    <button onclick="saveSignature2()">Save Signature</button>
     <br>
-    <input type="hidden" id="signatureData" name="signatureData">
 
-    <script>
-    var canvas = document.getElementById('signatureCanvas');
-    var ctx = canvas.getContext('2d');
-    var isDrawing = false;
+    <script src="script_try_canvas.js">
 
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('touchstart', startDrawingTouch);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchmove', drawTouch);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('touchend', stopDrawing);
-
-    function startDrawing(event) {
-        isDrawing = true;
-        draw(event);
-    }
-
-    function startDrawingTouch(event) {
-        event.preventDefault();
-        isDrawing = true;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        draw({
-            offsetX,
-            offsetY
-        });
-    }
-
-    function draw(event) {
-        if (!isDrawing) return;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(event.offsetX, event.offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(event.offsetX, event.offsetY);
-    }
-
-    function drawTouch(event) {
-        event.preventDefault();
-        if (!isDrawing) return;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(offsetX, offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(offsetX, offsetY);
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
-
-    function clearSignature() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function saveSignature() {
-        var dataURL = canvas.toDataURL();
-        document.getElementById('signatureData').value = dataURL;
-        // You can submit the form or send the data via AJAX to the server for further processing
-        // Example: document.getElementById('myForm').submit();
-    }
     </script>
+
+<div class="row mb-3">
+    <label for="pengambilanDate" class="col-sm-2 col-form-label">Date Register</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="person_office_recieved" id="security_select">
+            <?php
+            $sql = "SELECT tbls_nama FROM tb_list_security";
+            $result = mysqli_query($koneksi, $sql);
+
+            // Populate select options
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
+                }
+            } else {
+                echo "<option value=''>No security available</option>";
+            }
+            // Close database connection
+            ?>
+        </select>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#security_select').select2();
+    });
+</script>
+
 </body>
 
 </html>
