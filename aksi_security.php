@@ -797,18 +797,31 @@ if (isset($_POST['tombol_tambah_register_surat_transit'])) {
     }
 }
 
-if (isset($_POST['tombol_enable_change_status_to_serahterima'])) {
+if (isset($_POST['tombol_enable_serahterima_transit_surat_paket'])) {
 
     $ID_register = $_POST['ID_register'];
 
     // Sanitize the form inputs to prevent SQL injection
-    $person_office_recieved = mysqli_real_escape_string($koneksi, $_POST['person_office_recieved']);
-    $ttd_office = mysqli_real_escape_string($koneksi, $_POST['ttd_office']);
+    $person_office_recieved = $_POST['person_office_recieved'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
 
     // Construct the SQL update query
     $updateQuery = "UPDATE tb_register_surat_transit SET 
                         person_office_recieved = '$person_office_recieved', 
-                        ttd_office = '$ttd_office'  
+                        ttd_office = '$filename'  
                     WHERE ID_register = '$ID_register'";
 
     // Execute the update query
@@ -837,7 +850,7 @@ if (isset($_POST['tombol_tambah_shift_malam'])) {
     $noUrut = (int)substr($lastId, 8) + 1; // Start from the 10th character to extract the numeric part
 
     // Generating the new ID
-    $register = "register" . sprintf("%03s", $noUrut);
+    $register = "ShiftMlm" . sprintf("%03s", $noUrut);
 
     $jam_10 = "22:00:00";
 
@@ -914,6 +927,410 @@ if (isset($_POST['tombol_tambah_shift_malam'])) {
     } else {
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_11'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_11 = $_POST['pos_11'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_11 = "23:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_11 = '$jam_11',
+                        pos_11 = '$pos_11', 
+                        paraf_11 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_12'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_12 = $_POST['pos_12'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_12 = "23:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_12 = '$jam_12',
+                        pos_12 = '$pos_12', 
+                        paraf_12 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_01'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_01 = $_POST['pos_01'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_01 = "01:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_01 = '$jam_01',
+                        pos_01 = '$pos_01', 
+                        paraf_01 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_02'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_02 = $_POST['pos_02'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_02 = "02:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_02 = '$jam_02',
+                        pos_02 = '$pos_02', 
+                        paraf_02 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_03'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_03 = $_POST['pos_03'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_03 = "03:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_03 = '$jam_03',
+                        pos_03 = '$pos_03', 
+                        paraf_03 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_04'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_04 = $_POST['pos_04'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_04 = "04:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_04 = '$jam_04',
+                        pos_04 = '$pos_04', 
+                        paraf_04 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_change_status_pos_05'])) {
+
+    $ID_mutasi_shift_3 = $_POST['ID_mutasi_shift_3'];
+
+    // Sanitize the form inputs to prevent SQL injection
+    $pos_05 = $_POST['pos_05'];
+    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+
+    // Extract the base64 encoded image data
+    $encoded_image = explode(",", $data_uri)[1];
+
+    // Decode the base64 encoded image data
+    $decoded_image = base64_decode($encoded_image);
+
+    // Generate a unique filename for the signature image
+    $filename = uniqid('signature_') . '.png';
+
+    // Save the decoded image data to a file
+    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
+    file_put_contents($save_path, $decoded_image);
+
+    $jam_05 = "05:00:00";
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
+                        jam_operasional_05 = '$jam_05',
+                        pos_05 = '$pos_05', 
+                        paraf_05 = '$filename'  
+                    WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_mutasi_shift_3.php');
+        exit;
+    }
+}
+
+
+
+if (isset($_POST['tombol_tambah_barang_shift'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(ID_logs_barang_inventaris) AS max_id FROM tb_logs_barang_inventaris_mutasi_shift_3");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extract the numeric part of the ID
+    $noUrut = (int)substr($lastId, 6) + 1; // Start from the 10th character to extract the numeric part
+
+    // Generating the new ID
+    $register = "LogInv" . sprintf("%03s", $noUrut);
+
+    // Get the selected key details based on the selected id_key_room
+    $selected_barang_pos_id = $_POST['id_barang_inventaris_pos'];
+    $barang_query = mysqli_query($koneksi, "SELECT barang_inventaris FROM tb_barang_inventaris_shift_3 WHERE id_barang_inventaris_pos = '$selected_barang_pos_id'");
+    $barang_row = mysqli_fetch_assoc($barang_query);
+    $selected_data = $barang_row['barang_inventaris'];
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_logs_barang_inventaris_mutasi_shift_3
+         (ID_logs_barang_inventaris, 
+         id_barang_inventaris_pos, 
+         barang_inventaris, 
+         jumlah_barang_inventaris, 
+         date_created)
+        VALUES (
+            '$register',
+                 '$selected_barang_pos_id',
+                  UPPER('$selected_data'),
+                  '$_POST[jumlah_barang_inventaris]',
+                   current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_barang_inventaris_mutasi_malam.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_barang_inventaris_mutasi_malam.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_tambah_uraian_shift_malam'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_logs_activity_shift_3) AS max_id FROM tb_logs_activity_mutasi_shift_3");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extract the numeric part of the ID
+    $noUrut = (int)substr($lastId, 6) + 1; // Start from the 10th character to extract the numeric part
+
+    // Generating the new ID
+    $register = "uraian" . sprintf("%03s", $noUrut);
+
+    // Get the selected key details based on the selected id_key_room
+
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_logs_activity_mutasi_shift_3
+         (id_logs_activity_shift_3, 
+         time_uraian_created, 
+         uraian, 
+         time_uraian_finished, 
+         dibuat_pada)
+        VALUES (
+            '$register',
+                 '$_POST[time_uraian_created]',
+                  '$_POST[uraian]',
+                  '$_POST[time_uraian_finished]',
+                   current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_uraian_mutasi_malam.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_uraian_mutasi_malam.php');
         exit;
     }
 }

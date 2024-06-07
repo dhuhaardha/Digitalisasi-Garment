@@ -214,14 +214,14 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Date
                                                     </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="diambilDate" name="date_taken" value="<?php echo date('Y-m-d'); ?>">
+                                                    <input type="text" class="form-control" id="diambilDate" name="date_taken" value="<?php echo date('Y-m-d'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time_taken" name="time_taken" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="text" class="form-control" id="time_taken" name="time_taken" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <script>
@@ -343,14 +343,14 @@ session_start();
                                                     Pengembalian
                                                 </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
+                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengembalian</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time_returned" name="time_returned" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="text" class="form-control" id="time_returned" name="time_returned" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <script>
@@ -422,6 +422,7 @@ session_start();
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" name="tombol_enable_change_status_key_vehicle" class="btn btn-success">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
