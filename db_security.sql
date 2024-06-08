@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2024 at 11:38 AM
+-- Generation Time: Jun 08, 2024 at 03:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -242,7 +242,12 @@ INSERT INTO `tb_kunci_kendaraan` (`id_vehicle_key`, `id_no_pol`, `no_police`, `k
 ('keyvehicle005', 'KeyV001', 'B 1809 SYN', 'UNGARAN', '', '2024-06-05', '09:32:46', 'KUAT', '665fceaff154f.png', 'YUDHO', 1, 'mantap', '0000-00-00', '00:00:00', '', '', '', 0, ''),
 ('keyvehicle006', 'KeyV004', 'B 1440 SZC', 'UNGARAN', 'DISERAHKAN', '2024-06-05', '09:35:34', 'ARDHA', '665fcef7ad5bc.png', 'YUDHO', 1, 'mantap', '2024-06-05', '15:50:36', '', '', '', 1, ''),
 ('keyvehicle007', 'KeyV014', 'B 2736 SZX', 'PRINGAPUS', 'DISERAHKAN', '2024-06-05', '11:10:51', 'RITA', '665fe54c45c51.png', 'YUDHO', 1, 'qwrqrq', '2024-06-05', '15:46:33', '', '', '', 1, ''),
-('keyvehicle008', 'KeyV001', 'B 1809 SYN', 'UNGARAN', 'DISERAHKAN', '2024-06-05', '15:53:27', 'RITA', '6660278847f34.png', 'YUDHO', 1, 'qwrqrq', '2024-06-05', '15:54:09', 'ARDHA', '', 'DHUHA', 1, 'asda');
+('keyvehicle008', 'KeyV001', 'B 1809 SYN', 'UNGARAN', 'DISERAHKAN', '2024-06-05', '15:53:27', 'RITA', '6660278847f34.png', 'YUDHO', 1, 'qwrqrq', '2024-06-05', '15:54:09', 'ARDHA', '', 'DHUHA', 1, 'asda'),
+('keyvehicle009', 'KeyV001', 'B 1809 SYN', 'UNGARAN', 'DIAMBIL', '2024-06-06', '14:21:41', 'RITA', '6661638641039.png', 'YUDHO', 1, 'qwrqrq', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle010', 'KeyV004', 'B 1440 SZC', 'UNGARAN', 'DISERAHKAN', '2024-06-07', '11:21:24', 'KUAT', '66628ac4c7ce7.png', 'YUDHO', 1, 'mantap', '2024-06-07', '11:21:49', 'RANI', '', 'YDHO', 1, 'qwrq'),
+('keyvehicle011', 'KeyV013', 'B 2463 SZP', 'PRINGAPUS', 'DISERAHKAN', '2024-06-07', '14:18:52', 'ARDHA', '6662b45c51e76.png', 'YUDHO', 2, 'mantap', '2024-06-07', '14:19:42', 'RANI', '', 'WENDI', 2, 'qwrq'),
+('keyvehicle012', 'KeyV008', 'H 8402 HC', 'UNGARAN', 'DIAMBIL', '2024-06-07', '15:41:44', 'YUDHO', '6662c85ed3f27.png', 'ARDHA', 1, 'SUDAH ADA', '0000-00-00', '00:00:00', '', '', '', 0, ''),
+('keyvehicle013', 'KeyV007', 'B 1993 SAO', 'UNGARAN', 'DISERAHKAN', '2024-06-07', '16:12:12', 'YUDHO', '6662cf8205e2f.png', 'ARDHA', 1, '', '2024-06-07', '16:13:00', 'YUDHO', '', 'ARDHA', 1, '');
 
 -- --------------------------------------------------------
 
@@ -549,7 +554,12 @@ INSERT INTO `tb_kunci_ruangan` (`ID_kunci_ruangan`, `id_key_room`, `name_of_key`
 ('keyruang031', 'KeyR010', 'R.BUYER', 4, '1', 'PENGAMBILAN', '2024-06-03', '14:39:31', 'BINTANG', 4, '', '0000-00-00', '00:00:00', '', 0, '', '0000-00-00', '00:00:00', '', 0, ''),
 ('keyruang032', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-06-04', '08:42:10', 'ARDHA', 10, '665e70f33f0a2.png', '2024-06-04', '09:44:38', 'YUDHO', 10, 'qwer', '2024-06-04', '08:41:55', '', 10, ''),
 ('keyruang033', 'KeyR011', 'LABORAT', 1, '1', 'PENGAMBILAN', '2024-06-04', '13:00:45', 'KUAT', 1, '665ead8dce672.png', '2024-06-04', '13:00:25', '', 1, '', '2024-06-04', '13:00:25', '', 1, ''),
-('keyruang034', 'KeyR004', 'STORE FABRIC', 8, '2', 'PENGAMBILAN', '2024-06-05', '08:14:40', 'KUAT', 8, '665fbc0144d66.png', '2024-06-05', '08:14:31', '', 8, '', '2024-06-05', '08:14:31', '', 8, '');
+('keyruang034', 'KeyR004', 'STORE FABRIC', 8, '2', 'PENGAMBILAN', '2024-06-05', '08:14:40', 'KUAT', 8, '665fbc0144d66.png', '2024-06-05', '08:14:31', '', 8, '', '2024-06-05', '08:14:31', '', 8, ''),
+('keyruang035', 'KeyR010', 'R.BUYER', 4, '1', 'PENGEMBALIAN', '2024-06-06', '15:12:59', 'GURI', 4, '6661700d1f054.png', '2024-06-06', '15:13:14', 'YUDHO', 4, 'Rtgg', '2024-06-06', '15:14:36', '', 4, ''),
+('keyruang036', 'KeyR006', 'OFFICE', 9, '2', 'SERAH TERIMA', '2024-06-06', '15:13:38', 'TATIK', 9, '666170341f379.png', '2024-06-06', '15:13:53', 'ARDHA', 9, 'Tty', '2024-06-06', '15:14:16', 'YUDHO', 9, 'Tyy'),
+('keyruang037', 'KeyR005', 'STORE ACCESSORIS', 10, '1', 'PENGEMBALIAN', '2024-06-07', '11:20:57', 'KUAT', 10, '66628aaa11e16.png', '2024-06-07', '11:21:05', 'SOLIHIN', 10, 'qwer', '2024-06-07', '11:20:35', '', 10, ''),
+('keyruang038', 'KeyR006', 'OFFICE', 9, '1', 'PENGEMBALIAN', '2024-06-07', '16:14:45', 'YUDHO', 9, '6662d01aed5fe.png', '2024-06-07', '16:15:18', 'YUDHO', 9, '', '2024-06-07', '16:16:11', '', 9, ''),
+('keyruang039', 'KeyR005', 'STORE ACCESSORIS', 10, '2', 'SERAH TERIMA', '2024-06-07', '16:15:40', 'YUDHO', 10, '6662d0524dbdc.png', '2024-06-07', '16:16:05', 'YUDHO', 10, '', '2024-06-07', '16:16:26', 'YUDHO', 10, '');
 
 -- --------------------------------------------------------
 
@@ -817,11 +827,49 @@ INSERT INTO `tb_list_security` (`tbls_uid`, `tbls_unit`, `tbls_nik`, `tbls_nama`
 
 CREATE TABLE `tb_logs_activity_mutasi_shift_3` (
   `id_logs_activity_shift_3` varchar(11) NOT NULL,
-  `ID_mutasi_shift_3` varchar(13) NOT NULL,
   `time_uraian_created` time NOT NULL,
   `uraian` text NOT NULL,
-  `time_uraian_finished` time NOT NULL
+  `time_uraian_finished` time NOT NULL,
+  `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_logs_activity_mutasi_shift_3`
+--
+
+INSERT INTO `tb_logs_activity_mutasi_shift_3` (`id_logs_activity_shift_3`, `time_uraian_created`, `uraian`, `time_uraian_finished`, `dibuat_pada`) VALUES
+('uraian001', '22:22:58', 'keliling aja', '22:58:58', '2024-06-07 04:23:46'),
+('uraian002', '00:00:00', 'Cobaardha.....', '14:06:00', '2024-06-07 06:11:17'),
+('uraian003', '13:12:36', 'weqweqeqeqweqweqweqeqeqweqw', '00:00:00', '2024-06-07 06:12:54'),
+('uraian004', '13:14:12', 'Djdjdjd', '17:32:00', '2024-06-07 06:14:24'),
+('uraian005', '14:45:10', 'Feojosnfonfso', '00:42:00', '2024-06-07 07:45:32'),
+('uraian006', '16:34:08', 'JAGA MALAM', '00:00:00', '2024-06-07 09:38:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_logs_barang_inventaris_mutasi_shift_3`
+--
+
+CREATE TABLE `tb_logs_barang_inventaris_mutasi_shift_3` (
+  `ID_logs_barang_inventaris` varchar(13) NOT NULL,
+  `id_barang_inventaris_pos` varchar(13) NOT NULL,
+  `barang_inventaris` varchar(32) NOT NULL,
+  `jumlah_barang_inventaris` int(3) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_logs_barang_inventaris_mutasi_shift_3`
+--
+
+INSERT INTO `tb_logs_barang_inventaris_mutasi_shift_3` (`ID_logs_barang_inventaris`, `id_barang_inventaris_pos`, `barang_inventaris`, `jumlah_barang_inventaris`, `date_created`) VALUES
+('LogInv001', 'BInv001', 'KOMPUTER', 2, '2024-06-06 09:19:06'),
+('register002', 'BInv001', 'KOMPUTER', 2, '2024-06-07 03:18:31'),
+('LogInv001', 'BInv002', 'PRINTER', 3, '2024-06-07 03:53:26'),
+('LogInv001', 'BInv014', 'JAS HUJAN', 1, '2024-06-07 07:16:08'),
+('LogInv001', 'BInv018', 'TONGKAT POLRI', 3, '2024-06-07 07:44:56'),
+('LogInv001', 'BInv010', 'KIPAS ANGIN', 1, '2024-06-07 09:30:10');
 
 -- --------------------------------------------------------
 
@@ -831,14 +879,49 @@ CREATE TABLE `tb_logs_activity_mutasi_shift_3` (
 
 CREATE TABLE `tb_mutasi_shift_3` (
   `ID_mutasi_shift_3` varchar(13) NOT NULL,
+  `date` date NOT NULL,
   `nama` varchar(100) NOT NULL,
   `NIK` int(16) NOT NULL,
   `jabatan` varchar(32) NOT NULL,
-  `jam_operasional` time NOT NULL,
-  `pos` varchar(6) NOT NULL,
-  `paraf` text NOT NULL,
+  `jam_operasional_10` time NOT NULL,
+  `jam_operasional_11` time NOT NULL,
+  `jam_operasional_12` time NOT NULL,
+  `jam_operasional_01` time NOT NULL,
+  `jam_operasional_02` time NOT NULL,
+  `jam_operasional_03` time NOT NULL,
+  `jam_operasional_04` time NOT NULL,
+  `jam_operasional_05` time NOT NULL,
+  `pos_10` varchar(6) NOT NULL,
+  `paraf_10` text NOT NULL,
+  `pos_11` varchar(6) NOT NULL,
+  `paraf_11` text NOT NULL,
+  `pos_12` varchar(6) NOT NULL,
+  `paraf_12` text NOT NULL,
+  `pos_01` varchar(6) NOT NULL,
+  `paraf_01` text NOT NULL,
+  `pos_02` varchar(6) NOT NULL,
+  `paraf_02` text NOT NULL,
+  `pos_03` varchar(6) NOT NULL,
+  `paraf_03` text NOT NULL,
+  `pos_04` varchar(6) NOT NULL,
+  `paraf_04` text NOT NULL,
+  `pos_05` varchar(6) NOT NULL,
+  `paraf_05` text NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_mutasi_shift_3`
+--
+
+INSERT INTO `tb_mutasi_shift_3` (`ID_mutasi_shift_3`, `date`, `nama`, `NIK`, `jabatan`, `jam_operasional_10`, `jam_operasional_11`, `jam_operasional_12`, `jam_operasional_01`, `jam_operasional_02`, `jam_operasional_03`, `jam_operasional_04`, `jam_operasional_05`, `pos_10`, `paraf_10`, `pos_11`, `paraf_11`, `pos_12`, `paraf_12`, `pos_01`, `paraf_01`, `pos_02`, `paraf_02`, `pos_03`, `paraf_03`, `pos_04`, `paraf_04`, `pos_05`, `paraf_05`, `keterangan`) VALUES
+('ShiftMlm001', '2024-06-06', 'Ardha', 202465654, 'anggota', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'fasfafaf'),
+('register002', '2024-06-06', 'NAWOLO PRASETYO', 12414, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+('register002', '2024-06-07', 'RENDI ARGA SAPUTRA', 290675343, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+('register002', '2024-06-07', '', 0, '', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+('ShiftMlm002', '2024-06-07', 'ADIAT NUGROHO', 3538355, 'KETUA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '4/5', 'signature_6662a7819c2b1.png', '2', 'signature_6662b572dfde0.png', 'K', 'signature_6662b57a24e9e.png', '', '', '', '', '', '', '', '', ''),
+('ShiftMlm003', '2024-06-07', 'LUHADI ', 346363, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', 'K', '', '2', 'signature_6662b321c6d8a.png', '4/5', 'signature_6662b3592df45.png', '4/5', 'signature_6662b26545059.png', 'K', '', '2', '', '1', 'signature_6662b35d982da.png', 'K', 'signature_6662b361ce243.png', ''),
+('ShiftMlm004', '2024-06-07', 'DINI NURINJANI', 12345678, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2', '', 'K', 'signature_6662d2700d567.png', '2', 'signature_6662d2bda4c03.png', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -868,7 +951,17 @@ CREATE TABLE `tb_register_surat_transit` (
 INSERT INTO `tb_register_surat_transit` (`ID_register`, `date`, `time`, `pengirim`, `kurir`, `kepada`, `kondisi_barang`, `security_recieved`, `ttd_office`, `person_office_recieved`, `amount`, `keterangan`) VALUES
 ('register001', '2024-06-05', '14:37:08', 'JNE', 'AGRITO', 'ARDHA', 'BAIK', 'KUAT', '', '', 1, 'SEPATU LARI'),
 ('register002', '2024-06-05', '14:51:39', 'JNT', 'MUKIDI', 'ARDHA', 'BAIK', 'KUAT', '-', '', 1, 'manatap'),
-('register003', '2024-06-05', '15:55:16', 'JNT', 'YUNI', 'YUDHO', 'BAIK', 'KUAT', 'qewewr', 'KUAT PURWANTO', 1, 'manatap');
+('register003', '2024-06-05', '15:55:16', 'JNT', 'YUNI', 'YUDHO', 'BAIK', 'KUAT', 'qewewr', 'KUAT PURWANTO', 1, 'manatap'),
+('register004', '2024-06-06', '09:00:39', 'JNT', 'YUNI', 'ARDHA', 'BAIK', 'KUAT', '', 'NAWOLO PRASETYO', 1, 'manatap'),
+('register005', '2024-06-06', '09:02:41', 'JNT', 'YUNI', 'ARDHA', 'BASAH', 'KUAT', '', 'HARDI PRAJOYO', 1, 'qrq'),
+('register006', '2024-06-06', '09:16:04', 'JNT', 'MUKIDI', 'YUDHO', 'BAIK', 'KUAT', '-', '', 1, 'qrq'),
+('register007', '2024-06-07', '08:10:25', 'JNE', 'AGUS', 'ARDHA', 'BAIK', 'KUAT', 'signature_6662626b22848.png', '', 1, 'tumbler merah'),
+('register008', '2024-06-07', '08:42:06', 'SICEPAT', 'AGUS', 'ARDHA', 'BAIK', 'KUAT', 'signature_6662693ec24fe.png', '', 1, 'Sepatu tari'),
+('register009', '2024-06-07', '09:01:50', 'JNE', 'HURAS', 'YUDHO', 'BAIK', 'KUAT', 'signature_66626eafa17bf.png', '', 1, 'Red mic'),
+('register010', '2024-06-07', '09:25:41', 'JNT', 'MUKIDI', 'ARDHA', 'BAIK', 'KUAT', 'signature_6662702ba61c1.png', '', 1, 'manatap'),
+('register011', '2024-06-07', '09:31:41', 'JNT', 'MUKIDI', 'YUDHO', 'BAIK', 'KUAT', 'signature_66627115564d2.png', 'NAWOLO PRASETYO', 1, 'manatap'),
+('register012', '2024-06-07', '09:50:50', 'JNT', 'YUNI', 'YUDHO', 'BAIK', 'KUAT', '-', '', 1, 'tumbler merah'),
+('register013', '2024-06-07', '16:18:55', 'DHL - 123456789', 'YUDHO', 'ARDHA', 'BAIK', 'MARYANTO', 'signature_6662d14916dbf.png', 'ADI ARDIANSYAH', 1, '');
 
 -- --------------------------------------------------------
 
