@@ -1250,35 +1250,41 @@ if (isset($_POST['tombol_enable_change_status_pos_05'])) {
 
 if (isset($_POST['tombol_tambah_barang_shift'])) {
     // Assuming $koneksi is your database connection
-    $genUID = mysqli_query($koneksi, "SELECT MAX(ID_logs_barang_inventaris) AS max_id FROM tb_logs_barang_inventaris_mutasi_shift_3");
+    $genUID = mysqli_query($koneksi, "SELECT MAX(ID_logs_barang_inventaris) AS max_id FROM tb_logs_barang_inventaris_mutasi_shift");
     $row = mysqli_fetch_assoc($genUID);
     $lastId = $row['max_id'];
 
-    // Extract the numeric part of the ID
-    $noUrut = (int)substr($lastId, 6) + 1; // Start from the 10th character to extract the numeric part
-
-    // Generating the new ID
-    $register = "LogInv" . sprintf("%03s", $noUrut);
+    if ($lastId === NULL) {
+        // If there are no existing records, start with LogInv001
+        $nextId = "LogInv001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 7) + 1; 
+        // Generating the new ID
+        $nextId = "LogInv" . sprintf("%03s", $numericPart);
+    }
 
     // Get the selected key details based on the selected id_key_room
     $selected_barang_pos_id = $_POST['id_barang_inventaris_pos'];
-    $barang_query = mysqli_query($koneksi, "SELECT barang_inventaris FROM tb_barang_inventaris_shift_3 WHERE id_barang_inventaris_pos = '$selected_barang_pos_id'");
+    $barang_query = mysqli_query($koneksi, "SELECT barang_inventaris FROM tb_barang_inventaris_shift WHERE id_barang_inventaris_pos = '$selected_barang_pos_id'");
     $barang_row = mysqli_fetch_assoc($barang_query);
     $selected_data = $barang_row['barang_inventaris'];
 
     $tambahQuery = mysqli_query(
         $koneksi,
-        "INSERT INTO tb_logs_barang_inventaris_mutasi_shift_3
+        "INSERT INTO tb_logs_barang_inventaris_mutasi_shift
          (ID_logs_barang_inventaris, 
          id_barang_inventaris_pos, 
          barang_inventaris, 
          jumlah_barang_inventaris, 
+         shift, 
          date_created)
         VALUES (
-            '$register',
+            '$nextId',
                  '$selected_barang_pos_id',
                   UPPER('$selected_data'),
                   '$_POST[jumlah_barang_inventaris]',
+                  '$_POST[shift]',
                    current_timestamp())");
     
 
@@ -1295,7 +1301,7 @@ if (isset($_POST['tombol_tambah_barang_shift'])) {
 
 if (isset($_POST['tombol_tambah_uraian_shift_malam'])) {
     // Assuming $koneksi is your database connection
-    $genUID = mysqli_query($koneksi, "SELECT MAX(id_logs_activity_shift_3) AS max_id FROM tb_logs_activity_mutasi_shift_3");
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_logs_activity_shift) AS max_id FROM tb_logs_activity_mutasi_shift");
     $row = mysqli_fetch_assoc($genUID);
     $lastId = $row['max_id'];
 
@@ -1310,14 +1316,16 @@ if (isset($_POST['tombol_tambah_uraian_shift_malam'])) {
 
     $tambahQuery = mysqli_query(
         $koneksi,
-        "INSERT INTO tb_logs_activity_mutasi_shift_3
-         (id_logs_activity_shift_3, 
+        "INSERT INTO tb_logs_activity_shift
+         (id_logs_activity_shift,
+         shift, 
          time_uraian_created, 
          uraian, 
          time_uraian_finished, 
          dibuat_pada)
         VALUES (
             '$register',
+            '$_POST[shift]',
                  '$_POST[time_uraian_created]',
                   '$_POST[uraian]',
                   '$_POST[time_uraian_finished]',
@@ -1331,6 +1339,191 @@ if (isset($_POST['tombol_tambah_uraian_shift_malam'])) {
     } else {
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:cek_uraian_mutasi_malam.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_update_waktu_selesai'])) {
+
+    $id_logs_activity_shift = $_POST['id_logs_activity_shift'];
+
+   
+    // Construct the SQL update query
+    $updateQuery = "UPDATE 	tb_logs_activity_mutasi_shift SET 
+                        uraian = '$_POST[uraian]',
+                        time_uraian_finished = '$_POST[time_uraian_finished]'
+                    WHERE id_logs_activity_shift = '$id_logs_activity_shift'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_uraian_mutasi_malam.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_uraian_mutasi_malam.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_tambah_shift_1_2'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_mutasi_1_to_GS) AS max_id FROM tb_mutasi_shift_1_to_gs");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    if ($lastId === NULL) {
+        // If there are no existing records, start with ShiftMut001
+        $nextId = "ShiftMut001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 8) + 1; 
+        // Generating the new ID
+        $nextId = "ShiftMut" . sprintf("%03s", $numericPart);
+    }
+     $jenisShift1 = 1;
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_mutasi_shift_1_to_gs
+         (id_mutasi_1_to_GS, 
+         jenis,
+         nama, 
+         NIK, 
+         jabatan, 
+         pos,
+         ttd,
+         keterangan,
+         dibuat_pada)
+        VALUES (
+            '$nextId',
+            '$jenisShift1',
+                  UPPER('$_POST[nama]'),
+                  '$_POST[NIK]',
+                   UPPER('$_POST[jabatan]'),
+                    '$_POST[pos]',
+                    '',
+                    '$_POST[keterangan]',
+                    current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_tambah_shift_2'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_mutasi_1_to_GS) AS max_id FROM tb_mutasi_shift_1_to_gs");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    if ($lastId === NULL) {
+        // If there are no existing records, start with ShiftMut001
+        $nextId = "ShiftMut001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 8) + 1; 
+        // Generating the new ID
+        $nextId = "ShiftMut" . sprintf("%03s", $numericPart);
+    }
+     $jenisShift1 = 2;
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_mutasi_shift_1_to_gs
+         (id_mutasi_1_to_GS, 
+         jenis,
+         nama, 
+         NIK, 
+         jabatan, 
+         pos,
+         ttd,
+         keterangan,
+         dibuat_pada)
+        VALUES (
+            '$nextId',
+            '$jenisShift1',
+                  UPPER('$_POST[nama]'),
+                  '$_POST[NIK]',
+                   UPPER('$_POST[jabatan]'),
+                    '$_POST[pos]',
+                    '',
+                    '$_POST[keterangan]',
+                    current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_tambah_shift_GS'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_mutasi_1_to_GS) AS max_id FROM tb_mutasi_shift_1_to_gs");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    if ($lastId === NULL) {
+        // If there are no existing records, start with ShiftMut001
+        $nextId = "ShiftMut001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 8) + 1; 
+        // Generating the new ID
+        $nextId = "ShiftMut" . sprintf("%03s", $numericPart);
+    }
+     $jenisShift1 = "GS";
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_mutasi_shift_1_to_gs
+         (id_mutasi_1_to_GS, 
+         jenis,
+         nama, 
+         NIK, 
+         jabatan, 
+         pos,
+         ttd,
+         keterangan,
+         dibuat_pada)
+        VALUES (
+            '$nextId',
+            '$jenisShift1',
+                  UPPER('$_POST[nama]'),
+                  '$_POST[NIK]',
+                   UPPER('$_POST[jabatan]'),
+                    '$_POST[pos]',
+                    '',
+                    '$_POST[keterangan]',
+                    current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_mutasi_shift_1_2.php');
         exit;
     }
 }

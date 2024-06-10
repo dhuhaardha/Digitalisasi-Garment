@@ -81,7 +81,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="#">Mutasi GS</a>
+                <a class="collapse-item" href="cek_mutasi_shift_GS.php">Mutasi GS</a>
+                <a class="collapse-item" href="cek_mutasi_shift_1_2.php">Mutasi Shift 1 & 2</a>
                 <a class="collapse-item" href="cek_mutasi_shift_3.php">Mutasi Malam</a>
                 <a class="collapse-item" href="cek_barang_inventaris_mutasi_malam.php">Input Barang Inventaris</a>
                 <a class="collapse-item" href="cek_uraian_mutasi_malam.php">Input Logs Uraian</a>
