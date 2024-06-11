@@ -34,8 +34,15 @@ session_start();
                         </div>
 
                         <div class="card-body">
-
-
+                        <form action=""> 
+                            <select name="customers" onchange="showCustomer(this.value)" style="width: 17%;" class="form-control form-control-lg">
+                                <option value="">Select a Shift:</option>
+                                <option value="1">Shift 1</option>
+                                <option value="2">Shift 2</option>
+                                <option value="GS">Shift GS</option>
+                            </select>
+                        </form>
+                        
                             <p class="fs-3 fw-bold text-center">
                                 PT. UNGARAN SARI GARMENTS </br>
                                 SECURITY - UNGARAN </br>
@@ -78,64 +85,7 @@ session_start();
 
                             <div class="row">
                                 <div class="table-responsive">
-                                    <form method="POST" action="aksi_security.php">
-                                        <br>
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                              <style>
-                                                th, td {
-                                                  text-align: center;
-                                                }
-                                              </style>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>SHIFT</th>
-                                                    <th>NAMA</th>
-                                                    <th>NIK</th>
-                                                    <th>JABATAN</th>
-                                                    <th>POS</th>
-                                                    <th>TTD</th>
-                                                    <th>KETERANGAN</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                          
-                                               
-                                                <!-- data informasi karyawan dari database -->
-                                                <?php
-                                                $currentDate = date("Y-m-d");
-                                                $noUrut = 1;
-                                                $MutasiQuery = mysqli_query(
-                                                    $koneksi,
-                                                    "SELECT * FROM tb_mutasi_shift_1_to_gs  WHERE  
-                                                    DATE(dibuat_pada) = '$currentDate'
-                                                        ORDER BY id_mutasi_1_to_GS DESC LIMIT 14"
-                                                );
-                                                while ($Mutasi = mysqli_fetch_array($MutasiQuery)) {
-                                                ?>
-                                                        
-                                                    <tr>
-                                                        <td><?php echo $noUrut++; ?></td>
-                                                        <td>Shift <?php echo $Mutasi['jenis']; ?></td>
-                                                        <td><?php echo $Mutasi['nama']; ?></td>
-                                                        <td><?php echo $Mutasi['NIK']; ?></td>
-                                                        <td><?php echo $Mutasi['jabatan']; ?></td>
-                                                        
-                                                        <td><?php echo $Mutasi['pos']; ?></td>
-                                                        
-                                                        <td><?php echo $Mutasi['ttd']; ?></td>
-                                                        
-                                                        <td><?php echo $Mutasi['keterangan']; ?></td>
-                                                
-                                                    </tr>
-
-                                                <?php
-                                                }
-                                                ?>
-
-                                            </tbody>
-                                        </table>
-                                    </form>
+                                <div  id="txtHint"></div>
                                 </div>
                                 
                             </div>
@@ -195,7 +145,7 @@ session_start();
                                                 <select class="form-control" name="nama">
                                                         <?php
 
-                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
                                                         $result = mysqli_query($koneksi, $sql);
                         
                                                         // Populate select options
@@ -243,7 +193,7 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control" id="" name="NIK">
+                                                    <input type="number" class="form-control" id="" name="NIK" required maxlength="9">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -414,7 +364,7 @@ session_start();
                                                 <select class="form-control" name="nama">
                                                         <?php
 
-                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
                                                         $result = mysqli_query($koneksi, $sql);
                         
                                                         // Populate select options
@@ -462,7 +412,7 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control" id="" name="NIK">
+                                                    <input type="number" class="form-control" id="" name="NIK" required maxlength="9">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -632,7 +582,7 @@ session_start();
                                                 <select class="form-control" name="nama">
                                                         <?php
 
-                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
+                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
                                                         $result = mysqli_query($koneksi, $sql);
                         
                                                         // Populate select options
@@ -680,7 +630,7 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control" id="" name="NIK">
+                                                    <input type="number" class="form-control" id="" name="NIK" required maxlength="9">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -1125,6 +1075,21 @@ session_start();
     // Call saveSignature() when the form is submitted
     document.querySelector('form').addEventListener('submit', saveSignature);
     </script>
+
+<script>
+function showCustomer(int) {
+  if (int == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("txtHint").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "getseccurityshift.php?q="+int);
+  xhttp.send();
+}
+</script>
         
         <?php require_once "templates/footer.php" ?>
 </body>

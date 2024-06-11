@@ -251,6 +251,7 @@ session_start();
                                                     <option value="Baik">Baik</option>
                                                     <option value="Rusak">Rusak</option>
                                                     <option value="Basah">Basah</option>
+                                                    <option value="Robek">Robek</option>
                                                 </select>
                                                 </div>
                                             </div>

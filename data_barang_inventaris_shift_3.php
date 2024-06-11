@@ -68,7 +68,7 @@ session_start();
                                                 <!-- data informasi karyawan dari database -->
                                                 <?php
                                                 $noUrut = 1;
-                                                $KeyRoomQuery = mysqli_query($koneksi, "SELECT * FROM tb_barang_inventaris_shift_3");
+                                                $KeyRoomQuery = mysqli_query($koneksi, "SELECT * FROM tb_barang_inventaris_shift");
                                                 while ($listKeyRoom = mysqli_fetch_array($KeyRoomQuery)) {
                                                 ?>
 

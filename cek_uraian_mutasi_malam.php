@@ -137,7 +137,7 @@ session_start();
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Export to PDF pada Tanggal</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <form method="POST" action="print_data_kunci_ruangan.php" target="_blank">
@@ -165,6 +165,9 @@ session_start();
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi malam</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
+                                    </button>
                                 </div>
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">

@@ -1311,12 +1311,10 @@ if (isset($_POST['tombol_tambah_uraian_shift_malam'])) {
     // Generating the new ID
     $register = "uraian" . sprintf("%03s", $noUrut);
 
-    // Get the selected key details based on the selected id_key_room
-
 
     $tambahQuery = mysqli_query(
         $koneksi,
-        "INSERT INTO tb_logs_activity_shift
+        "INSERT INTO tb_logs_activity_mutasi_shift
          (id_logs_activity_shift,
          shift, 
          time_uraian_created, 

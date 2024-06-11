@@ -101,6 +101,7 @@
                 <h6 class="collapse-header">Administrasi :</h6>
                 <a class="collapse-item" href="#">Keamanan</a>
                 <a class="collapse-item" href="#">Fasilitas</a>
+                <a class="collapse-item" href="cek_kontrol_pagar.php">Kontrol Pagar</a>
             </div>
         </div>
     </li>

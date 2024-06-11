@@ -65,7 +65,7 @@ session_start();
 
                             <div class="row">
                                 <div class="table-responsive">
-                                    <form method="POST" action="aksi_security.php">
+                                    
                                         <br>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -177,7 +177,7 @@ session_start();
 
                                             </tbody>
                                         </table>
-                                    </form>
+                                    
                                 </div>
                                 
                             </div>
