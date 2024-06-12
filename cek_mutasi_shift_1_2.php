@@ -82,10 +82,30 @@ session_start();
                                     </div>
                                 </div>
                             </div>
-
+                            <br>
                             <div class="row">
                                 <div class="table-responsive">
-                                <div  id="txtHint"></div>
+                                <table class='table table-bordered' id='dataTable' width='100%'' cellspacing='0'>
+<thead>
+<style>
+      th, td {
+        text-align: center;
+      }
+    </style>
+<tr>
+<th>No</th>
+<th>SHIFT</th>
+<th>NAMA</th>
+<th>NIK</th>
+<th>JABATAN</th>
+<th>POS</th>
+<th>TTD</th>
+<th>KETERANGAN</th>
+</tr>
+</thead>
+<tbody id="txtHint">
+</tbody>
+                                </table>
                                 </div>
                                 
                             </div>
@@ -142,23 +162,23 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                <select class="form-control" name="nama">
+                                                <input list="securityList" class="form-control" name="nama">
+                                                    <datalist id="securityList">
                                                         <?php
-
                                                         $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
                                                         $result = mysqli_query($koneksi, $sql);
-                        
-                                                        // Populate select options
+
+                                                        // Populate datalist options
                                                         if (mysqli_num_rows($result) > 0) {
                                                             while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
+                                                                echo "<option value='" . $row['tbls_nama'] . "'>";
                                                             }
                                                         } else {
                                                             echo "<option value=''>No security available</option>";
                                                         }
                                                         // Close database connection
                                                         ?>
-                                                    </select>
+                                                    </datalist>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

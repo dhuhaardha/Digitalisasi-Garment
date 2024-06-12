@@ -412,34 +412,69 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     $selected_name_of_key = $key_row['name_of_key'];
     $selected_amount_of_key = $key_row['amount_of_key'];
 
-    
+    if ($_POST['part_operasional'] == '1') {
+        $tambahQuery = mysqli_query(
+            $koneksi,
+            "INSERT INTO tb_kunci_ruangan
+             (ID_kunci_ruangan, 
+             id_key_room, 
+             name_of_key, 
+             amount_of_key, 
+             part_operasional, 
+             status, 
+             date_retrieval, 
+             time_retrieval, 
+             worker_retrieval, 
+             amount_retrieval, 
+             signature_retrieval, 
+             date_returned, 
+             time_returned, 
+             worker_returned, 
+             amount_returned, 
+             signature_returned, 
+             date_handover, 
+             time_handover, 
+             handover_to, 
+             amount_handover, 
+             signature_handover)
+            VALUES ('$register', '$selected_key_id', '$selected_name_of_key', 
+            '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), 
+            '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), 
+            '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', 
+            UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', 
+            '', '', '', '', '')"
+        );
+    }
 
-    $tambahQuery = mysqli_query(
-        $koneksi,
-        "INSERT INTO tb_kunci_ruangan
-         (ID_kunci_ruangan, 
-         id_key_room, 
-         name_of_key, 
-         amount_of_key, 
-         part_operasional, 
-         status, 
-         date_retrieval, 
-         time_retrieval, 
-         worker_retrieval, 
-         amount_retrieval, 
-         signature_retrieval, 
-         date_returned, 
-         time_returned, 
-         worker_returned, 
-         amount_returned, 
-         signature_returned, 
-         date_handover, 
-         time_handover, 
-         handover_to, 
-         amount_handover, 
-         signature_handover)
-        VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
-    );
+    if ($_POST['part_operasional'] == '2') {
+        $tambahQuery = mysqli_query(
+            $koneksi,
+            "INSERT INTO tb_kunci_ruangan
+             (ID_kunci_ruangan, 
+             id_key_room, 
+             name_of_key, 
+             amount_of_key, 
+             part_operasional, 
+             status, 
+             date_retrieval, 
+             time_retrieval, 
+             worker_retrieval, 
+             amount_retrieval, 
+             signature_retrieval, 
+             date_returned, 
+             time_returned, 
+             worker_returned, 
+             amount_returned, 
+             signature_returned, 
+             date_handover, 
+             time_handover, 
+             handover_to, 
+             amount_handover, 
+             signature_handover)
+            VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
+        );
+    }
+
     
 
     if ($tambahQuery) {
