@@ -173,7 +173,7 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="print_data_kunci_ruangan.php" target="_blank">
+                                <form method="POST" action="print_key_vehicle.php" target="_blank">
                                     <div class="modal-body">
                                         <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
