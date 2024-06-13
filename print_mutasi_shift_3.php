@@ -16,7 +16,6 @@ if(!$koneksi){ // cek koneksi
 }
 
 $date = $_POST['input_print_pdf'];
-$hariiini = date('l', strtotime($date));
 
 class PDF extends FPDF
 {
@@ -31,71 +30,126 @@ class PDF extends FPDF
         $this->Cell(0, 0.8, 'Halaman ' . $this->PageNo() . ' dari {nb}', 0, 0, 'C');
     }
 }
-$pdf = new FPDF('L','cm',array(59, 35));
-$pdf->SetMargins(1, 1, 1);
+$pdf = new FPDF('P','cm','A4');
+$pdf->SetMargins(0.4, 0.5, 0.5, 0.5);
 
 $pdf->AddPage();
 
-$pdf->SetFont('Times', 'B', 16);
+$pdf->SetFont('Times', 'B', 10);
 
 // AWAL REPORT HEADER
 
-$pdf->Cell(59, 1, 'LOG BOOK OPERASIONALKUNCI KENDARAAN PERUSAHAAN', 0, 1, 'C');
-$pdf->Cell(59, 1, "HARI/TANGGAL : " . $hariiini . ", ". $date, 0, 1, 'C');
+$pdf->Cell(10, 1, 'PT UNGARAN SARI GARMENTS', 0, 0, 'L');
+$pdf->Cell(10, 1, "HARI/TANGGAL : " . $date, 0, 1, 'R');
+$pdf->Cell(10, 0.5, 'SECURITY - UNGARAN', 0, 0, 'L');
+$pdf->Cell(10, 0.5, "JAM                        : " . $date, 0, 1, 'R');
+$pdf->Cell(20, 1, 'SHIFT/DAN RU      :   3/3', 0, 1, 'C');
 // $pdf->Cell(87, 10, '', 0, 1, 'C');
-$pdf->SetFont('Times', '', 13);
+$pdf->SetFont('Times', 'B', 7);
 // $pdf->Cell(58, 0.8, "Tanggal cetak : " . $date, 0, 0, 'L');
 // AKHIR REPORT HEADER
 
-$pdf->Cell(2,2,'NO',1,0,'C'); //vertically merged cell, height=3x row height=3x10=30
-$pdf->Cell(5,2,'NO POL','TB',0,'C'); //vertically merged cell
-$pdf->Cell(25,1,'DIAMBIL','LTR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
-$pdf->Cell(25,1,'DIKEMBALIKAN','TR',1,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(0.4,1,'NO',1,0,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->Cell(2.4,1,'NAMA','TB',0,'C'); //vertically merged cell
+$pdf->Cell(1.2,1,'NIK','LBT',0,'C'); //vertically merged cell
+$pdf->Cell(1.4,1,'JABATAN','1',0,'C'); //vertically merged cell
+$pdf->Cell(1.2,1,'KET','BTR',0,'C'); //vertically merged cell
+$pdf->Cell(1.7,0.5,'22:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'23:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'24:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'01:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'02:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'03:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'04:00','TR',0,'C'); //normal height, but occupy 6 columns (horizontally merged)
+$pdf->Cell(1.7,0.5,'05:00','TR',1,'C'); //normal height, but occupy 6 columns (horizontally merged)
 
 // second line(row)
+$pdf->Cell(2.6,1,'',0,0); //dummy cell to align next cell, should be invisible
 $pdf->Cell(2,1,'',0,0); //dummy cell to align next cell, should be invisible
-$pdf->Cell(5,1,'',0,0); //dummy cell to align next cell, should be invisible
-$pdf->Cell(3,1,'TGL','LT',0,'C');
-$pdf->Cell(3,1,'JAM','LT',0,'C');
-$pdf->Cell(4.5,1,'NAMA','LTR',0,'C');
-$pdf->Cell(3,1,'TTD','TR',0,'C');
-$pdf->Cell(4.5,1,'DISERAHKAN','T',0,'C');
-$pdf->Cell(2,1,'JUMLAH','LT',0,'C');
-$pdf->Cell(5,1,'KETERANGAN','LTR',0,'C');
-$pdf->Cell(3,1,'TGL','T',0,'C');
-$pdf->Cell(3,1,'JAM','LT',0,'C');
-$pdf->Cell(4.5,1,'NAMA','LTR',0,'C');
-$pdf->Cell(3,1,'TTD','TR',0,'C');
-$pdf->Cell(4.5,1,'DISERAHKAN','TR',0,'C');
-$pdf->Cell(2,1,'JUMLAH','LT',0,'C');
-$pdf->Cell(5,1,'KETERANGAN','LTR',1,'C');
+$pdf->Cell(2,1,'',0,0); //dummy cell to align next cell, should be invisible
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,0,'C');
+$pdf->Cell(0.7,0.5,'POS','TB',0,'C');
+$pdf->Cell(1,0.5,'PARAF',1,1,'C');
+
 
 // DATA
-$pdf->SetFillColor(192, 192, 192); // Setting fill color to light grey
 $no = 1;
-$sql = "SELECT * FROM `tb_kunci_kendaraan` WHERE  
-        DATE(date_taken) = '$date' OR DATE(date_returned) = '$date'
-        ORDER BY id_vehicle_key ASC";
+$sql = "SELECT * FROM `tb_mutasi_shift_3` WHERE  
+        DATE(date) = '$date'
+        ORDER BY ID_mutasi_shift_3 ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
-$pdf->Cell(57, 1, '' . $row['kawasan_no_pol'] . '', 1, 1, '', true); // Cell with light grey fill color, without content
-$pdf->Cell(2,1,$no++,1,0,'C');
-$pdf->Cell(5,1,'' . $row['no_police'] . '','TB',0,'C');
-$pdf->Cell(3,1,'' . $row['date_taken'] . '','LT',0,'C');
-$pdf->Cell(3,1,'' . $row['time_taken'] . '','LT',0,'C');
-$pdf->Cell(4.5,1,'' . $row['name_taken'] . '','LTR',0,'C');
-$pdf->Cell(3,1,'' . $row['signature_taken'] . '','TR',0,'C');
-$pdf->Cell(4.5,1,'' . $row['submitted_to'] . '','T',0,'C');
-$pdf->Cell(2,1,'' . $row['amount_taken'] . '','LT',0,'C');
-$pdf->Cell(5,1,'' . $row['keterangan_taken'] . '','LTR',0,'C');
-$pdf->Cell(3,1,'' . $row['date_returned'] . '','T',0,'C');
-$pdf->Cell(3,1,'' . $row['time_returned'] . '','LT',0,'C');
-$pdf->Cell(4.5,1,'' . $row['name_returned'] . '','LTR',0,'C');
-$pdf->Cell(3,1,'' . $row['signature_returned'] . '','TR',0,'C');
-$pdf->Cell(4.5,1,'' . $row['recieved_to'] . '','TR',0,'C');
-$pdf->Cell(2,1,'' . $row['amount_returned'] . '','LT',0,'C');
-$pdf->Cell(5,1,'' . $row['keterangan_returned'] . '','LTR',1,'C');
+$pdf->Cell(0.4,0.5,$no++,'LBR',0,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->SetFont('Arial', 'B', 4.7);
+$pdf->Cell(2.4,0.5,'' . $row['nama'] . '','B',0,'C'); //vertically merged cell
+$pdf->SetFont('Times', 'B', 7);
+$pdf->Cell(1.2,0.5,'' . $row['NIK'] . '','LB',0,'C'); //vertically merged cell
+$pdf->Cell(1.4,0.5,'' . $row['jabatan'] . '','RLB',0,'C'); //vertically merged cell
+$pdf->Cell(1.2,0.5,'' . $row['keterangan'] . '','BR',0,'C'); //vertically merged cell
+$pdf->Cell(0.7,0.5,'' . $row['pos_10'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_10'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_11'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_11'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_12'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_12'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_01'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_01'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_02'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_02'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_03'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_03'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_04'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_04'] . '','BLR',0,'C');
+$pdf->Cell(0.7,0.5,'' . $row['pos_05'] . '','B',0,'C');
+$pdf->Cell(1,0.5,'' . $row['paraf_05'] . '','BLR',1,'C');
 }
+
+$pdf->SetFont('Times', 'B', 7);
+$pdf->Cell(10, 1, 'BARANG INVENTARIS :', 0, 1, 'L');
+
+$no = 1;
+$sql = "SELECT * FROM `tb_logs_barang_inventaris_mutasi_shift` WHERE  
+        DATE(date_created) = '$date' AND shift = '3'
+        ORDER BY ID_logs_barang_inventaris ASC";
+$result = $koneksi->query($sql);
+while ($row = $result->fetch_assoc()) {
+
+$pdf->Cell(10, 0.4, '=>               ' . $row['barang_inventaris'] . ' :            ' . $row['shift'] . '', 0, 1, 'L');
+}
+
+
+$pdf->Cell(1,1.4,'',0,1,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->Cell(0.6,0.8,'NO',1,0,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->Cell(1.5,0.8,'JAM','TB',0,'C'); //vertically merged cell
+$pdf->Cell(16.5,0.8,'URAIAN','LBT',0,'C'); //vertically merged cell
+$pdf->Cell(1.4,0.8,'S/D','1',1,'C'); //vertically merged cell
+
+// DATA
+$no = 1;
+$sql = "SELECT * FROM `tb_logs_activity_mutasi_shift` WHERE  
+        DATE(dibuat_pada) = '$date' AND shift = '3'
+        ORDER BY id_logs_activity_shift ASC";
+$result = $koneksi->query($sql);
+while ($row = $result->fetch_assoc()) {
+$pdf->Cell(0.6,3.8,$no++,'LBR',0,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->Cell(1.5,3.8,'' . $row['time_uraian_created'] . '','B',0,'C'); //vertically merged cell
+$pdf->Cell(16.5,3.8,'' . $row['uraian'] . '','LBR',0,'C'); //vertically merged cell
+$pdf->Cell(1.4,3.8,'' . $row['time_uraian_finished'] . '','LRB',1,'C'); //vertically merged cell
+}
+
 
 
 

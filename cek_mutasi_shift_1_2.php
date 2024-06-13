@@ -125,12 +125,23 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="print_data_kunci_ruangan.php" target="_blank">
+                                <form method="POST" action="print_mutasi_shift_1_to_gs.php" target="_blank">
                                     <div class="modal-body">
                                         <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                             <div class="col-sm-10">
                                                 <input type="date" name="input_print_pdf" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Shift</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="shift">
+                                                    <option selected disabled>Choose POS...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
