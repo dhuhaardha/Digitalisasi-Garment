@@ -138,6 +138,7 @@
                 <a class="collapse-item" href="cek_keyroom.php">Kunci Ruangan Check</a>
                 <a class="collapse-item" href="cek_key_vehicle.php">Kunci Kendaraan Check</a>
                 <a class="collapse-item" href="cek_register_surat_dan_transit.php">Surat dan Transit Paket</a>
+                <a class="collapse-item" href="cek_kontrol_pagar.php">Kontrol Pagar</a>
             </div>
         </div>
     </li>
