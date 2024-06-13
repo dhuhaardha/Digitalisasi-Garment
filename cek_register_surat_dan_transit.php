@@ -300,7 +300,7 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="hidden" id="IDInput" class="form-control" name="ID_register" placeholder="Selected Date">
+                                            <input type="text" id="IDInput" class="form-control" name="ID_register" placeholder="Selected Date">
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas</label>
                                                 <div class="col-sm-10">
@@ -325,30 +325,57 @@ session_start();
                     
                                                 </div>
                                             </div>
+                                            <!-- Your existing HTML code -->
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    </label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
                                                 <style>
                                                     canvas {
                                                         border: 1px solid #000;
                                                     }
-                                                
-                                                    </style>
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
                                                     <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
-
                                                 </div>
                                             </div>
+
+                                            
+
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_serahterima_transit_surat_paket" class="btn btn-success" onclick="saveSignature()">Add</button>
+                                        <button type="submit" name="tombol_enable_serahterima_transit_surat_paket" class="btn btn-success" id="saveSignatureBtn">Add</button>
                                         <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
+
                             </div>
                         </div>
                     </div>
@@ -440,7 +467,7 @@ session_start();
         <script>
             // Get all elements with the data-target attribute
             var buttons = document.querySelectorAll(
-                '[data-target="#modalGantiPengembalian"]');
+                '[data-target="#modalGantiSerahTerima"]');
 
             // Loop through each button
             buttons.forEach(function(button) {
@@ -450,92 +477,11 @@ session_start();
                     var IDValue = button.value;
 
                     // Set the value to the input field
-                    document.getElementById("InputID").value = IDValue;
+                    document.getElementById("IDInput").value = IDValue;
                 });
             });
         </script>
-        <script>
-            // Get all elements with the data-target attribute
-            var buttons = document.querySelectorAll(
-                '[data-target="#modalGantiSerahTerima"]');
 
-            // Loop through each button
-            buttons.forEach(function(button) {
-                // Add click event listener to the button
-                button.addEventListener("click", function() {
-                    // Get the value from the button
-                    var dateValue = button.value;
-
-                    // Set the value to the input field
-                    document.getElementById("IDInput").value = dateValue;
-                });
-            });
-        </script>
-        <script>
-            // Initialize Signature Pad
-            var canvas = document.getElementById('signatureCanvas');
-            var signaturePad = new SignaturePad(canvas, {
-                backgroundColor: 'rgb(255, 255, 255)', // set background color to white
-                penColor: 'black', // set pen color to black
-                maxWidth: 2, // set maximum width of the line
-                throttle: 16 // set the update rate of the canvas in milliseconds
-            });
-
-            // Handle touch events
-            canvas.addEventListener('touchstart', onTouchStart, false);
-            canvas.addEventListener('touchmove', onTouchMove, false);
-
-            function onTouchStart(event) {
-                event.preventDefault();
-                var touch = event.touches[0];
-                if (touch) {
-                    var x = touch.clientX;
-                    var y = touch.clientY;
-                    signaturePad._strokeBegin(event);
-                    signaturePad._strokeUpdate(event);
-                }
-            }
-
-            function onTouchMove(event) {
-                event.preventDefault();
-                var touch = event.touches[0];
-                if (touch) {
-                    var x = touch.clientX;
-                    var y = touch.clientY;
-                    signaturePad._strokeUpdate(event);
-                }
-            }
-
-            // Function to clear the signature
-            function clearSignature() {
-                signaturePad.clear();
-            }
-
-            // Function to save the signature
-            function saveSignature() {
-                if (signaturePad.isEmpty()) {
-                    alert('Please provide a signature first.');
-                } else {
-                    var dataURL = signaturePad.toDataURL(); // Get the signature image as data URL
-                    document.getElementById('signatureFilename').value = dataURL; // Set the data URL value to the hidden input field
-                    // You can proceed with saving the signature data as needed
-                }
-            }
-
-            
-
-            // Event listener for clear button
-            document.getElementById('clear_signature').addEventListener('click', function() {
-                clearSignature();
-            });
-
-            // Event listener for form submission
-            document.querySelector('form').addEventListener('submit', function(event) {
-                saveSignature();
-                // You can include additional form submission handling here if needed
-            });
-
-        </script>
         
         <?php require_once "templates/footer.php" ?>
 </body>

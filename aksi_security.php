@@ -838,25 +838,30 @@ if (isset($_POST['tombol_enable_serahterima_transit_surat_paket'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $person_office_recieved = $_POST['person_office_recieved'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    
+    $signatureData = $_POST['signatureFilename'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
+    
 
     // Construct the SQL update query
     $updateQuery = "UPDATE tb_register_surat_transit SET 
                         person_office_recieved = '$person_office_recieved', 
-                        ttd_office = '$filename'  
+                        ttd_office = '$filePath'  
                     WHERE ID_register = '$ID_register'";
 
     // Execute the update query
