@@ -62,6 +62,37 @@ $pdf->Cell(0, 5.9, "(                                     )", 0, 1, 'R');
 
 $pdf->Ln();
 
+// FOOTER BAGIAN TANDA TANGAN
+
+
+//SET FONT STYLE
+$pdf->SetFont('Times', 'B', 10);
+
+$pdf->Cell(29, 1, 'TUGAS DAN TANGGUNG JAWAB JAGA TELAH SELESAI DILAKSANAKAN', 0, 1, 'L');
+$pdf->Cell(29, 0.6, '           =>  LAMPU DIMATIKAN PETUGAS UTILITY          :', 0, 1, 'L');
+$pdf->Cell(29, 0.6, '           =>  PINTU UTAMA DITUTUP OLEH PETUGAS        :', 0, 1, 'L');
+$pdf->Cell(29, 0.6, '           =>  KUNCI DISERAHKAN POS INDUK                       :', 0, 1, 'L');
+$pdf->Ln();
+
+// BAGIAN TANDA TANGAN
+$pdf->Cell(0.1, 0.5, 'DITERIMA, ', 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'DISERAHKAN, ', 0, 0, 'C');
+$pdf->Cell(0, 0.5, 'PETUGAS, ', 0, 1, 'R');
+$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift, 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'SHIFT  '. $shift, 0, 0, 'C');
+$pdf->Cell(0, 0.6, '......  ', 0, 0, 'R');
+$pdf->Ln();
+
+$pdf->SetFont('Times', 'U', 10);
+$pdf->Cell(0.1, 4, '..........................', 0, 0, 'L');
+$pdf->Cell(0, 4, '..............................', 0, 0, 'C');
+$pdf->Cell(0, 4, '...........................', 0, 0, 'R');
+$pdf->Ln();
+
+$pdf->SetFont('Times', 'B', 10);
+$pdf->Cell(28, 2, 'MENGETAHUI', 0, 1, 'C');
+$pdf->Cell(29, 0.5, 'KOMANDAN REGU, ', 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'HR / GA, ', 0, 1, 'R');
 
 
 
