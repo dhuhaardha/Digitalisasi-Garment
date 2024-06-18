@@ -16,21 +16,13 @@ if(!$koneksi){ // cek koneksi
 }
 
 $date = $_POST['input_print_pdf'];
+
 $hariiini = date('l', strtotime($date));
 
-class PDF extends FPDF
-{
-    //Page footer
-    function Footer()
-    {
-        //atur posisi 1.5 cm dari bawah
-        $this->SetY(-1);
-        //Arial italic 9
-        $this->SetFont('Arial', 'I', 9);
-        //nomor halaman
-        $this->Cell(0, 0.8, 'Halaman ' . $this->PageNo() . ' dari {nb}', 0, 0, 'C');
-    }
-}
+$shift1 = '1';
+$shift2 = '2';
+$shift3 = '3';
+
 $pdf = new FPDF('L','cm',array(59, 35));
 $pdf->SetMargins(1, 1, 1);
 
@@ -98,103 +90,29 @@ $pdf->Cell(5,1,'' . $row['keterangan_returned'] . '','LTR',1,'C');
 }
 
 
+// FOOTER BAGIAN TANDA TANGAN
 
-// $no = 1;
-// $sql = "SELECT * FROM `tb_kunci_ruangan` WHERE  
-//         DATE(date_retrieval) = '$date' OR DATE(date_returned) = '$date' OR DATE(date_handover) = '$date' 
-//         ORDER BY ID_kunci_ruangan ASC";
-// $result = $koneksi->query($sql);
-// while ($row = $result->fetch_assoc()) {
-    
-//     $pdf->Cell(2,2,$no++,1,0,'C');
-//     $pdf->Cell(5,2,'' . $row['name_of_key'] . '',1,0,'C');
-//     $pdf->Cell(5,2,'' . $row['amount_of_key'] . '',1,0,'C');
-//     // Data Row
 
-//     if ($row['part_operasional'] == '1') {
-//         // operasional 1
-//     $pdf->Cell(2.5,1,'' . $row['date_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['time_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(4,2,'' . $row['signature_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['date_returned'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['time_returned'] . '',1,0,'C');
-//     $pdf->Cell(4,2,'' . $row['signature_returned'] . '',1,0,'C');
-    
-//     // operasional 2
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,2,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,2,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,2,'',1,0,'C');
-//     $pdf->Cell(0,1,'',0,1,'C');
-//     } else /* proses jika status operasional 2 */ {
-//     // operasional 1    
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,2,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,2,'',1,0,'C');
-    
-//     // operasional 2
-//     $pdf->Cell(2.5,1,'' . $row['date_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['time_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(4,2,'' . $row['signature_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['date_returned'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['time_returned'] . '',1,0,'C');
-//     $pdf->Cell(4,2,'' . $row['signature_returned'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['date_handover'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['time_handover'] . '',1,0,'C');
-//     $pdf->Cell(4,2,'' . $row['signature_handover'] . '',1,0,'C');
-//     $pdf->Cell(0,1,'',0,1,'C');
-//     }
+//SET FONT STYLE
+$pdf->SetFont('Times', 'B', 13);
 
-//     if ($row['part_operasional'] == '1') {
-//     // petugas dan jumlah
-//     $pdf->Cell(12,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'' . $row['worker_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['amount_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'' . $row['worker_returned'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['amount_returned'] . '',1,0,'C');
+$pdf->Ln();
 
-//     // operasional 2
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',0,1,'C');
-//     } else {
-//         // petugas dan jumlah
-//     $pdf->Cell(12,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'',1,0,'C');
-//     $pdf->Cell(2.5,1,'',1,0,'C');
+// BAGIAN TANDA TANGAN
+$pdf->Cell(0.1, 0.5, 'DITERIMA, ', 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'DITERIMA, ', 0, 0, 'C');
+$pdf->Cell(0, 0.5, 'DITERIMA, ', 0, 1, 'R');
+$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift3, 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'SHIFT  '. $shift2, 0, 0, 'C');
+$pdf->Cell(0, 0.6, 'SHIFT  '. $shift1, 0, 0, 'R');
+$pdf->Ln();
 
-//     // operasional 2
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'' . $row['worker_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['amount_retrieval'] . '',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'' . $row['worker_returned'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['amount_returned'] . '',1,0,'C');
-//     $pdf->Cell(4,1,'',0,0); //dummy cell to align next cell, should be invisible
-//     $pdf->Cell(2.5,1,'' . $row['handover_to'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'' . $row['amount_handover'] . '',1,0,'C');
-//     $pdf->Cell(2.5,1,'',0,1,'C');
-//     }
-// }
+$pdf->SetFont('Times', 'U', 10);
+$pdf->Cell(0.1, 4, '..........................', 0, 0, 'L');
+$pdf->Cell(0, 4, '..............................', 0, 0, 'C');
+$pdf->Cell(0, 4, '...........................', 0, 0, 'R');
+$pdf->Ln();
+
 
 $pdf->Output();
 ?>

@@ -16,34 +16,29 @@ if(!$koneksi){ // cek koneksi
 }
 
 $date = $_POST['input_print_pdf'];
+$shift1 = '1';
+$shift2 = '2';
+$shift3 = '3';
 
-class PDF extends FPDF
-{
-    //Page footer
-    function Footer()
-    {
-        //atur posisi 1.5 cm dari bawah
-        $this->SetY(-1);
-        //Arial italic 9
-        $this->SetFont('Arial', 'I', 9);
-        //nomor halaman
-        $this->Cell(0, 0.8, 'Halaman ' . $this->PageNo() . ' dari {nb}', 0, 0, 'C');
-    }
-}
+// BUAT PDF BARU
 $pdf = new FPDF('L','cm',array(59, 35));
+
+//SET MARGIN LEFT, TOP AND RIGHT
 $pdf->SetMargins(1, 1, 1);
 
+// SET/TAMBAH PAGE
 $pdf->AddPage();
 
+// SET FONT STYLE
 $pdf->SetFont('Times', 'B', 16);
 
 // AWAL REPORT HEADER
-
 $pdf->Cell(59, 1, 'OPERASIONAL KUNCI RUANGAN', 0, 1, 'C');
 $pdf->Cell(59, 1, "Tanggal cetak : " . $date, 0, 1, 'C');
-// $pdf->Cell(87, 10, '', 0, 1, 'C');
+
+// SET NEW FONT STYLE
 $pdf->SetFont('Times', '', 13);
-// $pdf->Cell(58, 0.8, "Tanggal cetak : " . $date, 0, 0, 'L');
+
 // AKHIR REPORT HEADER
 
 $pdf->Cell(2,4,'NO',1,0,'C'); //vertically merged cell, height=3x row height=3x10=30
@@ -197,6 +192,31 @@ while ($row = $result->fetch_assoc()) {
     $pdf->Cell(2.5,1,'',0,1,'C');
     }
 }
+
+// FOOTER BAGIAN TANDA TANGAN
+
+
+//SET FONT STYLE
+$pdf->SetFont('Times', 'B', 13);
+
+$pdf->Ln();
+
+// BAGIAN TANDA TANGAN
+$pdf->Cell(0.1, 0.5, 'DITERIMA, ', 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'DITERIMA, ', 0, 0, 'C');
+$pdf->Cell(0, 0.5, 'DITERIMA, ', 0, 1, 'R');
+$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift3, 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'SHIFT  '. $shift2, 0, 0, 'C');
+$pdf->Cell(0, 0.6, 'SHIFT  '. $shift1, 0, 0, 'R');
+$pdf->Ln();
+
+$pdf->SetFont('Times', 'U', 10);
+$pdf->Cell(0.1, 4, '..........................', 0, 0, 'L');
+$pdf->Cell(0, 4, '..............................', 0, 0, 'C');
+$pdf->Cell(0, 4, '...........................', 0, 0, 'R');
+$pdf->Ln();
+
+
 
 $pdf->Output();
 ?>

@@ -1426,6 +1426,23 @@ if (isset($_POST['tombol_tambah_shift_1_2'])) {
     }
      $jenisShift1 = 1;
 
+     $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
+
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_mutasi_shift_1_to_gs
@@ -1445,7 +1462,7 @@ if (isset($_POST['tombol_tambah_shift_1_2'])) {
                   '$_POST[NIK]',
                    UPPER('$_POST[jabatan]'),
                     '$_POST[pos]',
-                    '',
+                    '$filePath',
                     '$_POST[keterangan]',
                     current_timestamp())");
     
@@ -1479,6 +1496,23 @@ if (isset($_POST['tombol_tambah_shift_2'])) {
     }
      $jenisShift1 = 2;
 
+     $signatureData = $_POST['signatureFilename2'];
+
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
+
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_mutasi_shift_1_to_gs
@@ -1498,7 +1532,7 @@ if (isset($_POST['tombol_tambah_shift_2'])) {
                   '$_POST[NIK]',
                    UPPER('$_POST[jabatan]'),
                     '$_POST[pos]',
-                    '',
+                    '$filePath',
                     '$_POST[keterangan]',
                     current_timestamp())");
     
@@ -1531,6 +1565,23 @@ if (isset($_POST['tombol_tambah_shift_GS'])) {
     }
      $jenisShift1 = "GS";
 
+     $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
+
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_mutasi_shift_1_to_gs
@@ -1550,7 +1601,7 @@ if (isset($_POST['tombol_tambah_shift_GS'])) {
                   '$_POST[NIK]',
                    UPPER('$_POST[jabatan]'),
                     '$_POST[pos]',
-                    '',
+                    '$filePath',
                     '$_POST[keterangan]',
                     current_timestamp())");
     
@@ -1562,6 +1613,75 @@ if (isset($_POST['tombol_tambah_shift_GS'])) {
     } else {
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:cek_mutasi_shift_1_2.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_tambah_uraian_kontrol_pagar'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(id_opr_kontrol_pagar) AS max_id FROM tb_kontrol_pagar");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    // Extract the numeric part of the ID
+    $noUrut = (int)substr($lastId, 6) + 1; // Start from the 10th character to extract the numeric part
+
+    // Generating the new ID
+    $register = "KonPag" . sprintf("%03s", $noUrut);
+
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_kontrol_pagar
+         (id_opr_kontrol_pagar,
+         shift, 
+         time_kontrol_created, 
+         uraian, 
+         time_kontrol_finished, 
+         dibuat_pada)
+        VALUES (
+            '$register',
+            '$_POST[shift]',
+                 '$_POST[time_kontrol_created]',
+                  '$_POST[uraian]',
+                  '$_POST[time_kontrol_finished]',
+                   current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_kontrol_pagar.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_kontrol_pagar.php');
+        exit;
+    }
+}
+
+
+if (isset($_POST['tombol_update_waktu_selesai_kontrol_pagar'])) {
+
+    $id_opr_kontrol_pagar = $_POST['id_opr_kontrol_pagar'];
+
+   
+    // Construct the SQL update query
+    $updateQuery = "UPDATE 	tb_kontrol_pagar SET 
+                        uraian = '$_POST[uraian]',
+                        time_kontrol_finished = '$_POST[time_kontrol_finished]'
+                    WHERE id_opr_kontrol_pagar = '$id_opr_kontrol_pagar'";
+
+    // Execute the update query
+    $result = mysqli_query($koneksi, $updateQuery);
+
+    // Check if the query was successful
+    if ($result) {
+        $_SESSION['sukses'] = 'Data updated successfully';
+        header('Location: cek_kontrol_pagar.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'Data cannot be updated';
+        header('Location: cek_kontrol_pagar.php');
         exit;
     }
 }
