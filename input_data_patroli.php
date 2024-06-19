@@ -1,6 +1,7 @@
 <?php
-include "koneksi.php" ;
+include "koneksi.php";
 
+date_default_timezone_set('Asia/Jakarta');
 session_start();
 ?>
 
@@ -15,10 +16,7 @@ session_start();
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-            <?php require_once "templates/sidebar.php" ?>
-        <!-- End of Sidebar -->
-
+        <?php require_once "templates/sidebar.php" ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -65,8 +63,8 @@ session_start();
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Security Name</label>
                                             <div class="col-sm-10">
-                                                <select class="selectpicker" name="input_nama_security" data-live-search="true">
-
+                                                <select class="form-control selectpicker" name="input_nama_security" data-live-search="true">
+                                                <option value="0" selected>SELECT SECURITY...</option>
                                                     <?php
                                                         $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tbls_status LIKE 'ACTIVE' ORDER BY tbls_nama ASC");
 
@@ -220,142 +218,118 @@ session_start();
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; IT Department 2024</span>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; IT Department 2024</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Script Button -->
-    <script>
-        $(document).ready(function () {
-
-            $('.showButton').on('click', function () {
-                $('#viewmodal').modal('show');
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#show_uid').val(data[0]);
-                $('#show_type').val(data[2]);
-                $('#show_name').val(data[4]);
-            });
-
-        });
-    </script>
-
-    <!-- Cek Session -->
-    <?php 
-        if(@$_SESSION['sukses']){ 
-    ?>
-        <script>
-            Swal.fire({
-                title: 'SUCCESS!',
-                text: '<?php echo $_SESSION['sukses']; ?>',
-                icon: 'success',
-                position: 'center',
-                showConfirmButton: false,
-                timer: 3000
+        <!-- Cek Session -->
+        <?php
+        if (@$_SESSION['sukses']) {
+        ?>
+            <script>
+                Swal.fire({
+                    title: 'SUCCESS!',
+                    text: '<?php echo $_SESSION['sukses']; ?>',
+                    icon: 'success',
+                    position: 'center',
+                    showConfirmButton: false,
+                    timer: 3000
                 })
-        </script>
-    <?php 
-        unset($_SESSION['sukses']); 
-        }elseif(@$_SESSION['gagal']){
-    ?>
-        <script>
-            Swal.fire({
-                title: 'FAILED!',
-                text: '<?php echo $_SESSION['gagal']; ?>',
-                icon: 'error',
-                position: 'center',
-                showConfirmButton: false,
-                timer: 3000
+            </script>
+        <?php
+            unset($_SESSION['sukses']);
+        } elseif (@$_SESSION['gagal']) {
+        ?>
+            <script>
+                Swal.fire({
+                    title: 'FAILED!',
+                    text: '<?php echo $_SESSION['gagal']; ?>',
+                    icon: 'error',
+                    position: 'center',
+                    showConfirmButton: false,
+                    timer: 3000
                 })
-        </script>
-    <?php
-        unset($_SESSION['gagal']);
+            </script>
+
+
+        <?php
+            unset($_SESSION['gagal']);
         }
-    ?>
+        ?>
+        
+        <script>
+            // Get all elements with the data-target attribute
+            var buttons = document.querySelectorAll(
+                '[data-target="#modalCheckoutUraian"]');
 
-    <!-- Bootstrap core JavaScript-->
-    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            // Loop through each button
+            buttons.forEach(function(button) {
+                // Add click event listener to the button
+                button.addEventListener("click", function() {
+                    // Get the value from the button
+                    var IDValue = button.value;
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                    // Set the value to the input field
+                    document.getElementById("InputID").value = IDValue;
+                });
+            });
+        </script>
+        <script>
+            // Get all elements with the data-target attribute
+            var buttons = document.querySelectorAll(
+                '[data-target="#modalGantiSerahTerima"]');
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+            // Loop through each button
+            buttons.forEach(function(button) {
+                // Add click event listener to the button
+                button.addEventListener("click", function() {
+                    // Get the value from the button
+                    var dateValue = button.value;
 
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <!-- Menampilkan 2 datatable atau lebih -->
-    <script>
-        $(document).ready(function() {
-        $('table.table').DataTable();
-        } );
-    </script>
-
-    <!-- script signature -->
-    <script type="text/javascript">
-        var sig = $('#sig').signature({
-            syncField: '#signature64',
-            syncFormat: 'PNG'
-        });
-        $('#clear').click(function(e) {
-            e.preventDefault();
-            sig.signature('clear');
-            $("#signature64").val('');
-        });
-    </script>
-
-    <!-- Script dropdown select -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-
+                    // Set the value to the input field
+                    document.getElementById("IDInput").value = dateValue;
+                });
+            });
+        </script>
+        
+        
+        <?php require_once "templates/footer.php" ?>
 </body>
 
 </html>
