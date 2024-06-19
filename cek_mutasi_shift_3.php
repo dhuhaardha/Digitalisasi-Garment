@@ -307,122 +307,51 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    </label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
                                                 <style>
                                                     canvas {
                                                         border: 1px solid #000;
                                                     }
-                                                
-                                                    </style>
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
                                                     <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
-
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
                                             <!-- Add other fields related to pengambilan here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_tambah_shift_malam" class="btn btn-success">Add</button>
+                                        <button type="submit" name="tombol_tambah_shift_malam" class="btn btn-success" id="saveSignatureBtn">Add</button>
                                         <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -465,113 +394,44 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas11" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename11" name="signatureFilename11">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_11" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_11" class="btn btn-success" id="saveSignatureBtn11">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature11" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas11');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature11').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn11').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename11').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -605,122 +465,50 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    </label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
                                                 <style>
                                                     canvas {
                                                         border: 1px solid #000;
                                                     }
-                                                
-                                                    </style>
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
-
+                                                        <canvas id="signatureCanvas12" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename12" name="signatureFilename12">
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_12" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_12" class="btn btn-success" id="saveSignatureBtn12">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature12" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas12');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature12').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn12').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename12').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -764,113 +552,45 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas01" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename01" name="signatureFilename01">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
+                                            
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_01" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_01" class="btn btn-success" id="saveSignatureBtn01">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature01" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas01');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature01').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn01').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename01').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -913,113 +633,45 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas02" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename02" name="signatureFilename02">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
+                                            
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_02" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_02" class="btn btn-success" id="saveSignatureBtn02">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature02" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas02');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature02').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn02').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename02').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -1062,113 +714,45 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas03" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename03" name="signatureFilename03">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
+                                            
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_03" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_03" class="btn btn-success" id="saveSignatureBtn03">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature03" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas03');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature03').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn03').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename03').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -1211,113 +795,45 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas04" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename04" name="signatureFilename04">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
+                                            
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_04" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_04" class="btn btn-success" id="saveSignatureBtn04">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature04" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas04');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature04').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn04').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename04').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -1360,113 +876,45 @@ session_start();
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    <canvas id="signatureCanvas05" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename05" name="signatureFilename05">
 
                                                 </div>
                                             </div>
-                                            <script>
-                                            var canvas = document.getElementById('signatureCanvas');
-                                            var ctx = canvas.getContext('2d');
-                                            var isDrawing = false;
-
-                                            canvas.addEventListener('mousedown', startDrawing);
-                                            canvas.addEventListener('touchstart', startDrawingTouch);
-                                            canvas.addEventListener('mousemove', draw);
-                                            canvas.addEventListener('touchmove', drawTouch);
-                                            canvas.addEventListener('mouseup', stopDrawing);
-                                            canvas.addEventListener('touchend', stopDrawing);
-
-                                            function startDrawing(event) {
-                                                isDrawing = true;
-                                                draw(event);
-                                            }
-
-                                            function startDrawingTouch(event) {
-                                                event.preventDefault();
-                                                isDrawing = true;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                draw({
-                                                    offsetX,
-                                                    offsetY
-                                                });
-                                            }
-
-                                            function draw(event) {
-                                                if (!isDrawing) return;
-                                                ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(event.offsetX, event.offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(event.offsetX, event.offsetY);
-                                            }
-
-                                            function drawTouch(event) {
-                                                event.preventDefault();
-                                                if (!isDrawing) return;
-                                                var touch = event.touches[0];
-                                                var offsetX = touch.pageX - canvas.offsetLeft;
-                                                var offsetY = touch.pageY - canvas.offsetTop;
-                                                    ctx.lineWidth = 2;
-                                                ctx.lineCap = 'round';
-                                                ctx.strokeStyle = '#000';
-                                                ctx.lineTo(offsetX, offsetY);
-                                                ctx.stroke();
-                                                ctx.beginPath();
-                                                ctx.moveTo(offsetX, offsetY);
-                                            }
-
-                                            function stopDrawing() {
-                                                isDrawing = false;
-                                                ctx.beginPath();
-                                            }
-
-                                            var clearButton = document.getElementById('clear_signature');
-
-                                            clearButton.addEventListener('click', function() {
-                                                clearSignature();
-                                            });
-
-                                            function clearSignature() {
-                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                            }
-
-
-            // Function to convert canvas to data URL and store it in hidden input field
-            function saveSignature() {
-    var dataURL = canvas.toDataURL("image/png");
-    document.getElementById('signatureData').value = dataURL;
-
-    // Send an AJAX request to save the image
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_image.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var filename = xhr.responseText;
-            document.getElementById('signatureFilename').value = filename;
-        }
-    };
-    xhr.send("imageData=" + encodeURIComponent(dataURL));
-}
-
-
-                                           // Call saveSignature() when the form is submitted
-                                            document.querySelector('form').addEventListener('submit', saveSignature);
-                                            </script>
+                                           
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_pos_05" class="btn btn-success" onclick="saveSignature()">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_pos_05" class="btn btn-success" id="saveSignatureBtn05">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature05" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas05');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature05').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn05').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename05').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -1689,86 +1137,7 @@ session_start();
                 });
             });
         </script>
-        <script>
-    var canvas = document.getElementById('signatureCanvas');
-    var ctx = canvas.getContext('2d');
-    var isDrawing = false;
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('touchstart', startDrawingTouch);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchmove', drawTouch);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('touchend', stopDrawing);
-
-    function startDrawing(event) {
-        isDrawing = true;
-        draw(event);
-    }
-
-    function startDrawingTouch(event) {
-        event.preventDefault();
-        isDrawing = true;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        draw({
-            offsetX,
-            offsetY
-        });
-    }
-
-    function draw(event) {
-        if (!isDrawing) return;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(event.offsetX, event.offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(event.offsetX, event.offsetY);
-    }
-
-    function drawTouch(event) {
-        event.preventDefault();
-        if (!isDrawing) return;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(offsetX, offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(offsetX, offsetY);
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
-
-    var clearButton = document.getElementById('clear_signature');
-
-    clearButton.addEventListener('click', function() {
-        clearSignature();
-    });
-
-    function clearSignature() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-
-    // Function to convert canvas to data URL and store it in hidden input field
-    function saveSignature() {
-        var dataURL = canvas.toDataURL("image/png");
-        document.getElementById('signatureData').value = dataURL;
-    }
-
-    // Call saveSignature() when the form is submitted
-    document.querySelector('form').addEventListener('submit', saveSignature);
-    </script>
+        
         
         <?php require_once "templates/footer.php" ?>
 </body>

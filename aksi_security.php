@@ -8,107 +8,108 @@ session_start();
 // tanggal otomatis
 date_default_timezone_set('Asia/Jakarta');
 
-if (isset($_POST['tombol_tambah_karyawan'])) {
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_karyawan (tbk_nik, tbk_nama, tbk_dept, tbk_status) VALUES 
-                                                ('$_POST[input_nik]',
-                                                 UPPER('$_POST[input_name]'),
-                                                 UPPER('$_POST[input_department]'),
-                                                 UPPER('$_POST[input_status]'))");
+if (isset($_POST['tombol_tambah_karyawan'])){
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_karyawan (tbk_nik, tbk_nama, tbk_dept, tbk_status) VALUES 
+                                            ('$_POST[input_nik]',
+                                             UPPER('$_POST[input_name]'),
+                                             UPPER('$_POST[input_department]'),
+                                             UPPER('$_POST[input_status]'))");
 
-    if ($tambahQuery) {
+    if($tambahQuery){
         $_SESSION['sukses'] = 'data added successfully';
         header('Location:index.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:index.php');
         exit;
     }
+
 }
 
-if (isset($_POST['tombol_enable_karyawan'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_karyawan SET 
-                                                tbk_status = 'ACTIVE' WHERE
-                                                tbk_nik LIKE '$_POST[tombol_enable_karyawan]'");
+if (isset($_POST['tombol_enable_karyawan'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_karyawan SET 
+                                            tbk_status = 'ACTIVE' WHERE
+                                            tbk_nik LIKE '$_POST[tombol_enable_karyawan]'");
 
-    if ($updateQuery) {
+    if($updateQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:index.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:index.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_disable_karyawan'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_karyawan SET 
-                                                tbk_status = 'INACTIVE' WHERE
-                                                tbk_nik LIKE '$_POST[tombol_disable_karyawan]'");
+if (isset($_POST['tombol_disable_karyawan'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_karyawan SET 
+                                            tbk_status = 'INACTIVE' WHERE
+                                            tbk_nik LIKE '$_POST[tombol_disable_karyawan]'");
 
-    if ($updateQuery) {
+    if($updateQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:index.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:index.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_checkin_karyawan'])) {
-    $cariDept = mysqli_query($koneksi, "SELECT tbk_dept FROM tb_karyawan WHERE tbk_nama = '$_POST[input_nama]'");
+if (isset($_POST['tombol_checkin_karyawan'])){
+    $cariDept = mysqli_query($koneksi,"SELECT tbk_dept FROM tb_karyawan WHERE tbk_nama = '$_POST[input_nama]'");
     $listDept = mysqli_fetch_array($cariDept);
     $Dept = $listDept['tbk_dept'];
 
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_absensi (tba_nama, tba_dept, tba_tanggal, tba_masuk) VALUES
-                                                ('$_POST[input_nama]',
-                                                '$Dept',
-                                                DATE_FORMAT(NOW(),'%Y-%m-%d'),
-                                                DATE_FORMAT(NOW(),'%H:%s'))");
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_absensi (tba_nama, tba_dept, tba_tanggal, tba_masuk) VALUES
+                                            ('$_POST[input_nama]',
+                                            '$Dept',
+                                            DATE_FORMAT(NOW(),'%Y-%m-%d'),
+                                            DATE_FORMAT(NOW(),'%H:%s'))");
 
-    if ($tambahQuery) {
+    if($tambahQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:absensi.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:absensi.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_checkout_karyawan'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_absensi SET tba_keluar = DATE_FORMAT(NOW(),'%H:%s') WHERE tba_nama LIKE '$_POST[tombol_checkout_karyawan]'");
+if (isset($_POST['tombol_checkout_karyawan'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_absensi SET tba_keluar = DATE_FORMAT(NOW(),'%H:%s') WHERE tba_nama LIKE '$_POST[tombol_checkout_karyawan]'");
 
-    if ($updateQuery) {
+    if($updateQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:absensi.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:absensi.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_note_karyawan'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_absensi SET tba_detail = '$_POST[input_note_karyawan]' WHERE tba_nama LIKE '$_POST[input_nama_karyawan]'");
+if (isset($_POST['tombol_note_karyawan'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_absensi SET tba_detail = '$_POST[input_note_karyawan]' WHERE tba_nama LIKE '$_POST[input_nama_karyawan]'");
 
-    if ($updateQuery) {
+    if($updateQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:absensi.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:absensi.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_tambah_tamu'])) {
+if (isset($_POST['tombol_tambah_tamu'])){
     $name = $_POST['input_nama_tamu'];
     $folderPath = "upload/";
     $image_parts = explode(";base64,", $_POST['signature']);
@@ -122,59 +123,59 @@ if (isset($_POST['tombol_tambah_tamu'])) {
 
     file_put_contents($file, $image_base64);
 
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_tamu (tbt_tanggal, tbt_masuk, tbt_nama, tbt_alamat, tbt_bertemu, tbt_keperluan, tbt_cek_metal, tbt_cek_mirror, tbt_ktp, tbt_id_card, tbt_paraf) VALUES
-                                                (DATE_FORMAT(NOW(), '%Y-%m-%d'),
-                                                DATE_FORMAT(NOW(), '%H-%s'),
-                                                '$_POST[input_nama_tamu]',
-                                                '$_POST[input_alamat_tamu]',
-                                                '$_POST[input_kunjung_tamu]',
-                                                '$_POST[input_tujuan_tamu]',
-                                                '$_POST[input_cek_metal]',
-                                                '$_POST[input_cek_mirror]',
-                                                '$_POST[input_ktp_tamu]',
-                                                '$_POST[input_nomor_visit]',
-                                                '$file')");
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_tamu (tbt_tanggal, tbt_masuk, tbt_nama, tbt_alamat, tbt_bertemu, tbt_keperluan, tbt_cek_metal, tbt_cek_mirror, tbt_ktp, tbt_id_card, tbt_paraf) VALUES
+                                            (DATE_FORMAT(NOW(), '%Y-%m-%d'),
+                                            DATE_FORMAT(NOW(), '%H-%s'),
+                                            '$_POST[input_nama_tamu]',
+                                            '$_POST[input_alamat_tamu]',
+                                            '$_POST[input_kunjung_tamu]',
+                                            '$_POST[input_tujuan_tamu]',
+                                            '$_POST[input_cek_metal]',
+                                            '$_POST[input_cek_mirror]',
+                                            '$_POST[input_ktp_tamu]',
+                                            '$_POST[input_nomor_visit]',
+                                            '$file')");
 
-    if ($tambahQuery) {
+    if($tambahQuery){
         $_SESSION['sukses'] = 'data added succesfully';
         header('Location:absensi.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:absensi.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_checkout_tamu'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_tamu SET tbt_keluar = DATE_FORMAT(NOW(), '%H:%s') WHERE tbt_id_card LIKE '$_POST[tombol_checkout_karyawan]'");
+if (isset($_POST['tombol_checkout_tamu'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_tamu SET tbt_keluar = DATE_FORMAT(NOW(), '%H:%s') WHERE tbt_id_card LIKE '$_POST[tombol_checkout_karyawan]'");
 
-    if ($updateQuery) {
+    if($updateQuery){
         $_SESSION['sukses'] = 'data updated successfully';
         header('Location:absensi.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:absensi.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_tambah_cctv'])) {
+if (isset($_POST['tombol_tambah_cctv'])){
 
-    if ($_POST['input_name'] == '') {
+    if($_POST['input_name'] == ''){
         $_SESSION['gagal'] = 'name has not been filled';
         header('Location:data_cctv.php');
         exit;
     }
 
-    if ($_POST['input_unit'] == 'PTU1') {
-        $genUID = mysqli_query($koneksi, "SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU1'");
-    } elseif ($_POST['input_unit'] == 'PTU2') {
-        $genUID = mysqli_query($koneksi, "SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU2'");
-    } elseif ($_POST['input_unit'] == 'PTU3') {
-        $genUID = mysqli_query($koneksi, "SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU3'");
-    } else {
+    if($_POST['input_unit'] == 'PTU1'){
+        $genUID = mysqli_query($koneksi,"SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU1'");
+    }elseif($_POST['input_unit'] == 'PTU2'){
+        $genUID = mysqli_query($koneksi,"SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU2'");
+    }elseif($_POST['input_unit'] == 'PTU3'){
+        $genUID = mysqli_query($koneksi,"SELECT MAX(tblc_uid) AS Kode_CCTV FROM tb_list_cctv WHERE SUBSTRING(tblc_uid,1,4) LIKE 'PTU3'");
+    }else{
         $_SESSION['gagal'] = 'unit has not been selected';
         header('Location:data_cctv.php');
         exit;
@@ -187,71 +188,94 @@ if (isset($_POST['tombol_tambah_cctv'])) {
     $noUrut = (int) substr($noUID, 5, 3);
     $noUrut++;
 
-    $register = $kdUID . "/" . sprintf("%03s", $noUrut);
-    var_dump($kdUID);
+    $register = $kdUID . "/" . sprintf("%03s",$noUrut);
+    
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_list_cctv VALUES ('$register', '$_POST[input_unit]', UPPER('$_POST[input_name]'), '$_POST[input_status]', '')");
 
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_list_cctv VALUES ('$register', '$_POST[input_unit]', UPPER('$_POST[input_name]'), '$_POST[input_status]')");
-
-    if ($tambahQuery) {
+    if($tambahQuery){
         $_SESSION['sukses'] = 'data added successfully';
         header('Location:data_cctv.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:data_cctv.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_enable_cctv'])) {
+if (isset($_POST['tombol_enable_cctv'])){
 
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_list_cctv SET tblc_status = 'ACTIVE' WHERE tblc_uid LIKE '$_POST[tombol_enable_cctv]'");
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_list_cctv SET tblc_status = 'ACTIVE' WHERE tblc_uid LIKE '$_POST[tombol_enable_cctv]'");
 
-    if ($updateQuery) {
-        $_SESSION['sukses'] = 'data updated successfully';
-        header('Location:data_cctv.php');
-        exit;
-    } else {
-        $_SESSION['gagal'] = 'data cannot be updated';
-        header('Location:data_cctv.php');
-        exit;
+    if($updateQuery){
+    $_SESSION['sukses'] = 'data updated successfully';
+    header('Location:data_cctv.php');
+    exit;
+    }else{
+    $_SESSION['gagal'] = 'data cannot be updated';
+    header('Location:data_cctv.php');
+    exit;
     }
 }
 
-if (isset($_POST['tombol_disable_cctv'])) {
+if (isset($_POST['tombol_disable_cctv'])){
 
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_list_cctv SET tblc_status = 'INACTIVE' WHERE tblc_uid LIKE '$_POST[tombol_disable_cctv]'");
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_list_cctv SET tblc_status = 'INACTIVE' WHERE tblc_uid LIKE '$_POST[tombol_disable_cctv]'");
 
-    if ($updateQuery) {
-        $_SESSION['sukses'] = 'data updated successfully';
-        header('Location:data_cctv.php');
-        exit;
-    } else {
-        $_SESSION['gagal'] = 'data cannot be updated';
-        header('Location:data_cctv.php');
-        exit;
+    if($updateQuery){
+    $_SESSION['sukses'] = 'data updated successfully';
+    header('Location:data_cctv.php');
+    exit;
+    }else{
+    $_SESSION['gagal'] = 'data cannot be updated';
+    header('Location:data_cctv.php');
+    exit;
     }
 }
 
-if (isset($_POST['tombol_ok_cctv'])) {
+if (isset($_POST['tombol_ok_cctv'])){
     $today = DATE('Y-m-d');
+    $time = DATE('H:i:s');
     $uidReport = "REPCCTV/" . $_POST['input_lokasi'] . "/" . DATE('Y/m/d');
+    $namaSecurity = $_POST['input_nama_security'];
 
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_list_cctv SET tblc_cek_cctv = '$today' WHERE tblc_uid LIKE '$_POST[tombol_ok_cctv]'");
-    $updateQuery1 = mysqli_query($koneksi, "INSERT INTO tb_report_cctv VALUES ('$uidReport', '$_POST[tombol_ok_cctv]', '$today', 'OK')");
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_list_cctv SET tblc_cek_cctv = '$today' WHERE tblc_uid LIKE '$_POST[tombol_ok_cctv]'");
+    $updateQuery1 = mysqli_query($koneksi,"INSERT INTO tb_report_cctv VALUES ('$uidReport', '$_POST[tombol_ok_cctv]', '$today', '$time', '$namaSecurity', 'OK')");
 
-    if ($updateQuery && $updateQuery1) {
+    if($updateQuery && $updateQuery1){
         $_SESSION['sukses'] = 'data updated successfully';
+        $_SESSION['nama_security'] = $namaSecurity;
         header('Location:cek_cctv.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be updated';
         header('Location:cek_cctv.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_register_kendaraan'])) {
+if (isset($_POST['tombol_notok_cctv'])){
+    $today = DATE('Y-m-d');
+    $time = DATE('H:i:s');
+    $uidReport = "REPCCTV/" . $_POST['input_lokasi'] . "/" . DATE('Y/m/d');
+    $namaSecurity = $_POST['input_nama_security'];
+
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_list_cctv SET tblc_cek_cctv = '$today' WHERE tblc_uid LIKE '$_POST[tombol_ok_cctv]'");
+    $updateQuery1 = mysqli_query($koneksi,"INSERT INTO tb_report_cctv VALUES ('$uidReport', '$_POST[tombol_ok_cctv]', '$today', '$time', '$namaSecurity', 'NOT OK')");
+
+    if($updateQuery && $updateQuery1){
+        $_SESSION['sukses'] = 'data updated successfully';
+        $_SESSION['nama_security'] = $namaSecurity;
+        header('Location:cek_cctv.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:cek_cctv.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_register_kendaraan'])){
 
     $today = DATE('Y-m-d');
     $uidVehicle = "REPVEHICLE/" . $_POST['input_nomor_kontainer'] . "/" . DATE('Y/m/d');
@@ -269,74 +293,480 @@ if (isset($_POST['tombol_register_kendaraan'])) {
 
     file_put_contents($file, $image_base64);
 
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_kendaraan (tbrk_uid, tbrk_tanggal, tbrk_masuk, tbrk_jns_kendaraan, tbrk_nmr_kontainer, tbrk_cek_mirror, tbrk_nmr_seal, 
-                                                                                tbrk_ket, tbrk_jns_sim, tbrk_no_sim, tbrk_no_card, tbrk_ttd) 
-                                                VALUES ('$uidVehicle',
-                                                            DATE_FORMAT(NOW(),'%Y-%m-%d'),
-                                                            DATE_FORMAT(NOW(),'%H:%s'),
-                                                            '$_POST[input_tipe_kendaraan]',
-                                                            '$_POST[input_nomor_kontainer]',
-                                                            '$_POST[input_cek_mirror]',
-                                                            '$_POST[input_nomor_seal]',
-                                                            '$_POST[input_keterangan]',
-                                                            '$_POST[input_tipe_sim]',
-                                                            '$_POST[input_nomor_sim]',
-                                                            '$_POST[input_nomor_kartu]',
-                                                            '$file')");
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_kendaraan (tbrk_uid, 
+                                                                        tbrk_tanggal, 
+                                                                        tbrk_masuk, 
+                                                                        tbrk_jns_kendaraan, 
+                                                                        tbrk_nama_supir, 
+                                                                        tbrk_nomor_plat, 
+                                                                        tbrk_nmr_kontainer, 
+                                                                        tbrk_cek_mirror, 
+                                                                        tbrk_nmr_seal, 
+                                                                        tbrk_jns_sim, 
+                                                                        tbrk_no_sim, 
+                                                                        tbrk_no_card, 
+                                                                        tbrk_ttd) 
+                                            VALUES (UPPER('$uidVehicle'),
+                                                        DATE_FORMAT(NOW(),'%Y-%m-%d'),
+                                                        DATE_FORMAT(NOW(),'%H:%s'),
+                                                        UPPER('$_POST[input_tipe_kontainer]'),
+                                                        UPPER('$_POST[input_nama_supir]'),
+                                                        UPPER('$_POST[input_plat_nomor]'),
+                                                        UPPER('$_POST[input_nomor_kontainer]'),
+                                                        UPPER('$_POST[input_cek_mirror]'),
+                                                        UPPER('$_POST[input_nomor_seal]'),
+                                                        UPPER('$_POST[input_tipe_sim]'),
+                                                        UPPER('$_POST[input_nomor_sim]'),
+                                                        UPPER('$_POST[input_nomor_kartu]'),
+                                                        '$file')");
+    
+    $kartuQuery = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY' WHERE tblic_uid LIKE '$_POST[input_nomor_kartu]'");
 
-    $kartuQuery = mysqli_query($koneksi, "UPDATE tb_list_card SET tblic_status = 'NOT READY' WHERE tblic_uid LIKE '$_POST[input_nomor_kartu]'");
-
-    if ($tambahQuery && $kartuQuery) {
+    if($tambahQuery && $kartuQuery){
         $_SESSION['sukses'] = 'data added successfully';
         header('Location:user_register_kendaraan.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:user_register_kendaraan.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_checkout_kendaraan'])) {
-    $updateQuery = mysqli_query($koneksi, "UPDATE tb_kendaraan SET tbrk_keluar = DATE_FORMAT(NOW(),'%H:%s') WHERE tbrk_uid LIKE '$_POST[tombol_checkout_kendaraan]'");
-    $cariID = mysqli_query($koneksi, "SELECT * FROM tb_kendaraan WHERE tbrk_uid LIKE '$_POST[tombol_checkout_kendaraan]'");
+if (isset($_POST['tombol_checkout_kendaraan'])){
+    $updateQuery = mysqli_query($koneksi,"UPDATE tb_kendaraan SET tbrk_keluar = DATE_FORMAT(NOW(),'%H:%s'), 
+                                                                    tbrk_tanggal_out = DATE_FORMAT(NOW(), '%Y-%m-%d'),
+                                                                    tbrk_nama_transporter = UPPER('$_POST[input_nama_transporter]'),
+                                                                    tbrk_nama_buyer = UPPER('$_POST[input_nama_buyer]'),
+                                                                    tbrk_qty_kirim = UPPER('$_POST[input_total_qty]'),
+                                                                    tbrk_no_gp = UPPER('$_POST[input_nomor_gp]'),
+                                                                    tbrk_tujuan = UPPER('$_POST[input_lokasi_tujuan]'),
+                                                                    tbrk_nm_pengawal = UPPER('$_POST[input_nama_pengawal]'),
+                                                                    tbrk_surat_jalan = UPPER('$_POST[input_nomor_surat]'),
+                                                                    tbrk_no_eseal = UPPER('$_POST[input_nomor_eseal]') 
+                                                                WHERE tbrk_uid LIKE '$_POST[info_uid_kendaraan]'");
+
+    $cariID = mysqli_query($koneksi,"SELECT * FROM tb_kendaraan WHERE tbrk_uid LIKE '$_POST[info_uid_kendaraan]'");
 
     $ambilID = mysqli_fetch_array($cariID);
     $noID = $ambilID['tbrk_no_card'];
-    $updateQuery1 = mysqli_query($koneksi, "UPDATE tb_list_card SET tblic_status = 'READY' WHERE tblic_uid LIKE '$noID'");
+    $updateQuery1 = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY' WHERE tblic_uid LIKE '$noID'");
 
-    if ($updateQuery && $updateQuery1) {
+    if($updateQuery && $updateQuery1){
         $_SESSION['sukses'] = 'data added successfully';
         header('Location:data_register_kendaraan.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:data_register_kendaraan.php');
         exit;
     }
 }
 
-if (isset($_POST['tombol_tambah_kendaraan'])) {
-    $queryNo = mysqli_query($koneksi, "SELECT MAX(tblk_uid) AS Kode_Terbesar FROM tb_list_kendaraan");
+if (isset($_POST['tombol_tambah_kendaraan'])){
+
+    // cari kode terbesar pada SQL
+    $queryNo = mysqli_query($koneksi,"SELECT MAX(tblk_uid) AS Kode_Terbesar FROM tb_list_kendaraan");
 
     $tabel = mysqli_fetch_array($queryNo);
     $uidKendaraan = $tabel['Kode_Terbesar'];
-    $noUID = (int) substr($uidKendaraan, 3);
+    $noUID = (int) substr($uidKendaraan,8);
     $noUID++;
+    
+    // cek tipe kendaraan
+    if($_POST['input_tipe'] == '1'){
+        $tipeKendaraan = 'KU';
+    }elseif($_POST['input_tipe'] == '2'){
+        $tipeKendaraan = 'KS';
+    }else{
+        $_SESSION['gagal'] = 'type not selected';
+        header('Location:data_kendaraan.php');
+        exit;
+    }
 
-    $register = "VHC" . sprintf("%03s", $noUID);
+    // UID kendaraan
+    $register = "PTU1/" . $tipeKendaraan . "/" . sprintf("%03s",$noUID);
 
-    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_list_kendaraan VALUES ('$register','$_POST[input_tipe]','$_POST[input_status]')");
+    $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_list_kendaraan VALUES (UPPER('$register'),
+                                                                                    UPPER('$tipeKendaraan'),
+                                                                                    UPPER('$_POST[input_nama]'),
+                                                                                    UPPER('$_POST[input_status]'))");
 
-    if ($tambahQuery) {
+    if($tambahQuery){
         $_SESSION['sukses'] = 'data added successfully';
         header('Location:data_kendaraan.php');
         exit;
-    } else {
+    }else{
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:data_kendaraan.php');
         exit;
     }
+}
+
+if (isset($_POST['tombol_register_kendaraan_umum'])){
+
+    // cari kode terbesar
+    $queryNo = mysqli_query($koneksi,"SELECT MAX(SUBSTRING(tbu_uid,9,10)) AS Kode_Terbesar FROM tb_kendaraan_umum");
+
+    $noTerbesar = mysqli_fetch_array($queryNo);
+    $uidKendaraan = (int) $noTerbesar['Kode_Terbesar'];
+    $uidKendaraan++;
+
+    // UID kendaraan
+    $register = "PTU1/KU/" . $uidKendaraan;
+
+    $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_kendaraan_umum (tbu_uid,
+                                                        tbu_tgl_masuk,
+                                                        tbu_jam_masuk,
+                                                        tbu_jns_kendaraan,
+                                                        tbu_no_kartu,
+                                                        tbu_no_identitas,
+                                                        tbu_nm_supir,
+                                                        tbu_nmr_plat,
+                                                        tbu_nmr_kontainer,
+                                                        tbu_nmr_seal,
+                                                        tbu_bc_masuk,
+                                                        tbu_brg_masuk) 
+                                            VALUES (UPPER('$register'),
+                                                        DATE_FORMAT(NOW(),'%Y-%m-%d'),
+                                                        DATE_FORMAT(NOW(),'%H:%s'),
+                                                        UPPER('$_POST[input_tipe_kontainer]'),
+                                                        UPPER('$_POST[input_nomor_kartu]'),
+                                                        UPPER('$_POST[input_nomor_identitas]'),
+                                                        UPPER('$_POST[input_nama_supir]'),
+                                                        UPPER('$_POST[input_plat_nomor]'),
+                                                        UPPER('$_POST[input_nomor_kontainer]'),
+                                                        UPPER('$_POST[input_nomor_seal]'),
+                                                        UPPER('$_POST[input_bc_masuk]'),
+                                                        UPPER('$_POST[input_barang_masuk]'))");
+
+    $kartuQuery = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY' WHERE tblic_uid LIKE '$_POST[input_nomor_kartu]'");
+
+    if($tambahQuery && $kartuQuery){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:user_register_umum.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:user_register_umum.php');
+        exit;
+    }
+    
+}
+
+if (isset($_POST['tombol_checkout_kendaraan_umum'])){
+
+    // ambil input dari input box
+    $InputUID = $_POST['info_uid_kendaraan'];
+    $InputBC = $_POST['input_bc_keluar'];
+    $InputNamaSecurity = $_POST['input_nama_security'];
+    $InputBarangKeluar = $_POST['input_barang_keluar'];
+    $InputNoKartu = $_POST['info_nomor_id'];
+
+    // update ke database
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_kendaraan_umum SET tbu_tgl_keluar = DATE_FORMAT(NOW(), '%Y-%m-%d'),
+                                                                        tbu_jam_keluar = DATE_FORMAT(NOW(),'%H:%s'),
+                                                                        tbu_bc_keluar = UPPER('$InputBC'),
+                                                                        tbu_brg_keluar = UPPER('$InputBarangKeluar'),
+                                                                        tbu_nm_security = UPPER('$InputNamaSecurity')");
+
+    $queryKartu = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY' WHERE tblic_no_id LIKE '$InputNoKartu'");
+
+    // session
+    if($queryUpdate && $queryKartu){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_kendaraan_umum.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_kendaraan_umum.php');
+        exit;
+    }
+
+}
+
+if (isset($_POST['tombol_tambah_list_security'])){
+
+    // ambil inputan dari input box
+    $InputUnit = $_POST['input_unit'];
+    $InputNama = $_POST['input_nama'];
+    $InputStatus = $_POST['input_status'];
+
+    // cari UID tertinggi
+    $queryCari = mysqli_query($koneksi,"SELECT MAX(SUBSTRING(tbls_uid,6,4)) AS Kode_Terbesar FROM tb_list_security");
+    $tabelCari = mysqli_fetch_array($queryCari);
+    $UID = (int) $tabelCari['Kode_Terbesar'];
+    $UID++;
+    $InputUID = "PTU1/" . sprintf("%04s",$UID);
+
+    // tambah input ke database
+    $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_list_security (tbls_uid,
+                                                                        tbls_unit,
+                                                                        tbls_nama,
+                                                                        tbls_status)
+                                            VALUES (UPPER('$InputUID'),
+                                                    UPPER('$InputUnit'),
+                                                    UPPER('$InputNama'),
+                                                    UPPER('$InputStatus'))");
+
+    // session
+    if($queryTambah){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_list_security.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_list_security.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_list_security'])){
+    
+    // ambil inputan dari input box 
+    $InputID = $_POST['tombol_enable_list_security'];
+
+    // update ke database
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_security SET tbls_status = 'ACTIVE' WHERE tbls_uid LIKE '$InputID'");
+
+    // session
+    if($queryUpdate){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_list_security.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_list_security.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_disable_list_security'])){
+
+    // ambil inputan dari input box 
+    $InputID = $_POST['tombol_disable_list_security'];
+
+    // update ke database
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_security SET tbls_status = 'INACTIVE' WHERE tbls_uid LIKE '$InputID'");
+
+    // session
+    if($queryUpdate){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_list_security.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_list_security.php');
+        exit;
+    }
+
+}
+
+if (isset($_POST['tombol_tambah_list_bc'])){
+    
+    // ambil input dari input box
+    $InputNama = $_POST['input_nama'];
+    $InputStatus = $_POST['input_status'];
+
+    // cari UID tertinggi
+    $queryCari = mysqli_query($koneksi,"SELECT MAX(SUBSTRING(tblb_uid,6,3)) AS Kode_Terbesar FROM tb_list_bc");
+    $tabelCari = mysqli_fetch_array($queryCari);
+    $UID = (int) $tabelCari['Kode_Terbesar'];
+    $UID++;
+    $InputUID = "PTU1/" . sprintf("%03s",$UID);
+
+    // tambah input ke database
+    $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_list_bc VALUES (UPPER('$InputUID'),
+                                                                            UPPER('$InputNama'),
+                                                                            UPPER('$InputStatus'))");
+
+    // session
+    if($queryTambah){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_list_bc.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_list_bc.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_enable_list_bc'])){
+
+    // ambil inputan dari input box
+    $InputID = $_POST['tombol_enable_list_bc'];
+
+    // update ke database
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_bc SET tblb_sts_bc = 'ACTIVE' WHERE tblb_uid LIKE '$InputID'");
+
+    // session
+    if($queryUpdate){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_list_bc.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_list_bc.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_disable_list_bc'])){
+
+    // ambil inputan dari input box
+    $InputID = $_POST['tombol_disable_list_bc'];
+
+    // update ke database
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_bc SET tblb_sts_bc = 'INACTIVE' WHERE tblb_uid LIKE '$InputID'");
+
+    // session
+    if($queryUpdate){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_list_bc.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_list_bc.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_register_patroli'])){
+    $InputJenisReport = $_POST['input_nama_buku'];
+    $InputJamMulai = date("h:i:s");
+    $InputHariMulai = date("Y-m-d");
+    $InputNamaSecurity = SUBSTR($_POST['input_nama_security'],0,2);
+    $InputShift = $_POST['input_shift'];
+    $InputUID = "PTU1/" . $InputJenisReport . "/" . $InputHariMulai;
+
+    $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_report_patroli (tbrp_uid,
+                                                                            tbrp_jns_report,
+                                                                            tbrp_tgl_mulai,
+                                                                            tbrp_jam_mulai,
+                                                                            tbrp_nm_security,
+                                                                            tbrp_shf_security) 
+                                                                VALUES (UPPER('$InputUID'),
+                                                                            UPPER('$InputJenisReport'),
+                                                                            '$InputHariMulai',
+                                                                            '$InputJamMulai',
+                                                                            UPPER('$InputNamaSecurity'),
+                                                                            UPPER('$InputShift'))");
+
+    // session
+    if($queryTambah){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:input_data_patroli.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:input_data_patroli.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_update_patroli'])){
+    $InputUIDReport = $_POST['show_uid'];
+    $InputJamSelesai = date("h:i:s");
+    $InputHariSelesai = date("Y-m-d");
+    $InputKeterangan = $_POST['input_remark'];
+
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_report_patroli SET tbrp_tgl_selesai = '$InputHariSelesai',
+                                                                        tbrp_jam_selesai = '$InputJamSelesai',
+                                                                        tbrp_keterangan = UPPER('$InputKeterangan')
+                                            WHERE tbrp_uid LIKE '$InputUIDReport'");
+    
+    // session
+    if($queryUpdate){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:input_data_patroli.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:input_data_patroli.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_register_tamu'])){
+    $InputJenisKunjungan = $_POST['input_nama_buku'];
+    $InputTanggalKunjungan = date("Y-m-d");
+    $InputJamKunjungan = date("h:i:s");
+    $InputNomorKartu = $_POST['input_nomor_kartu'];
+    $InputNomorIdentitas = $_POST['input_nomor_identitas'];
+    $InputNamaPengunjung = $_POST['input_nama_pengunjung'];
+    $InputAlamatPengunjung = $_POST['input_alamat_pengunjung'];
+    $InputJanjiBertemu = $_POST['input_janji_bertemu'];
+    $InputTujuanKunjungan = $_POST['input_tujuan_kunjungan'];
+    $InputCekMetal = $_POST['input_cek_metal'];
+    $InputCekMirror = $_POST['input_cek_mirror'];
+    $InputUID = "PTU1/" . $InputJenisKunjungan . "/" . $InputTanggalKunjungan;
+
+    $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_report_tamu (tbrt_uid,
+                                                                        tbrt_jns_kunjungan,
+                                                                        tbrt_tgl_masuk,
+                                                                        tbrt_jam_masuk,
+                                                                        tbrt_nm_tamu,
+                                                                        tbrt_alm_tamu,
+                                                                        tbrt_jnj_temu,
+                                                                        tbrt_keperluan,
+                                                                        tbrt_cek_metal,
+                                                                        tbrt_cek_mirror,
+                                                                        tbrt_nmr_identitas,
+                                                                        tbrt_nmr_kartu)
+                                            VALUES (UPPER('$InputUID'),
+                                                    UPPER('$InputJenisKunjungan'),
+                                                    '$InputTanggalKunjungan',
+                                                    '$InputJamKunjungan',
+                                                    UPPER('$InputNamaPengunjung'),
+                                                    UPPER('$InputAlamatPengunjung'),
+                                                    UPPER('$InputJanjiBertemu'),
+                                                    UPPER('$InputTujuanKunjungan'),
+                                                    UPPER('$InputCekMetal'),
+                                                    UPPER('$InputCekMirror'),
+                                                    UPPER('$InputNomorIdentitas'),
+                                                    UPPER('$InputNomorKartu'))");
+
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY'
+                                            WHERE tblic_uid LIKE '$InputNomorKartu'");
+
+    // session
+    if($queryTambah && $queryUpdate){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:input_data_tamu.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:input_data_tamu.php');
+        exit;
+    }
+
+}
+
+if (isset($_POST['tombol_checkout_visitor'])){
+    $InputUID = $_POST['show_uid'];
+    $InputCard = $_POST['show_card_uid'];
+    $InputTanggalKeluar = date("Y-m-d");
+    $InputJamKeluar = date("h:i:s");
+
+    $queryUpdate = mysqli_query($koneksi,"UPDATE tb_report_tamu SET tbrt_tgl_keluar = '$InputTanggalKeluar',
+                                                                    tbrt_jam_keluar = '$InputJamKeluar'
+                                            WHERE tbrt_uid LIKE '$InputUID' AND tbrt_nmr_kartu LIKE '$InputCard'");
+
+    $queryUpdateKartu = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY'
+                                                WHERE tblic_uid LIKE '$InputCard'");
+
+    // session
+    if($queryUpdate && $queryUpdateKartu){
+        $_SESSION['sukses'] = 'data updated successfully';
+        header('Location:data_tamu_applicant.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be updated';
+        header('Location:data_tamu_applicant.php');
+        exit;
+    }
+
 }
 
 
@@ -374,25 +804,22 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
 
 if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
     // Get the data URL of the canvas
-    $dataURL = $_POST['signatureData'];
-    
-    // Remove the "data:image/png;base64," part from the data URL
-    $data = substr($dataURL, strpos($dataURL, ",") + 1);
-    
-    // Decode the base64-encoded image data
-    $imageData = base64_decode($data);
-    
-    // Generate a unique filename for the image
-    $filename =  uniqid() . '.png';
-    
-    // Specify the folder path to store the images
-    $folderPath = "upload/";
-    
-    // Combine the folder path and filename to create the full path
-    $filePath = $folderPath . $filename;
-    
-    // Save the image data to a file
-    file_put_contents($filePath, $imageData);
+    $signatureData = $_POST['signatureFilenamePengambilan'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     // Assuming $koneksi is your database connection
     $genUID = mysqli_query($koneksi, "SELECT MAX(ID_kunci_ruangan) AS max_id FROM tb_kunci_ruangan");
@@ -440,7 +867,7 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
             VALUES ('$register', '$selected_key_id', '$selected_name_of_key', 
             '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), 
             '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), 
-            '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', 
+            '$selected_amount_of_key', '$filePath', '$_POST[date_returned]', '$_POST[time_returned]', 
             UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', 
             '', '', '', '', '')"
         );
@@ -471,7 +898,7 @@ if (isset($_POST['tombol_tambah_operasional_keyroom'])) {
              handover_to, 
              amount_handover, 
              signature_handover)
-            VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$filename', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
+            VALUES ('$register', '$selected_key_id', '$selected_name_of_key', '$selected_amount_of_key', UPPER('$_POST[part_operasional]'), UPPER('$_POST[status]'), '$_POST[date_retrieval]', '$_POST[time_retrieval]', UPPER('$_POST[worker_retrieval]'), '$selected_amount_of_key', '$filePath', '$_POST[date_returned]', '$_POST[time_returned]', UPPER('$_POST[worker_returned]'), '$selected_amount_of_key', '$_POST[signature_returned]', '$_POST[date_handover]', '$_POST[time_handover]', UPPER('$_POST[handover_to]'), '$selected_amount_of_key', '$_POST[signature_handover]')"
         );
     }
 
@@ -497,12 +924,28 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {
     $key_row = mysqli_fetch_assoc($key_query);
     $selected_amount_of_key = $key_row['amount_of_key'];
 
+    $signatureData = $_POST['signatureFilenamePengembalian'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
     // Sanitize the form inputs to prevent SQL injection
     $date_returned = mysqli_real_escape_string($koneksi, $_POST['date_returned']);
     $time_returned = mysqli_real_escape_string($koneksi, $_POST['time_returned']);
     $worker_returned = mysqli_real_escape_string($koneksi, $_POST['worker_returned']);
     $amount_returned = $selected_amount_of_key;
-    $signature_returned = mysqli_real_escape_string($koneksi, $_POST['signature_returned']);
 
     // Construct the SQL update query
     $updateQuery = "UPDATE tb_kunci_ruangan SET 
@@ -511,7 +954,7 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_pengembalian'])) {
                         time_returned = '$time_returned', 
                         worker_returned = UPPER('$worker_returned'), 
                         amount_returned = '$amount_returned', 
-                        signature_returned = '$signature_returned'  
+                        signature_returned = '$filePath'  
                     WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'";
 
     // Execute the update query
@@ -894,6 +1337,23 @@ if (isset($_POST['tombol_tambah_shift_malam'])) {
 
     $jam_10 = "22:00:00";
 
+    $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_mutasi_shift_3
@@ -942,7 +1402,7 @@ if (isset($_POST['tombol_tambah_shift_malam'])) {
                     '',
                     '',
                     '$_POST[pos_10]',
-                    '',
+                    '$filePath',
                     '',
                     '',
                     '',
@@ -977,20 +1437,22 @@ if (isset($_POST['tombol_enable_change_status_pos_11'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_11 = $_POST['pos_11'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename11'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
 
     $jam_11 = "23:00:00";
 
@@ -998,7 +1460,7 @@ if (isset($_POST['tombol_enable_change_status_pos_11'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_11 = '$jam_11',
                         pos_11 = '$pos_11', 
-                        paraf_11 = '$filename'  
+                        paraf_11 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1022,20 +1484,22 @@ if (isset($_POST['tombol_enable_change_status_pos_12'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_12 = $_POST['pos_12'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename12'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_12 = "23:00:00";
 
@@ -1043,7 +1507,7 @@ if (isset($_POST['tombol_enable_change_status_pos_12'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_12 = '$jam_12',
                         pos_12 = '$pos_12', 
-                        paraf_12 = '$filename'  
+                        paraf_12 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1067,20 +1531,22 @@ if (isset($_POST['tombol_enable_change_status_pos_01'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_01 = $_POST['pos_01'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename01'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_01 = "01:00:00";
 
@@ -1088,7 +1554,7 @@ if (isset($_POST['tombol_enable_change_status_pos_01'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_01 = '$jam_01',
                         pos_01 = '$pos_01', 
-                        paraf_01 = '$filename'  
+                        paraf_01 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1112,20 +1578,23 @@ if (isset($_POST['tombol_enable_change_status_pos_02'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_02 = $_POST['pos_02'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+    $signatureData = $_POST['signatureFilename02'];
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_02 = "02:00:00";
 
@@ -1133,7 +1602,7 @@ if (isset($_POST['tombol_enable_change_status_pos_02'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_02 = '$jam_02',
                         pos_02 = '$pos_02', 
-                        paraf_02 = '$filename'  
+                        paraf_02 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1157,20 +1626,22 @@ if (isset($_POST['tombol_enable_change_status_pos_03'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_03 = $_POST['pos_03'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename03'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_03 = "03:00:00";
 
@@ -1178,7 +1649,7 @@ if (isset($_POST['tombol_enable_change_status_pos_03'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_03 = '$jam_03',
                         pos_03 = '$pos_03', 
-                        paraf_03 = '$filename'  
+                        paraf_03 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1202,20 +1673,22 @@ if (isset($_POST['tombol_enable_change_status_pos_04'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_04 = $_POST['pos_04'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename04'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_04 = "04:00:00";
 
@@ -1223,7 +1696,7 @@ if (isset($_POST['tombol_enable_change_status_pos_04'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_04 = '$jam_04',
                         pos_04 = '$pos_04', 
-                        paraf_04 = '$filename'  
+                        paraf_04 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
@@ -1247,20 +1720,22 @@ if (isset($_POST['tombol_enable_change_status_pos_05'])) {
 
     // Sanitize the form inputs to prevent SQL injection
     $pos_05 = $_POST['pos_05'];
-    $data_uri = $_POST['signatureFilename']; // Assuming you're sending the signature data via AJAX
+    $signatureData = $_POST['signatureFilename05'];
 
-    // Extract the base64 encoded image data
-    $encoded_image = explode(",", $data_uri)[1];
+    // Remove the "data:image/png;base64," prefix
+    $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    // Decode the base64 encoded image data
-    $decoded_image = base64_decode($encoded_image);
+    // Decode the base64-encoded image data
+    $signatureData = base64_decode($signatureData);
 
-    // Generate a unique filename for the signature image
-    $filename = uniqid('signature_') . '.png';
+    // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    // Save the decoded image data to a file
-    $save_path = "upload/" . $filename; // Specify the directory where you want to save the signature images
-    file_put_contents($save_path, $decoded_image);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $jam_05 = "05:00:00";
 
@@ -1268,7 +1743,7 @@ if (isset($_POST['tombol_enable_change_status_pos_05'])) {
     $updateQuery = "UPDATE tb_mutasi_shift_3 SET 
                         jam_operasional_05 = '$jam_05',
                         pos_05 = '$pos_05', 
-                        paraf_05 = '$filename'  
+                        paraf_05 = '$filePath'  
                     WHERE ID_mutasi_shift_3 = '$ID_mutasi_shift_3'";
 
     // Execute the update query
