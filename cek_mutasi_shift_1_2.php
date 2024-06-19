@@ -461,7 +461,7 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div id="pengambilanFields">
-                                        <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>">
+                                        <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('d-m-Y'); ?>">
                                             <div class="row mb-3">
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>

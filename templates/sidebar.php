@@ -39,8 +39,8 @@
         <div id="collapseMasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Master Data :</h6>
-                <a class="collapse-item" href="data_list_bc.php">BC List</a>
-                <a class="collapse-item" href="data_list_buku.php">Book List</a>
+                <a class="collapse-item" href="data_list_bc.php">Bea Cukai List</a>
+                <a class="collapse-item" href="data_list_buku.php">Buku List</a>
                 <a class="collapse-item" href="data_list_security.php">Security List</a>
                 <a class="collapse-item" href="data_cctv.php">CCTV List</a>
                 <a class="collapse-item" href="data_keyroom.php">Kunci Ruangan</a>
@@ -84,9 +84,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="cek_mutasi_shift_GS.php">Mutasi GS</a>
                 <a class="collapse-item" href="cek_mutasi_shift_1_2.php">Mutasi Shift 1 & 2</a>
-                <a class="collapse-item" href="cek_mutasi_shift_3.php">Mutasi Malam</a>
+                <a class="collapse-item" href="cek_mutasi_shift_3.php">Mutasi Shift 3</a>
                 <a class="collapse-item" href="cek_barang_inventaris_mutasi_malam.php">Input Barang Inventaris</a>
                 <a class="collapse-item" href="cek_uraian_mutasi_malam.php">Input Logs Uraian</a>
                 
@@ -103,10 +102,10 @@
         <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="input_data_tamu.php">Input Visitor</a>
-                <a class="collapse-item" href="data_tamu_applicant.php">Applicant</a>
+                <a class="collapse-item" href="input_data_tamu.php">Input Pengunjung</a>
+                <a class="collapse-item" href="data_tamu_applicant.php">Pelamar</a>
                 <a class="collapse-item" href="data_tamu_buyer.php">Buyer</a>
-                <a class="collapse-item" href="data_tamu_factory_visitor.php">Factory Visitor</a>
+                <a class="collapse-item" href="data_tamu_factory_visitor.php">Kunjungan Pabrik</a>
                 <a class="collapse-item" href="data_tamu_segregation.php">Segregation</a>
                 <a class="collapse-item" href="data_tamu_store.php">Store</a>
                 <a class="collapse-item" href="data_tamu_supplier.php">Supplier</a>
@@ -128,8 +127,8 @@
                 <a class="collapse-item" href="data_patroli_gs.php">GS Patrol</a>
                 <a class="collapse-item" href="data_patroli_shift.php">Shift Patrol</a>
                 <a class="collapse-item" href="data_patroli_danru.php">Danru Patrol</a>
-                <a class="collapse-item" href="data_laporan_khusus.php">Special Security Report</a>
-                <a class="collapse-item" href="data_pengecekan_pintu_darurat.php">Emergency Door Check</a>
+                <a class="collapse-item" href="data_laporan_khusus.php">Laporan Khusus Security</a>
+                <a class="collapse-item" href="data_pengecekan_pintu_darurat.php">Cek Pintu Emergency</a>
             </div>
         </div>
     </li>
@@ -159,9 +158,9 @@
         <div id="collapseUtilitie2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="user_register_umum.php">Input Public</a>
-                <a class="collapse-item" href="data_kendaraan_umum.php">Public</a>
-                <a class="collapse-item" href="user_register_kendaraan.php">Input Shipment</a>
+                <a class="collapse-item" href="user_register_umum.php">Input Tamu Public</a>
+                <a class="collapse-item" href="data_kendaraan_umum.php">Kendaraan Umum</a>
+                <a class="collapse-item" href="user_register_kendaraan.php">Input Kendaraan Shipment</a>
                 <a class="collapse-item" href="data_register_kendaraan.php">Shipment</a>
                 <a class="collapse-item" href="login_cek_cctv.php">CCTV Check</a>
                 <a class="collapse-item" href="cek_keyroom.php">Kunci Ruangan Check</a>

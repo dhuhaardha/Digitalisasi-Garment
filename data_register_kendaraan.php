@@ -95,16 +95,16 @@ session_start();
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Date</th>
-                                                        <th>In</th>
-                                                        <th>Out</th>
-                                                        <th>Card Number</th>
-                                                        <th>Vehicle Type</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Masuk</th>
+                                                        <th>Keluar</th>
+                                                        <th>Nomor Kartu</th>
+                                                        <th>Tipe Kendaraan</th>
                                                         <th>Under Mirror</th>
-                                                        <th>Remark</th>
-                                                        <th>SIM Type</th>
-                                                        <th>SIM Number</th>
-                                                        <th>Sign</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Tipe SIM</th>
+                                                        <th>Nomor SIM</th>
+                                                        <th>Paraf</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

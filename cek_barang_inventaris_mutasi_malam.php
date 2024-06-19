@@ -223,7 +223,7 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
                                                 <div class="col-sm-10">
                                                 <select id="inputState" class="form-select" name="pos_10">
-                                                    <option selected disabled>Choose POS...</option>
+                                                    <option selected disabled>Pilih POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -232,7 +232,7 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Tanda Tangan
                                                     </label>
                                                 <style>
                                                     canvas {
@@ -497,7 +497,7 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Shift</label>
                                                 <div class="col-sm-10">
                                                 <select id="inputState" class="form-select" name="shift">
-                                                    <option selected disabled>Choose Shift...</option>
+                                                    <option selected disabled>Pilih Shift...</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -538,7 +538,7 @@ session_start();
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
                                                 <div class="col-sm-10">
                                                 <select id="inputState" class="form-select" name="pos_11">
-                                                    <option selected disabled>Choose POS...</option>
+                                                    <option selected disabled>Pilih POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -547,7 +547,7 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Tanda Tangan
                                                     </label>
                                                 <style>
                                                     canvas {

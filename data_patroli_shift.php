@@ -66,12 +66,12 @@ session_start();
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Date</th>
-                                                        <th>Start</th>
-                                                        <th>Finish</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Mulai</th>
+                                                        <th>Selesai</th>
                                                         <th>Security</th>
                                                         <th>Shift</th>
-                                                        <th>Remark</th>
+                                                        <th>Keterangan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

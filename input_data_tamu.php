@@ -36,10 +36,10 @@ session_start();
                         <div class="card-body">
                                 <form method="POST" action="aksi_security.php">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Visitor Type</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Tipe Visitor</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_nama_buku">
-                                                    <option value="0" selected>SELECT TYPE...</option>
+                                                    <option value="0" selected>PILIH TIPE...</option>
 
                                                         <?php
                                                             $queryBuku = mysqli_query($koneksi,"SELECT * FROM tb_list_buku WHERE tblu_jns_buku LIKE 'TAMU' ORDER BY tblu_nm_buku");
@@ -58,10 +58,10 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Card Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Kartu</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_nomor_kartu">
-                                                    <option value="0" selected>CARD NUMBER...</option>
+                                                    <option value="0" selected>PILIH CARD NUMBER...</option>
 
                                                         <?php
                                                             $queryKartu = mysqli_query($koneksi,"SELECT * FROM tb_list_card WHERE tblic_jns_kartu LIKE 'TAMU' AND tblic_status LIKE 'READY'");
@@ -79,31 +79,31 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Visitor Identity</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Identitas Visitor</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_nomor_identitas" placeholder="NO IDENTITAS">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Visitor Name</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nama Visitor</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_nama_pengunjung" placeholder="NAMA TAMU">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Visitor Address</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Alamat Visitor</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_alamat_pengunjung" placeholder="ALAMAT TAMU">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Appointment</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Janji Bertemu</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_janji_bertemu" placeholder="JANJI BERTEMU">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Purpose</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Tujuan Kunjungan</label>
                                             <div class="col-sm-10">
                                                 <textarea class="form-control" rows="5" name="input_tujuan_kunjungan" placeholder="TUJUAN KUNJUNGAN"></textarea>
                                             </div>

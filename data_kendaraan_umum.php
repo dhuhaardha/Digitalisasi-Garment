@@ -66,11 +66,11 @@ session_start();
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>In</th>
-                                                        <th>Out</th>
-                                                        <th>Card Number</th>
-                                                        <th>Driver Name</th>
-                                                        <th>Vehicle Type</th>
+                                                        <th>Masuk</th>
+                                                        <th>Keluar</th>
+                                                        <th>Nomor Kartu</th>
+                                                        <th>Nama Driver</th>
+                                                        <th>Tipe Kendaraan</th>
                                                         <th>Goods In</th>
                                                         <th>Goods Out</th>
                                                     </tr>

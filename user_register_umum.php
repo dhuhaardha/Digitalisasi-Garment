@@ -35,13 +35,13 @@ session_start();
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Public Vehicle Registration</h3>
+                                <h3 class="m-0 text-dark">Registrasi Kendaraan Umum</h3>
                             </div>
 
                             <div class="card-body">
                                 <form method="POST" action="aksi_security.php">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Card Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor Kartu</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_nomor_kartu">
                                                 
@@ -57,10 +57,10 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Vehicle Type</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Tipe Kendaraan</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_tipe_kontainer">
-                                                    <option value="0" selected>Choose Type...</option>
+                                                    <option value="0" selected>PILIH TIPE...</option>
 
                                                     <?php
                                                     $queryKendaraan = mysqli_query($koneksi,"SELECT * FROM tb_list_kendaraan WHERE tblk_status LIKE 'ACTIVE'");
@@ -78,40 +78,40 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Vehicle Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Kendaraan</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" style="text-transform:uppercase;" name="input_plat_nomor">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Identity Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Identitas</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" style="text-transform:uppercase;" name="input_nomor_identitas">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Driver Name</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nama Driver</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" style="text-transform:uppercase;" name="input_nama_supir">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Container Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Kontainer</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" style="text-transform:uppercase;" name="input_nomor_kontainer">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Seal Number</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Seal</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" style="text-transform:uppercase;" name="input_nomor_seal">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Incoming BC</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">BC Yang Akan Datang</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_bc_masuk">
-                                                    <option value="0" selected>Choose Type...</option>
+                                                    <option value="0" selected>PILIH TIPE...</option>
 
                                                         <?php 
                                                             $queryJenis = mysqli_query($koneksi,"SELECT * FROM tb_list_bc");
@@ -134,7 +134,7 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Sign</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Tanda Tangan</label>
                                             <div class="col-sm-10">
                                                 <div name="sig" id="sig"></div>
                                                     <br />
@@ -151,7 +151,7 @@ session_start();
                                         <div class="col-sm-10 text-center">
                                             <button type="submit" class="btn btn-success" name="tombol_register_kendaraan_umum">
                                                         <i class="fa-solid fa-square-plus">&nbsp</i>
-                                                            Add Data
+                                                            Add Kendaraan Umum
                                             </button>
                                         </div>
                                     </div>

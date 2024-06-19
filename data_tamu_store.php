@@ -47,12 +47,12 @@ session_start();
                                                     <th class="d-none">UID</th>
                                                     <th class="d-none">Card UID</th>
                                                     <th>No</th>
-                                                    <th>In</th>
-                                                    <th>Out</th>
-                                                    <th>Card</th>
-                                                    <th>Name</th>
-                                                    <th>Appointment</th>
-                                                    <th>Purpose</th>
+                                                    <th>Masuk</th>
+                                                    <th>Keluar</th>
+                                                    <th>No. Kartu</th>
+                                                    <th>Nama</th>
+                                                    <th>Janji</th>
+                                                    <th>Tujuan</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

@@ -39,10 +39,10 @@ session_start();
                             <div class="card-body">
                                 <form method="POST" action="aksi_security.php">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Report Type</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Tipe Report</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_nama_buku">
-                                                    <option value="0" selected>SELECT REPORT...</option>
+                                                    <option value="0" selected>PILIH REPORT...</option>
 
                                                         <?php
                                                             $queryBuku = mysqli_query($koneksi,"SELECT * FROM tb_list_buku WHERE tblu_jns_buku LIKE 'PATROLI'");
@@ -61,10 +61,10 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Security Name</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nama Security</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control selectpicker" name="input_nama_security" data-live-search="true">
-                                                <option value="0" selected>SELECT SECURITY...</option>
+                                                <option value="0" selected>PILIH SECURITY...</option>
                                                     <?php
                                                         $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tbls_status LIKE 'ACTIVE' ORDER BY tbls_nama ASC");
 
@@ -84,7 +84,7 @@ session_start();
                                         <label class="col-sm-2 col-form-label" for="unit">Shift</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_shift">
-                                                    <option value="0" selected>SELECT SHIFT...</option>
+                                                    <option value="0" selected>PILIH SHIFT...</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -121,9 +121,9 @@ session_start();
                                                 <tr>
                                                     <th class="d-none">UID</th>
                                                     <th>No</th>
-                                                    <th>Type</th>
+                                                    <th>Tipe</th>
                                                     <th>Start Patrol</th>
-                                                    <th>Security Name</th>
+                                                    <th>Nama Security</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -169,19 +169,19 @@ session_start();
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Type</label>
+                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe</label>
                                                                                                     <div class="col-sm-10">
                                                                                                         <input type="text" class="form-control" id="show_type" name="show_type" readonly>
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
                                                                                                     <div class="col-sm-10">
                                                                                                         <input type="text" class="form-control" id="show_name" name="show_name" readonly>
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Remark</label>
+                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan</label>
                                                                                                     <div class="col-sm-10">
                                                                                                         <textarea class="form-control" name="input_remark" rows="5"></textarea>
                                                                                                     </div>

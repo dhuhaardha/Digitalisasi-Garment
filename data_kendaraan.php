@@ -35,7 +35,7 @@ session_start();
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Vehicle Information</h3>
+                                <h3 class="m-0 text-dark">Informasi Kendaraan</h3>
                             </div>
 
                             <div class="card-body">
@@ -43,7 +43,7 @@ session_start();
                                     <div class="col align-self-end">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-square-plus">&nbsp</i>
-                                                Add Vehicle
+                                                Add Kendaraan
                                         </button>
                                     </div>
                                 </div>
