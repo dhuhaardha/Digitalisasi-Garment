@@ -4,7 +4,6 @@ include "koneksi.php" ;
 session_start();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,12 +65,12 @@ session_start();
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Date</th>
-                                                        <th>Start</th>
-                                                        <th>Finish</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Mulai</th>
+                                                        <th>Selesai</th>
                                                         <th>Security</th>
                                                         <th>Shift</th>
-                                                        <th>Remark</th>
+                                                        <th>Keterangan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -113,7 +112,7 @@ session_start();
 
             <!-- Modal Cetak PDF -->
             <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Export to PDF</h5>
@@ -137,6 +136,18 @@ session_start();
                                         </div>
                                 </div>
                                 <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature Officer</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                </div>
+                                            </div>
+                                <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Responsible</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="input_nama_penanggung_jawab" class="form-control">
@@ -149,6 +160,18 @@ session_start();
                                         </div>
                                 </div>
                                 <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature Commander</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvasCommander" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenameCommander" name="signatureFilenameCommander">
+                                                </div>
+                                            </div>
+                                <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">HR & GA</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="input_nama_hr" class="form-control">
@@ -156,10 +179,55 @@ session_start();
                                 </div>                                
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" name="tombol_cetak_pdf" target="_blank" class="btn btn-success">Export</button>
+                                <button type="submit" name="tombol_cetak_pdf" target="_blank" class="btn btn-success" id="saveSignatureBtn" id="saveSignatureBtnCommander">Export</button>
+                                <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                 <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                             </div>
                         </form>
+                        <script src="signature_pad.umd.min.js"></script>
+                        <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pads
+        var canvas1 = document.getElementById('signatureCanvas');
+        var signaturePad1 = new SignaturePad(canvas1, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        var canvas2 = document.getElementById('signatureCanvasCommander');
+        var signaturePad2 = new SignaturePad(canvas2, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function for the first pad
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad1.clear(); // Clear the first signature pad
+        });
+
+        // Clear Signature function for the second pad
+        document.getElementById('clear_signature_commander').addEventListener('click', function() {
+            signaturePad2.clear(); // Clear the second signature pad
+        });
+
+        // Form submission for the first pad
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the first signature
+            var dataURL1 = signaturePad1.toDataURL();
+
+            // Set the data URL to the hidden input field for the first pad
+            document.getElementById('signatureFilename').value = dataURL1;
+        });
+
+        // Form submission for the second pad
+        document.getElementById('saveSignatureBtnCommander').addEventListener('click', function() {
+            // Get the data URL of the second signature
+            var dataURL2 = signaturePad2.toDataURL();
+
+            // Set the data URL to the hidden input field for the second pad
+            document.getElementById('signatureFilenameCommander').value = dataURL2;
+        });
+    });
+</script>
                     </div>
                 </div>
             </div>
@@ -239,30 +307,7 @@ session_start();
         unset($_SESSION['gagal']);
         }
     ?>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <!-- Menampilkan 2 datatable atau lebih -->
-    <script>
-        $(document).ready(function() {
-        $('table.table').DataTable();
-        } );
-    </script>
+    <?php require_once "templates/footer.php" ?>
 
 </body>
 
