@@ -224,30 +224,7 @@ session_start();
                                                     <input type="text" class="form-control" id="time_taken" name="time_taken" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
-                                            <script>
-                                                // Function to update the time field
-                                                function updateTime() {
-                                                    // Get the current time
-                                                    var currentTime = new Date();
-                                                    var hours = currentTime.getHours();
-                                                    var minutes = currentTime.getMinutes();
-                                                    var seconds = currentTime.getSeconds();
-
-                                                    // Format the time with leading zeros if necessary
-                                                    hours = (hours < 10 ? "0" : "") + hours;
-                                                    minutes = (minutes < 10 ? "0" : "") + minutes;
-                                                    seconds = (seconds < 10 ? "0" : "") + seconds;
-
-                                                    // Display the formatted time in the input field
-                                                    document.getElementById("time_taken").value = hours + ":" +
-                                                        minutes +
-                                                        ":" + seconds;
-                                                }
-
-                                                // Update the time initially and every second
-                                                updateTime(); // Initial update
-                                                setInterval(updateTime, 1000); // Update every second
-                                            </script>
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
                                                     </label>

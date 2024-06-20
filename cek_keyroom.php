@@ -263,7 +263,7 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengambilan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time_retrieval" name="time_retrieval" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="text" class="form-control" name="time_retrieval" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <script>
@@ -349,13 +349,7 @@ session_start();
                                                     <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="time_returned" value="<?php echo date('H:i:s'); ?>">
-                                                </div>
-                                            </div>
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
                                                     Pengembalian</label>
@@ -515,7 +509,7 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengembalian</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time_returned" name="time_returned" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="text" class="form-control" id="time_returned" name="time_returned" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <script>
@@ -597,7 +591,7 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Serah Terima</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="time_handover" name="time_handover" value="<?php echo date('H:i:s'); ?>">
+                                                    <input type="text" class="form-control" id="time_handover" name="time_handover" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
                                             <script>
@@ -768,86 +762,7 @@ session_start();
                 });
             });
         </script>
-        <script>
-    var canvas = document.getElementById('signatureCanvas');
-    var ctx = canvas.getContext('2d');
-    var isDrawing = false;
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('touchstart', startDrawingTouch);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchmove', drawTouch);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('touchend', stopDrawing);
-
-    function startDrawing(event) {
-        isDrawing = true;
-        draw(event);
-    }
-
-    function startDrawingTouch(event) {
-        event.preventDefault();
-        isDrawing = true;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        draw({
-            offsetX,
-            offsetY
-        });
-    }
-
-    function draw(event) {
-        if (!isDrawing) return;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(event.offsetX, event.offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(event.offsetX, event.offsetY);
-    }
-
-    function drawTouch(event) {
-        event.preventDefault();
-        if (!isDrawing) return;
-        var touch = event.touches[0];
-        var offsetX = touch.pageX - canvas.offsetLeft;
-        var offsetY = touch.pageY - canvas.offsetTop;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(offsetX, offsetY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(offsetX, offsetY);
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
-
-    var clearButton = document.getElementById('clear_signature');
-
-    clearButton.addEventListener('click', function() {
-        clearSignature();
-    });
-
-    function clearSignature() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-
-    // Function to convert canvas to data URL and store it in hidden input field
-    function saveSignature() {
-        var dataURL = canvas.toDataURL("image/png");
-        document.getElementById('signatureData').value = dataURL;
-    }
-
-    // Call saveSignature() when the form is submitted
-    document.querySelector('form').addEventListener('submit', saveSignature);
-    </script>
+        
         
         <?php require_once "templates/footer.php" ?>
 </body>
