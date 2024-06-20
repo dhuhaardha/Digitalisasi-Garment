@@ -66,12 +66,12 @@ session_start();
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Date</th>
-                                                        <th>Start</th>
-                                                        <th>Finish</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Mulai</th>
+                                                        <th>Selesai</th>
                                                         <th>Security</th>
                                                         <th>Shift</th>
-                                                        <th>Remark</th>
+                                                        <th>Keterangan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -149,6 +149,18 @@ session_start();
                                         </div>
                                 </div>
                                 <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature Commander</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                </div>
+                                            </div>
+                                <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">HR & GA</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="input_nama_hr" class="form-control">
@@ -156,10 +168,36 @@ session_start();
                                 </div>                               
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" name="tombol_cetak_pdf" target="_blank" class="btn btn-success">Export</button>
+                                <button type="submit" name="tombol_cetak_pdf" target="_blank" class="btn btn-success" id="saveSignatureBtn">Export</button>
+                                <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                 <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                             </div>
                         </form>
+                        <script src="signature_pad.umd.min.js"></script>
+                        <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
                     </div>
                 </div>
             </div>
@@ -240,29 +278,7 @@ session_start();
         }
     ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <!-- Menampilkan 2 datatable atau lebih -->
-    <script>
-        $(document).ready(function() {
-        $('table.table').DataTable();
-        } );
-    </script>
+<?php require_once "templates/footer.php" ?>
 
 </body>
 
