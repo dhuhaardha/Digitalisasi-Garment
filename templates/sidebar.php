@@ -69,8 +69,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
                 <a class="collapse-item" href="absensi.php">Absensi</a>
-                <a class="collapse-item" href="#">Kejadian & Pelanggaran</a>
-                <a class="collapse-item" href="#">Orientasi</a>
             </div>
         </div>
     </li>
@@ -133,21 +131,7 @@
         </div>
     </li>
 
-    <!-- Nav Item - STORE -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie1" aria-expanded="true" aria-controls="collapseUtilitie1">
-            <i class="fa-solid fa-store"></i>
-            <span>Store</span>
-        </a>
-        <div id="collapseUtilitie1" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="#">Bongkar</a>
-                <a class="collapse-item" href="#">Loading</a>
-                <a class="collapse-item" href="#">Administrasi</a>
-            </div>
-        </div>
-    </li>
+    
 
     <!-- Nav Item - TAMU -->
     <li class="nav-item">
@@ -158,7 +142,7 @@
         <div id="collapseUtilitie2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="user_register_umum.php">Input Tamu Public</a>
+                <a class="collapse-item" href="user_register_umum.php">Input Kendaraan Umum</a>
                 <a class="collapse-item" href="data_kendaraan_umum.php">Kendaraan Umum</a>
                 <a class="collapse-item" href="user_register_kendaraan.php">Input Kendaraan Shipment</a>
                 <a class="collapse-item" href="data_register_kendaraan.php">Shipment</a>
@@ -171,7 +155,7 @@
         </div>
     </li>
 
-    <!-- Nav Item - TRANSFER -->
+    <!-- Nav Item - TRANSFER
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie3" aria-expanded="true" aria-controls="collapseUtilitie3">
             <i class="fa-solid fa-truck"></i>
@@ -185,7 +169,7 @@
                 <a class="collapse-item" href="#">Transfer Barang</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
 
     <!-- Divider -->

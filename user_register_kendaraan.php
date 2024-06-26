@@ -68,19 +68,19 @@ session_start();
                             </div>
 
                             <div class="card-body">
-                                <form method="POST" action="aksi_security.php">
+                            <form method="POST" action="aksi_security.php">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Tipe Kendaraan</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_tipe_kontainer">
-                                                    <option selected>Pilih Tipe...</option>
+                                                    <option value="0" selected>Pilih Tipe...</option>
 
                                                     <?php
                                                     $queryKendaraan = mysqli_query($koneksi,"SELECT * FROM tb_list_kendaraan WHERE tblk_status LIKE 'ACTIVE'");
                                                     while ($listKendaraan = mysqli_fetch_array($queryKendaraan)){
                                                     ?>
 
-                                                        <option><?php echo $listKendaraan['tblk_tipe_kendaraan'] ?></option>
+                                                        <option value='<?php echo $listKendaraan['tblk_uid'] ?>'><?php echo $listKendaraan['tblk_nama_kendaraan'] ?></option>
 
                                                     <?php
                                                         }
@@ -91,7 +91,19 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Kontainer</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor Kendaraan</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="input_plat_nomor">
+                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" for="unit">Nama Driver</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="input_nama_supir">
+                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor Container</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_nomor_kontainer">
                                             </div>
@@ -100,13 +112,13 @@ session_start();
                                         <label class="col-sm-2 col-form-label" for="unit">Under Mirror</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_cek_mirror">
-                                                    <option selected>Yes</option>
-                                                    <option>No</option>
+                                                    <option value="YES" selected>Yes</option>
+                                                    <option value="NO">No</option>
                                                 </select>
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Nomer Seal</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor Seal</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_nomor_seal">
                                             </div>
@@ -115,7 +127,7 @@ session_start();
                                         <label class="col-sm-2 col-form-label" for="unit">Tipe SIM</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_tipe_sim">
-                                                    <option selected>PILIH TIPE...</option>
+                                                    <option selected>Choose Type...</option>
                                                     <option>B</option>
                                                     <option>B1</option>
                                                     <option>B1-UMUM</option>
@@ -125,13 +137,13 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Nomer SIM</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor SIM</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="input_nomor_sim">
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Nomer ID</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">Nomor ID</label>
                                             <div class="col-sm-10">
                                                 <select class="form-select" name="input_nomor_kartu">
                                                 
@@ -147,14 +159,19 @@ session_start();
                                             </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="unit">Tanda Tangan</label>
+                                        <label class="col-sm-2 col-form-label" for="unit">TTD</label>
                                             <div class="col-sm-10">
-                                                <div name="sig" id="sig"></div>
-                                                    <br />
-                                                    <textarea id="signature64" name="signature" style="display: none"></textarea>
-                                                        <div class="col-12">
-                                                            <button class="btn btn-sm btn-warning" id="clear">&#x232B;Clear Signature</button>
-                                                        </div>
+                                            
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                </div>
+                                            
                                             </div>
                                     </div>
 
@@ -162,13 +179,39 @@ session_start();
 
                                     <div class="form-group row">
                                         <div class="col-sm-10 text-center">
-                                            <button type="submit" class="btn btn-success" name="tombol_register_kendaraan">
+                                            <button type="submit" class="btn btn-success" name="tombol_register_kendaraan" id="saveSignatureBtn">
                                                         <i class="fa-solid fa-square-plus">&nbsp</i>
-                                                            Add Kendaraan
+                                                            Add Visitor
                                             </button>
+                                            <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         </div>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
                             </div>
 
                         </div>

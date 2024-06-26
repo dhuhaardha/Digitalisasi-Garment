@@ -34,9 +34,25 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Visitor Data</h3>
-                            </div>
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h3 class="m-0 text-dark">Visitor Data</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            tambah danru
+                                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            tambah security & shift penerima
+                                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            tambah security & shift diserahkan
+                                        </button>
+                        </div>
+                        
 
                             <div class="card-body">
                                 <div class="row">
@@ -47,12 +63,12 @@ session_start();
                                                     <th class="d-none">UID</th>
                                                     <th class="d-none">Card UID</th>
                                                     <th>No</th>
-                                                    <th>Masuk</th>
-                                                    <th>Keluar</th>
-                                                    <th>No. Kartu</th>
-                                                    <th>Nama</th>
-                                                    <th>Janji</th>
-                                                    <th>Tujuan</th>
+                                                    <th>In</th>
+                                                    <th>Out</th>
+                                                    <th>Card</th>
+                                                    <th>Name</th>
+                                                    <th>Appointment</th>
+                                                    <th>Purpose</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -82,7 +98,7 @@ session_start();
                                                                 <?php
                                                                     if ($tabelCari['tbrt_tgl_keluar'] == ''){
                                                                 ?>
-                                                                    <button type="button" class="btn btn-danger btn-sm showButton" data-toggle="modal" data-target="#ModalSelesaiPatroli">
+                                                                    <button type="button" class="btn btn-danger btn-sm showButton" data-toggle="modal" data-target="#ModalSelesaiPatroli" value=<?php echo $tabelCari['tbrt_uid']; ?>>
                                                                         <i class="fa-solid fa-person-circle-xmark"></i> <b>Check Out</b>
                                                                     </button>
                                                                 <?php
@@ -96,8 +112,263 @@ session_start();
                                                                     }
                                                                 ?>
 
-                                                                
 
+                                                                <!-- Modal Tambah -->
+                    <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Malam</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="aksi_security.php">
+                                    <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
+                                                <div class="col-sm-9">
+                                                    <input type="date" name="input_print_pdf" class="form-control">
+                                                    <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="pengambilanDate" class="col-sm-3 col-form-label">Danru
+                                                        </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
+                                                    <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH DANRU...</option>
+                                                            <?php
+                                                            $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
+
+                                                            while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                        ?>
+
+                                                                <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        
+                                                    </select>
+                                                    </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
+                                                    <style>
+                                                        canvas {
+                                                            border: 1px solid #000;
+                                                        }
+                                                    </style>
+                                                    <div class="col-sm-3">
+                                                            <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                            
+                                                        <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="tombol_tambah_ttd_danru" class="btn btn-success" id="saveSignatureBtn">Add</button>
+                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
+
+                                                                
+                                                                    <!-- Modal Cetak PDF -->
+                    <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Export to PDF</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                    <form method="POST" action="print_tamu.php" target="_blank">
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
+                                                <div class="col-sm-9">
+                                                    <input type="date" name="input_print_pdf" class="form-control">
+                                                    <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="pengambilanDate" class="col-sm-3 col-form-label">Danru
+                                                        </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
+                                                    <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH DANRU...</option>
+                                                            <?php
+                                                            $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
+
+                                                            while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                        ?>
+
+                                                                <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        
+                                                    </select>
+                                                    </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
+                                                    <style>
+                                                        canvas {
+                                                            border: 1px solid #000;
+                                                        }
+                                                    </style>
+                                                    <div class="col-sm-3">
+                                                            <canvas id="signatureCanvasCommander" width="300" height="150"></canvas>
+                                                            <button class="btn btn-primary" id="clear_signature_commander" type="button">Clear Signature</button>
+                                                        <input type="hidden" class="form-control" id="signatureFilenameCommander" name="signatureFilenameCommander">
+                                                    </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Diterima</label>
+                                                <div class="col-sm-9">
+                                                <select id="inputState" class="form-select" name="input_diterima_shift">
+                                                        <option selected disabled>DITERIMA SHIFT...</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="GS">GS</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="pengambilanDate" class="col-sm-3 col-form-label">Oleh
+                                                        </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control selectpicker" name="input_nama_diterima" data-live-search="true">
+                                                    <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DITERIMA)...</option>
+                                                            <?php
+                                                            $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                            while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                        ?>
+
+                                                                <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        
+                                                    </select>
+                                                    </div>
+                                            </div>
+                                            
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Diserahkan</label>
+                                                <div class="col-sm-9">
+                                                <select id="inputState" class="form-select" name="input_diserahkan_shift">
+                                                        <option selected disabled>DISERAHKAN SHIFT...</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="GS">GS</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                    <label for="pengambilanDate" class="col-sm-3 col-form-label">Oleh
+                                                        </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control selectpicker" name="input_nama_diserahkan" data-live-search="true">
+                                                    <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DISERAHKAN)...</option>
+                                                            <?php
+                                                            $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                            while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                        ?>
+
+                                                                <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">HR/GA</label>
+                                                <div class="col-sm-9">
+                                                <select id="inputState" class="form-select" name="input_hr">
+                                                        <option selected disabled>DISERAHKAN HR...</option>
+                                                        <option value="REDY HARYOKO">REDY HARYOKO</option>
+                                                        <option value="RIZKI AKBAR">RIZKI AKBAR</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" target="_blank" class="btn btn-success" id="saveSignatureBtn saveSignatureBtnDiserahkan saveSignatureBtnCommander">Export</button>
+                                            <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                    <script src="signature_pad.umd.min.js"></script>
+                            <script>
+        // Wait for the document to be fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+
+            var canvasCommander = document.getElementById('signatureCanvasCommander');
+            var signaturePadCommander = new SignaturePad(canvasCommander, {
+                backgroundColor: 'rgb(255, 255, 255)' // set background color
+            });
+
+
+            // Clear Signature function for the second pad
+            document.getElementById('clear_signature_commander').addEventListener('click', function() {
+                signaturePadCommander.clear(); // Clear the second signature pad
+            });
+
+            // Form submission for the second pad
+            document.getElementById('saveSignatureBtnCommander').addEventListener('click', function() {
+                // Get the data URL of the second signature
+                var dataURL3 = signaturePadCommander.toDataURL();
+
+                // Set the data URL to the hidden input field for the second pad
+                document.getElementById('signatureFilenameCommander').value = dataURL3;
+            });
+        });
+    </script>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- End Modal -->
                                                                     <!-- Modal Selesai Patroli -->
                                                                         <div class="modal fade" id="ModalSelesaiPatroli" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                             <div class="modal-dialog modal-lg" role="document">
@@ -110,36 +381,10 @@ session_start();
                                                                                     </div>
                                                                                     <form method="POST" action="aksi_security.php">
                                                                                         <div class="modal-body">
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">UID</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_uid" name="show_uid" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3 d-none">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Card UID</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_card_uid" name="show_card_uid" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Card</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_card" name="show_card" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_name" name="show_name" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Purpose</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <textarea class="form-control" id="show_purpose" name="show_purpose" rows="5" readonly></textarea>
-                                                                                                    </div>
-                                                                                            </div>
+                                                                                            <h5 class="text-center"> Apakah anda yakin ingin Check out Card</h5>
+                                                                                                        <input type="hidden" class="form-control" id="IDInput" name="show_uid" readonly>
+                                                                                                        <input type="hidden" class="form-control" value="<?php echo $tabelCari['tblic_no_id']; ?>" readonly>
+                                                                                                        
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <button type="submit" name="tombol_checkout_visitor" class="btn btn-success">Check Out</button>
@@ -214,27 +459,22 @@ session_start();
 
     <!-- Script Button -->
     <script>
-        $(document).ready(function () {
+            // Get all elements with the data-target attribute
+            var buttons = document.querySelectorAll(
+                '[data-target="#ModalSelesaiPatroli"]');
 
-            $('.showButton').on('click', function () {
-                $('#viewmodal').modal('show');
-                $tr = $(this).closest('tr');
+            // Loop through each button
+            buttons.forEach(function(button) {
+                // Add click event listener to the button
+                button.addEventListener("click", function() {
+                    // Get the value from the button
+                    var IDValue = button.value;
 
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#show_uid').val(data[0]);
-                $('#show_card_uid').val(data[1]);
-                $('#show_card').val(data[5]);
-                $('#show_name').val(data[6]);
-                $('#show_purpose').val(data[8]);
+                    // Set the value to the input field
+                    document.getElementById("IDInput").value = IDValue;
+                });
             });
-
-        });
-    </script>
+        </script>
                                                     
 
     <!-- Cek Session -->
@@ -269,6 +509,7 @@ session_start();
         unset($_SESSION['gagal']);
         }
     ?>
+
 <?php require_once "templates/footer.php" ?>
 
 </body>

@@ -16,7 +16,15 @@ if(!$koneksi){ // cek koneksi
 }
 
 $date = $_POST['input_print_pdf'];
-$shift = $_POST['shift'];
+$time_mulai = $_POST['input_time_mulai'];
+$time_selesai = $_POST['input_time_selesai'];
+$shift_diterima = $_POST['input_diterima_shift'];
+$security_diterima = $_POST['input_nama_diterima'];
+$shift_diserahkan = $_POST['input_diserahkan_shift'];
+$security_diserahkan = $_POST['input_nama_diserahkan'];
+$danru = $_POST['input_nama_danru'];
+$petugas = $_POST['input_nama_petugas'];
+$HR = $_POST['input_hr'];
 
 
 // BUAT PDF BARU
@@ -38,12 +46,12 @@ $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(18, 1, 'PT UNGARAN SARI GARMENTS', 0, 0, 'L');
 $pdf->Cell(10, 1, "HARI/TANGGAL : " . $date, 0, 1, 'R');
 $pdf->Cell(18, 0.5, 'SECURITY - UNGARAN', 0, 0, 'L');
-$pdf->Cell(10, 0.5, "JAM                        : " . $date, 0, 1, 'R');
+$pdf->Cell(10, 0.5, "JAM                        : " . $time_mulai . "-" . $time_selesai, 0, 1, 'R');
 
 $pdf->Ln();
 
-$pdf->Cell(18, 0.5, 'SHIFT                           :  '  . $shift, 0, 1, 'L');
-$pdf->Cell(10, 0.5, "DAN RU                        : ", 0, 1, 'L');
+$pdf->Cell(18, 0.5, 'SHIFT                           :  '  . $shift_diterima, 0, 1, 'L');
+$pdf->Cell(10, 0.5, "DAN RU                        : ". $danru, 0, 1, 'L');
 
 $pdf->Ln();
 
@@ -65,7 +73,7 @@ $pdf->Cell(4,1,'KETERANGAN','BTR',1,'C'); //vertically merged cell
 // DATA OPERASIONAL SHIFT
 $no = 1;
 $sql = "SELECT * FROM `tb_mutasi_shift_1_to_gs` WHERE  
-        DATE(dibuat_pada) = '$date' AND jenis = '$shift'
+        DATE(dibuat_pada) = '$date' AND jenis = '$shift_diterima'
         ORDER BY id_mutasi_1_to_GS ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
@@ -96,7 +104,7 @@ $pdf->Cell(10, 2, 'BARANG INVENTARIS :', 0, 1, 'L');
 // DATA BARANG INVENTARIS
 $no = 1;
 $sql = "SELECT * FROM `tb_logs_barang_inventaris_mutasi_shift` WHERE  
-        DATE(date_created) = '$date' AND shift = '$shift'
+        DATE(date_created) = '$date' AND shift = '$shift_diterima'
         ORDER BY ID_logs_barang_inventaris ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
@@ -127,7 +135,7 @@ function tableHeader() {
 // DATA URAIAN MUTASI
 $no = 1;
 $sql = "SELECT * FROM `tb_logs_activity_mutasi_shift` WHERE  
-        DATE(dibuat_pada) = '$date' AND shift = '$shift'
+        DATE(dibuat_pada) = '$date' AND shift = '$shift_diterima'
         ORDER BY id_logs_activity_shift ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
@@ -161,27 +169,27 @@ $pdf->Ln();
 $pdf->Cell(0.1, 0.5, 'DITERIMA, ', 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'DISERAHKAN, ', 0, 0, 'C');
 $pdf->Cell(0, 0.5, 'PETUGAS, ', 0, 1, 'R');
-$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift, 0, 0, 'L');
-$pdf->Cell(0, 0.5, 'SHIFT  '. $shift, 0, 0, 'C');
-$pdf->Cell(0, 0.6, '......  ', 0, 0, 'R');
+$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift_diterima, 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'SHIFT  '. $shift_diserahkan, 0, 0, 'C');
+$pdf->Cell(0, 0.6,  '', 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(0.1, 4, '..........................', 0, 0, 'L');
-$pdf->Cell(0, 4, '..............................', 0, 0, 'C');
-$pdf->Cell(0, 4, '...........................', 0, 0, 'R');
+$pdf->Cell(0.1, 4, $security_diterima, 0, 0, 'L');
+$pdf->Cell(0, 4, $security_diserahkan, 0, 0, 'C');
+$pdf->Cell(0, 4, $petugas, 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(28, 2, 'MENGETAHUI', 0, 1, 'C');
-$pdf->Cell(29, 0.5, 'KOMANDAN REGU, ', 0, 0, 'L');
+$pdf->Cell(29, 0.5, 'DANRU, ', 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'HR / GA, ', 0, 1, 'R');
 
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(29, 4, '..................', 0, 0, 'L');
-$pdf->Cell(0, 4, 'RUDY HARYOKO', 0, 0, 'R');
+$pdf->Cell(29, 4, $danru, 0, 0, 'L');
+$pdf->Cell(0, 4, $HR, 0, 0, 'R');
 
 
 

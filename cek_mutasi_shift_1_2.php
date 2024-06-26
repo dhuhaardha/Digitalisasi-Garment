@@ -29,60 +29,52 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Mutasi Shift 1 & 2 Checking</h3>
-                        </div>
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h3 class="m-0 text-dark">Mutasi Shift 1 & 2 Checking</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF
+                        </button>
+</div>
+
 
                         <div class="card-body">
-                        <form action=""> 
-                            <select name="customers" onchange="showCustomer(this.value)" style="width: 17%;" class="form-control form-control-lg">
+                        <div class="row">
+    <div class="col-sm">
+    <select name="jenis" onchange="showCustomer(this.value)" style="width: 90%;" class="form-control form-control-lg">
                                 <option value="">Select a Shift:</option>
                                 <option value="1">Shift 1</option>
                                 <option value="2">Shift 2</option>
                                 <option value="GS">Shift GS</option>
                             </select>
-                        </form>
+    </div>
+    <div class="col-sm">
+      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShift1">
+        <i class="fa-solid fa-plus">&nbsp</i>
+        Input Shift 1
+        <i class="fa-solid fa-plus">&nbsp</i>
+    </button>
+    </div>
+    <div class="col-sm">
+      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShift2">
+        <i class="fa-solid fa-plus">&nbsp</i>
+        Input Shift 2
+        <i class="fa-solid fa-plus">&nbsp</i>
+    </button>
+    </div>
+    <div class="col-sm">
+      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShiftGS">
+        <i class="fa-solid fa-plus">&nbsp</i>
+        Input Shift GS
+        <i class="fa-solid fa-plus">&nbsp</i>
+    </button>
+    </div>
+  </div>
+                            
                         
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
                             </p>
 
                             </br>
-
-                            <div class="row">
-                                <div class="card text-center">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
-                                        
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahShift1">
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                            Input Shift 1
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahShift2">
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                            Input Shift 2
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahShiftGS">
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                            Input Shift GS
-                                            <i class="fa-solid fa-plus">&nbsp</i>
-                                        </button>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
+                            
                             <div class="row">
                                 <div class="table-responsive">
                                 <table class='table table-bordered' id='dataTable' width='100%'' cellspacing='0'>
@@ -127,20 +119,137 @@ session_start();
                                 </div>
                                 <form method="POST" action="print_mutasi_shift_1_to_gs.php" target="_blank">
                                     <div class="modal-body">
-                                        <div class="row mb-3">
+                                    <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                             <div class="col-sm-10">
                                                 <input type="date" name="input_print_pdf" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Shift</label>
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Mulai</label>
                                             <div class="col-sm-10">
-                                            <select id="inputState" class="form-select" name="shift">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <input type="time" name="input_time_mulai" class="form-control" placeholder="Jam mulai" min="00:00" max="23:59">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Selesai</label>
+                                            <div class="col-sm-10">
+                                                <input type="time" name="input_time_selesai" class="form-control" placeholder="Jam selesai" min="00:00" max="23:59">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Petugas
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_petugas" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH PETUGAS...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Danru
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH DANRU...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Diterima</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="input_diterima_shift">
+                                                    <option selected disabled>DITERIMA SHIFT...</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Oleh
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_diterima" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DITERIMA)...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Diserahkan</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="input_diserahkan_shift">
+                                                    <option selected disabled>DISERAHKAN SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Oleh
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_diserahkan" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DISERAHKAN)...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">HR/GA</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="input_hr">
+                                                    <option selected disabled>DISERAHKAN HR...</option>
+                                                    <option value="REDY HARYOKO">REDY HARYOKO</option>
+                                                    <option value="RIZKI AKBAR">RIZKI AKBAR</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -173,23 +282,21 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                <input list="securityList" class="form-control" name="nama">
-                                                    <datalist id="securityList">
+                                                    <select class="form-control selectpicker" name="nama" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                         <?php
-                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
-                                                        $result = mysqli_query($koneksi, $sql);
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
-                                                        // Populate datalist options
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "'>";
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No security available</option>";
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
                                                         }
-                                                        // Close database connection
-                                                        ?>
-                                                    </datalist>
+                                                    ?>
+                                                    
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -320,23 +427,21 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                <select class="form-control" name="nama">
+                                                <select class="form-control selectpicker" name="nama" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                         <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
-                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
-                                                        $result = mysqli_query($koneksi, $sql);
-                        
-                                                        // Populate select options
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No security available</option>";
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
                                                         }
-                                                        // Close database connection
-                                                        ?>
-                                                    </select>
+                                                    ?>
+                                                    
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -466,23 +571,21 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                <select class="form-control" name="nama">
+                                                <select class="form-control selectpicker" name="nama" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                         <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
-                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
-                                                        $result = mysqli_query($koneksi, $sql);
-                        
-                                                        // Populate select options
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No security available</option>";
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
                                                         }
-                                                        // Close database connection
-                                                        ?>
-                                                    </select>
+                                                    ?>
+                                                    
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -822,7 +925,7 @@ function showCustomer(int) {
   xhttp.onload = function() {
     document.getElementById("txtHint").innerHTML = this.responseText;
   }
-  xhttp.open("GET", "getseccurityshift.php?q="+int);
+  xhttp.open("GET", "getseccurityshift.php?q="+int, true);
   xhttp.send();
 }
 </script>

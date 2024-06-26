@@ -29,30 +29,23 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h3 class="m-0 text-dark">Uraian Kegiatan Kontrol Pagar</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
                         </div>
 
                         <div class="card-body">
 
 
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
+                            
 
                             </br>
 
                             <div class="row">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahUraian">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Logs Operasional Kegiatan Hari Ini
@@ -200,6 +193,30 @@ session_start();
                                                     <input type="text" class="form-control" id="time" name="time_kontrol_finished" value="<?php echo date('H:i:s'); ?>" readonly>
                                                 </div>
                                             </div>
+                                            <script>
+                                                // Function to update the time field
+                                                function updateTime() {
+                                                    // Get the current time
+                                                    var currentTime = new Date();
+                                                    var hours = currentTime.getHours();
+                                                    var minutes = currentTime.getMinutes();
+                                                    var seconds = currentTime.getSeconds();
+
+                                                    // Format the time with leading zeros if necessary
+                                                    hours = (hours < 10 ? "0" : "") + hours;
+                                                    minutes = (minutes < 10 ? "0" : "") + minutes;
+                                                    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+                                                    // Display the formatted time in the input field
+                                                    document.getElementById("time").value = hours + ":" +
+                                                        minutes +
+                                                        ":" + seconds;
+                                                }
+
+                                                // Update the time initially and every second
+                                                updateTime(); // Initial update
+                                                setInterval(updateTime, 1000); // Update every second
+                                            </script>
                                             <!-- Add other fields related to pengambilan here -->
                                         </div>
                                     </div>

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
     <link href="vendor/woff/font.css" rel="stylesheet">
 
+    <link  href="timepicker/timepicker.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 

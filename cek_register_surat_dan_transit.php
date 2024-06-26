@@ -35,31 +35,27 @@ session_start();
                 <div class="container-fluid">
 
                     <!-- Container Data Karyawan -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Register Surat dan Transit Paket Checking</h3>
-                        </div>
+                
+                            
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h3 class="m-0 text-dark">Register Surat dan Transit Paket Checking</h3>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                                        <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                                    </button>
+                                </div>
 
                         <div class="card-body">
 
 
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
+                           
 
                             </br>
 
                             <div class="row">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
+                                       
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Operasional Surat dan Transit Hari Ini
@@ -187,11 +183,15 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div id="pengambilanFields">
+                                            <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                                             <div class="row mb-3">
-                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Date
-                                                    Register</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jenis Barang</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                                <select id="inputState" class="form-select" name="jenis_transit" required>
+                                                    <option value="">PILIH JENIS TRANSIT....</option>
+                                                    <option value="SURAT PERUSAHAAN">SURAT PERUSAHAAN</option>
+                                                    <option value="PAKET">PAKET</option>
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -247,7 +247,6 @@ session_start();
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Kondisi Barang</label>
                                                 <div class="col-sm-10">
                                                 <select id="inputState" class="form-select" name="kondisi_barang">
-                                                    <option selected disabled>Choose Dept...</option>
                                                     <option value="Baik">Baik</option>
                                                     <option value="Rusak">Rusak</option>
                                                     <option value="Basah">Basah</option>
@@ -258,7 +257,22 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Security</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="security_recieved">
+                                                    
+                                                    <select class="form-control selectpicker" name="security_recieved" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -300,29 +314,11 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div>
-                                            <input type="text" id="IDInput" class="form-control" name="ID_register" placeholder="Selected Date">
+                                            <input type="hidden" id="IDInput" class="form-control" name="ID_register" placeholder="Selected Date">
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Penerima</label>
                                                 <div class="col-sm-10">
-                                                    <!-- Add select options for nama from tb_list_security -->
-                                                    <select class="form-control" name="person_office_recieved">
-                                                        <?php
-
-                                                        $sql = "SELECT tbls_uid, tbls_nama FROM tb_list_security ORDER BY tbls_nama ASC";
-                                                        $result = mysqli_query($koneksi, $sql);
-                        
-                                                        // Populate select options
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='". $row['tbls_nama'] ."'>". $row['tbls_nama'] ."</option>";
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No keys available</option>";
-                                                        }
-                                                        // Close database connection
-                                                        ?>
-                                                    </select>
-                    
+                                                    <input type="text" class="form-control" id="" name="person_office_recieved">
                                                 </div>
                                             </div>
                                             <!-- Your existing HTML code -->

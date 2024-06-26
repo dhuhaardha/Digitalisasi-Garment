@@ -29,30 +29,18 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Kunci Ruangan Checking</h3>
-                        </div>
-
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h3 class="m-0 text-dark">Kunci Ruangan Checking</h3>                      
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+</div>
                         <div class="card-body">
-
-
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
-
-                            </br>
 
                             <div class="row">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
+                                       
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Operasional Kunci Ruangan Hari Ini
@@ -252,13 +240,9 @@ session_start();
                                             </div>
                                         </div>
                                         <div id="pengambilanFields" style="display: none;">
-                                            <div class="row mb-3">
-                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Date
-                                                    Pengambilan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengambilanDate" name="date_retrieval" value="<?php echo date('Y-m-d'); ?>">
-                                                </div>
-                                            </div>
+                                            
+                                                    <input type="hidden" class="form-control" id="pengambilanDate" name="date_retrieval" value="<?php echo date('Y-m-d'); ?>">
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengambilan</label>
@@ -342,13 +326,9 @@ session_start();
                                             <!-- Add other fields related to pengambilan here -->
                                         </div>
                                         <div id="pengembalianFields" style="display: none;">
-                                            <div class="row mb-3">
-                                                <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
-                                                </div>
-                                            </div>
+                                           
+                                                    <input type="hidden" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
+                                           
                                             
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
@@ -373,13 +353,9 @@ session_start();
                                             <!-- Add other fields related to pengembalian here -->
                                         </div>
                                         <div id="serahTerimaFields" style="display: none;">
-                                            <div class="row mb-3">
-                                                <label for="serahTerimaDate" class="col-sm-2 col-form-label">Date Serah
-                                                    Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="serahTerimaDate" name="date_handover" value="<?php echo date('Y-m-d'); ?>">
-                                                </div>
-                                            </div>
+                                           
+                                                    <input type="hidden" class="form-control" id="serahTerimaDate" name="date_handover" value="<?php echo date('Y-m-d'); ?>">
+                                           
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Serah Terima</label>
@@ -402,21 +378,51 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    Serah Terima</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_name" name="signature_handover">
+                                                        <canvas id="signatureCanvasPengambilan" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenamePengambilan" name="signatureFilenamePengambilan">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to serah terima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_tambah_operasional_keyroom" class="btn btn-success">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_tambah_operasional_keyroom" class="btn btn-success" id="saveSignatureBtnPengambilan">Add</button>
+                                        <button class="btn btn-primary" id="clear_signaturePengambilan" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvasPengambilan = document.getElementById('signatureCanvas');
+        var signaturePadPengambilan = new SignaturePad(canvasPengambilan, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signaturePengambilan').addEventListener('click', function() {
+            signaturePadPengambilan.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtnPengambilan').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePadPengambilan.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilenamePengambilan').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -497,14 +503,10 @@ session_start();
                                         <div>
                                             <input type="hidden" id="InputID" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
-                                            <div class="row mb-3">
-                                                <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
-                                                    Pengembalian
-                                                </label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
-                                                </div>
-                                            </div>
+                                            
+                                            
+                                                    <input type="hidden" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengembalian</label>
@@ -544,20 +546,51 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    Pengembalian</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_name" name="signature_returned">
+                                                        <canvas id="signatureCanvasPengembalian" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenamePengembalian" name="signatureFilenamePengembalian">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to pengembalian here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_keyroom_to_pengembalian" class="btn btn-success">Add</button>
+                                        <button type="submit" name="tombol_enable_change_status_keyroom_to_pengembalian" class="btn btn-success" id="saveSignatureBtnPengembalian">Add</button>
+                                        <button class="btn btn-primary" id="clear_signaturePengembalian" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvasPengembalian = document.getElementById('signatureCanvasPengembalian');
+        var signaturePadPengembalian = new SignaturePad(canvasPengembalian, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signaturePengembalian').addEventListener('click', function() {
+            signaturePadPengembalian.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtnPengembalian').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePadPengembalian.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilenamePengembalian').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -579,14 +612,10 @@ session_start();
                                         <div>
                                             <input type="hidden" id="IDInput" class="form-control" name="ID_kunci_ruangan" placeholder="Selected Date">
 
-                                            <div class="row mb-3">
-                                                <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
-                                                    Serah Terima
-                                                </label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_handover" value="<?php echo date('Y-m-d'); ?>">
-                                                </div>
-                                            </div>
+                                            
+                                            
+                                                    <input type="hidden" class="form-control" id="pengembalianDate" name="date_handover" value="<?php echo date('Y-m-d'); ?>">
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Serah Terima</label>
@@ -626,20 +655,51 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    Serah Terima</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_name" name="signature_handover">
+                                                        <canvas id="signatureCanvasSerahTerima" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenameSerahTerima" name="signatureFilenameSerahTerima">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to serahterima here -->
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_keyroom_to_serahterima" class="btn btn-success">Add</button>
+                                        <button type="submit" name="tombol_enable_change_status_keyroom_to_serahterima" class="btn btn-success" id="saveSignatureBtnSerahTerima">Add</button>
+                                        <button class="btn btn-primary" id="clear_signatureSerahTerima" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvasSerahTerima = document.getElementById('signatureCanvasSerahTerima');
+        var signaturePadSerahTerima = new SignaturePad(canvasSerahTerima, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signatureSerahTerima').addEventListener('click', function() {
+            signaturePadSerahTerima.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtnSerahTerima').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePadSerahTerima.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilenameSerahTerima').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>

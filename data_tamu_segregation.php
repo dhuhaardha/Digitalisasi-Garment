@@ -33,10 +33,13 @@ session_start();
                 <div class="container-fluid">
 
                     <!-- Container Data Karyawan -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Visitor Data</h3>
-                            </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h3 class="m-0 text-dark">Visitor Segregation Data</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+                        </div>
 
                             <div class="card-body">
                                 <div class="row">
@@ -82,7 +85,7 @@ session_start();
                                                                 <?php
                                                                     if ($tabelCari['tbrt_tgl_keluar'] == ''){
                                                                 ?>
-                                                                    <button type="button" class="btn btn-danger btn-sm showButton" data-toggle="modal" data-target="#ModalSelesaiPatroli">
+                                                                    <button type="button" class="btn btn-danger btn-sm showButton" data-toggle="modal" data-target="#ModalSelesaiPatroli" value="<?php echo $tabelCari['tbrt_uid']; ?>">
                                                                         <i class="fa-solid fa-person-circle-xmark"></i> <b>Check Out</b>
                                                                     </button>
                                                                 <?php
@@ -96,7 +99,160 @@ session_start();
                                                                     }
                                                                 ?>
 
-                                                                
+                                                                <!-- Modal Cetak PDF -->
+                                                                <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Export to PDF</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="print_tamu_for_gs.php" target="_blank">
+                                    <div class="modal-body">
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
+                                            <div class="col-sm-9">
+                                                <input type="date" name="input_print_pdf" class="form-control">
+                                                <input type="hidden" name="input_jns_kunjungan" value="B007" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-3 col-form-label">Petugas
+                                                    </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control selectpicker" name="input_nama_petugas" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH PETUGAS...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                            
+                                        <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Petugas</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-3">
+                                                        <canvas id="signatureCanvasPetugas" width="300" height="150"></canvas>
+                                                        <button class="btn btn-primary" id="clear_signaturePetugas" type="button">Clear Signature</button>
+                                                    <input type="hidden" class="form-control" id="signatureFilenamePetugas" name="signatureFilenamePetugas">
+                                                </div>
+                                            </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-3 col-form-label">Danru
+                                                    </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH DANRU...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-3">
+                                                        <canvas id="signatureCanvasCommander" width="300" height="150"></canvas>
+                                                        <button class="btn btn-primary" id="clear_signature_commander" type="button">Clear Signature</button>
+                                                    <input type="hidden" class="form-control" id="signatureFilenameCommander" name="signatureFilenameCommander">
+                                                </div>
+                                        </div>
+                                        
+                                            <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">HR/GA</label>
+                                            <div class="col-sm-9">
+                                            <select id="inputState" class="form-select" name="input_hr">
+                                                    <option selected disabled>DISERAHKAN HR...</option>
+                                                    <option value="REDY HARYOKO">REDY HARYOKO</option>
+                                                    <option value="RIZKI AKBAR">RIZKI AKBAR</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" target="_blank" class="btn btn-success">Export</button>
+                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                        <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pads
+        var canvasPetugas = document.getElementById('signatureCanvasPetugas');
+        var signaturePadPetugas = new SignaturePad(canvasPetugas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        var canvasCommander = document.getElementById('signatureCanvasCommander');
+        var signaturePadCommander = new SignaturePad(canvasCommander, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function for the first pad
+        document.getElementById('clear_signaturePetugas').addEventListener('click', function() {
+            signaturePadPetugas.clear(); // Clear the first signature pad
+        });
+
+
+        // Clear Signature function for the second pad
+        document.getElementById('clear_signature_commander').addEventListener('click', function() {
+            signaturePadCommander.clear(); // Clear the second signature pad
+        });
+
+        // Form submission for the first pad
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the first signature
+            var dataURL1 = signaturePadPetugas.toDataURL();
+
+            // Set the data URL to the hidden input field for the first pad
+            document.getElementById('signatureFilenamePetugas').value = dataURL1;
+        });
+
+        // Form submission for the second pad
+        document.getElementById('saveSignatureBtnCommander').addEventListener('click', function() {
+            // Get the data URL of the second signature
+            var dataURL2 = signaturePadCommander.toDataURL();
+
+            // Set the data URL to the hidden input field for the second pad
+            document.getElementById('signatureFilenameCommander').value = dataURL2;
+        });
+    });
+</script>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
 
                                                                     <!-- Modal Selesai Patroli -->
                                                                         <div class="modal fade" id="ModalSelesaiPatroli" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,37 +265,9 @@ session_start();
                                                                                         </button>
                                                                                     </div>
                                                                                     <form method="POST" action="aksi_security.php">
-                                                                                        <div class="modal-body">
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">UID</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_uid" name="show_uid" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3 d-none">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Card UID</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_card_uid" name="show_card_uid" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Card</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_card" name="show_card" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_name" name="show_name" readonly>
-                                                                                                    </div>
-                                                                                            </div>
-                                                                                            <div class="row mb-3">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Purpose</label>
-                                                                                                    <div class="col-sm-10">
-                                                                                                        <textarea class="form-control" id="show_purpose" name="show_purpose" rows="5" readonly></textarea>
-                                                                                                    </div>
-                                                                                            </div>
+                                                                                    <div class="modal-body">
+                                                                                            <h5 class="text-center"> Apakah anda yakin ingin Check out Card</h5>
+                                                                                                        <input type="text" class="form-control" id="IDInput" name="show_uid" readonly>
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <button type="submit" name="tombol_checkout_visitor" class="btn btn-success">Check Out</button>
@@ -214,27 +342,22 @@ session_start();
 
     <!-- Script Button -->
     <script>
-        $(document).ready(function () {
+            // Get all elements with the data-target attribute
+            var buttons = document.querySelectorAll(
+                '[data-target="#ModalSelesaiPatroli"]');
 
-            $('.showButton').on('click', function () {
-                $('#viewmodal').modal('show');
-                $tr = $(this).closest('tr');
+            // Loop through each button
+            buttons.forEach(function(button) {
+                // Add click event listener to the button
+                button.addEventListener("click", function() {
+                    // Get the value from the button
+                    var IDValue = button.value;
 
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#show_uid').val(data[0]);
-                $('#show_card_uid').val(data[1]);
-                $('#show_card').val(data[5]);
-                $('#show_name').val(data[6]);
-                $('#show_purpose').val(data[8]);
+                    // Set the value to the input field
+                    document.getElementById("IDInput").value = IDValue;
+                });
             });
-
-        });
-    </script>
+        </script>
                                                     
 
     <!-- Cek Session -->

@@ -36,15 +36,7 @@ session_start();
                         <div class="card-body">
 
 
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
-
-                            </br>
+                            
 
                             <div class="row">
                                 <div class="card text-center">

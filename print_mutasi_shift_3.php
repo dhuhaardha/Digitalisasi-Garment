@@ -17,12 +17,17 @@ if(!$koneksi){ // cek koneksi
 
 $date = $_POST['input_print_pdf'];
 $shift = '3';
+$shift_diterima = $_POST['input_diterima_shift'];
+$security_diterima = $_POST['input_nama_diterima'];
+$shift_diserahkan = '3';
+$security_diserahkan = $_POST['input_nama_diserahkan'];
+$HR = $_POST['input_hr'];
 
 // BUAT PDF BARU
 $pdf = new FPDF('L','cm','A4');
 
 // SET MARGIN LEFT, TOP, AND RIGHT
-$pdf->SetMargins(0.5, 0.5, 0.5, 0.5);
+$pdf->SetMargins(0.5, 0.5, 0.5);
 
 // SET NEW PAGE PDF
 $pdf->AddPage();
@@ -32,11 +37,11 @@ $pdf->SetFont('Times', 'B', 10);
 
 
 // AWAL REPORT HEADER
-$pdf->Cell(10, 1, 'PT UNGARAN SARI GARMENTS', 0, 0, 'L');
+$pdf->Cell(18, 1, 'PT UNGARAN SARI GARMENTS', 0, 0, 'L');
 $pdf->Cell(10, 1, "HARI/TANGGAL : " . $date, 0, 1, 'R');
-$pdf->Cell(10, 0.5, 'SECURITY - UNGARAN', 0, 0, 'L');
-$pdf->Cell(10, 0.5, "JAM                        : " . $date, 0, 1, 'R');
-$pdf->Cell(20, 1, 'SHIFT/DAN RU      :   3/3', 0, 1, 'C');
+$pdf->Cell(18, 0.5, 'SECURITY - UNGARAN', 0, 0, 'L');
+$pdf->Cell(10, 0.5, "JAM                        : 22:00 - 06:00", 0, 1, 'R');
+$pdf->Cell(28, 1, 'SHIFT/DAN RU      :   3/3', 0, 1, 'C');
 
 $pdf->SetFont('Times', 'B', 7);
 
@@ -93,21 +98,45 @@ $pdf->Cell(1.2,0.5,'' . $row['NIK'] . '','LB',0,'C'); //vertically merged cell
 $pdf->Cell(1.4,0.5,'' . $row['jabatan'] . '','RLB',0,'C'); //vertically merged cell
 $pdf->Cell(1.2,0.5,'' . $row['keterangan'] . '','BR',0,'C'); //vertically merged cell
 $pdf->Cell(0.7,0.5,'' . $row['pos_10'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_10'] . '','BLR',0,'C');
+$imagePath = $row['paraf_10']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_11'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_11'] . '','BLR',0,'C');
+$imagePath = $row['paraf_11']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_12'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_12'] . '','BLR',0,'C');
+$imagePath = $row['paraf_12']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_01'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_01'] . '','BLR',0,'C');
+$imagePath = $row['paraf_01']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_02'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_02'] . '','BLR',0,'C');
+$imagePath = $row['paraf_02']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_03'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_03'] . '','BLR',0,'C');
+$imagePath = $row['paraf_03']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_04'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_04'] . '','BLR',0,'C');
+$imagePath = $row['paraf_04']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 $pdf->Cell(0.7,0.5,'' . $row['pos_05'] . '','B',0,'C');
-$pdf->Cell(1,0.5,'' . $row['paraf_05'] . '','BLR',1,'C');
+$imagePath = $row['paraf_05']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(1, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+    }
 }
 
 // BAGIAN BARANG INVENTARIS
@@ -187,13 +216,13 @@ $pdf->Ln();
 // BAGIAN TANDA TANGAN
 $pdf->Cell(0.1, 0.5, 'DITERIMA, ', 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'DISERAHKAN, ', 0, 1, 'R');
-$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift, 0, 0, 'L');
-$pdf->Cell(0, 0.5, 'SHIFT  '. $shift, 0, 0, 'R');
+$pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift_diterima, 0, 0, 'L');
+$pdf->Cell(0, 0.5, 'SHIFT  '. $shift_diserahkan, 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(0.1, 4, '..........................', 0, 0, 'L');
-$pdf->Cell(0, 4, '...........................', 0, 0, 'R');
+$pdf->Cell(0.1, 4, $security_diterima, 0, 0, 'L');
+$pdf->Cell(0, 4, $security_diserahkan, 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'B', 10);
@@ -203,7 +232,7 @@ $pdf->Cell(28, 0, 'HR / GA', 0, 1, 'C');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(28, 8, 'RUDY HARYOKO', 0, 1, 'C');
+$pdf->Cell(28, 8, $HR, 0, 1, 'C');
 
 
 

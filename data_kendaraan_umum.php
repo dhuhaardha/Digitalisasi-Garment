@@ -34,30 +34,16 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Public Vehicle Registration</h3>
-                            </div>
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h3 class="m-0 text-dark">Public Vehicle Registration</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+</div>
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col align-self-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                                Export PDF
-                                        </button>
-                                    </div>
-                                </div>
                                 
-                                </br>
-
-                                <p class="fs-3 fw-bold text-center">
-                                    PT. UNGARAN SARI GARMENTS </br>
-                                    SECURITY - UNGARAN </br>
-                                    </br>
-                                    PUBLIC VEHICLE REGISTRATION</br>
-                                </p>
-
-                                </br>
+                                
                                 
                                 <div class="row">
                                     <div class="table-responsive">
@@ -139,12 +125,12 @@ session_start();
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <form method="POST" action="cetak_cek_cctv.php" target="_blank">
+                        <form method="POST" action="print_kendaraan_umum.php" target="_blank">
                             <div class="modal-body">
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Month</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                         <div class="col-sm-10">
-                                            <input type="month" name="input_print_pdf" class="form-control">
+                                            <input type="date" name="input_print_pdf" class="form-control">
                                         </div>
                                 </div>                                
                             </div>

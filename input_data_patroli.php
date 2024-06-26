@@ -64,7 +64,7 @@ session_start();
                                         <label class="col-sm-2 col-form-label" for="unit">Nama Security</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control selectpicker" name="input_nama_security" data-live-search="true">
-                                                <option value="0" selected>PILIH SECURITY...</option>
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                     <?php
                                                         $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tbls_status LIKE 'ACTIVE' ORDER BY tbls_nama ASC");
 
@@ -146,7 +146,7 @@ session_start();
                                                             <td><?php echo $tabelCari['tbrp_tgl_mulai'] . " - " . $tabelCari['tbrp_jam_mulai']; ?></td>
                                                             <td><?php echo $tabelCari['tbls_uid'] . " - " . $tabelCari['tbls_nama']; ?></td>
                                                             <td>
-                                                                <button type="button" class="btn btn-warning btn-sm showButton" data-toggle="modal" data-target="#ModalSelesaiPatroli">
+                                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ModalSelesaiPatroli">
                                                                     <i class="fa-solid fa-clipboard-check"></i> <b>Finish Patrol</b>
                                                                 </button>
 
@@ -165,19 +165,19 @@ session_start();
                                                                                             <div class="row mb-3">
                                                                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">UID</label>
                                                                                                     <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_uid" name="show_uid" readonly>
+                                                                                                        <input type="text" class="form-control" value="<?php echo $tabelCari['tbrp_uid']; ?>" name="show_uid" readonly>
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
                                                                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe</label>
                                                                                                     <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_type" name="show_type" readonly>
+                                                                                                        <input type="text" class="form-control" value="<?php echo $tabelCari['tblu_nm_buku']; ?>" name="show_type" readonly>
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
                                                                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
                                                                                                     <div class="col-sm-10">
-                                                                                                        <input type="text" class="form-control" id="show_name" name="show_name" readonly>
+                                                                                                        <input type="text" class="form-control" value="<?php echo $tabelCari['tbls_uid'] . " - " . $tabelCari['tbls_nama']; ?>" name="show_name" readonly>
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div class="row mb-3">
@@ -257,6 +257,27 @@ session_start();
                 </div>
             </div>
         </div>
+
+        <script>
+        $(document).ready(function () {
+
+            $('.showButton').on('click', function () {
+                $('#viewmodal').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#show_uid').val(data[0]);
+                $('#show_type').val(data[2]);
+                $('#show_name').val(data[4]);
+            });
+
+        });
+    </script>
 
         <!-- Cek Session -->
         <?php

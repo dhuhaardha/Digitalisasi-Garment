@@ -63,48 +63,31 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h3 class="m-0 text-dark">Shipment Vehicle Registration</h3>
-                            </div>
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h3 class="m-0 text-dark">Registrasi Kendaraan Shipment</h3>
+                        
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+</div>
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col align-self-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                                Export PDF
-                                        </button>
-                                    </div>
-                                </div>
                                 
-                                </br>
-
-                                <p class="fs-3 fw-bold text-center">
-                                    PT. UNGARAN SARI GARMENTS </br>
-                                    SECURITY - UNGARAN </br>
-                                    </br>
-                                    SHIPMENT VEHICLE REGISTRATION</br>
-                                </p>
-
-                                </br>
                                 
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <form method="POST" action="aksi_security.php">
+                                    <form method="POST" action="data_out_kendaraan.php">
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Tanggal</th>
                                                         <th>Masuk</th>
                                                         <th>Keluar</th>
                                                         <th>Nomor Kartu</th>
+                                                        <th>Nama Driver</th>
                                                         <th>Tipe Kendaraan</th>
-                                                        <th>Under Mirror</th>
                                                         <th>Keterangan</th>
-                                                        <th>Tipe SIM</th>
-                                                        <th>Nomor SIM</th>
-                                                        <th>Paraf</th>
+                                                        <th>TTD</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -113,36 +96,44 @@ session_start();
                                                         <!-- data informasi karyawan dari database -->
                                                         <?php
                                                             $noUrut = 1;
-                                                            $vehicleQuery = mysqli_query($koneksi,"SELECT * FROM tb_kendaraan LEFT JOIN tb_list_card ON tb_kendaraan.tbrk_no_card = tb_list_card.tblic_uid");
+                                                            $vehicleQuery = mysqli_query($koneksi,"SELECT * FROM tb_kendaraan 
+                                                                                                    LEFT JOIN tb_list_card ON tb_kendaraan.tbrk_no_card = tb_list_card.tblic_uid
+                                                                                                    LEFT JOIN tb_list_kendaraan ON tb_kendaraan.tbrk_jns_kendaraan = tb_list_kendaraan.tblk_uid");
                                                             while($listVehicle = mysqli_fetch_array($vehicleQuery)){
                                                         ?>
 
                                                             <tr>
                                                                 <td><?php echo $noUrut++; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_tanggal']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_masuk']; ?></td>
+                                                                <td><?php echo $listVehicle['tbrk_tanggal'] . " - " . $listVehicle['tbrk_masuk']; ?></td>
                                                                 <td>
                                                                     
                                                                         <?php 
                                                                             if (empty($listVehicle['tbrk_keluar'])){
                                                                         ?>
-                                                                            <button type="submit" class="btn btn-danger" name="tombol_checkout_kendaraan" value="<?php echo $listVehicle['tbrk_uid']; ?>">
+                                                                            <button type="submit" class="btn btn-danger" name="checkout_kendaraan" value="<?php echo $listVehicle['tbrk_uid']; ?>">
                                                                         <?php
                                                                                 echo "<i class='fa-solid fa-road-circle-xmark'></i>";
                                                                         ?>
                                                                             </button>
                                                                         <?php
                                                                             } else {
-                                                                                echo $listVehicle['tbrk_keluar'];
+                                                                                echo $listVehicle['tbrk_tanggal_out'] . " - " . $listVehicle['tbrk_keluar'];
                                                                             }
                                                                         ?>
                                                                 </td>
                                                                 <td><?php echo $listVehicle['tblic_no_id']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_jns_kendaraan']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_cek_mirror']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_ket']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_jns_sim']; ?></td>
-                                                                <td><?php echo $listVehicle['tbrk_no_sim']; ?></td>
+                                                                <td><?php echo $listVehicle['tbrk_nama_supir']; ?></td>
+                                                                <td><?php echo $listVehicle['tblk_nama_kendaraan']; ?></td>
+                                                                <td>
+                                                                    <?php echo "Transporter : " . $listVehicle['tbrk_nama_transporter'] . "</br>" .
+                                                                                "Buyer : " . $listVehicle['tbrk_nama_buyer'] . "</br>" .
+                                                                                "Qty : " . $listVehicle['tbrk_qty_kirim'] . "</br>" .
+                                                                                "Gatepass : " . $listVehicle['tbrk_no_gp'] . "</br>" .
+                                                                                "Destination : " . $listVehicle['tbrk_tujuan'] . "</br>" .
+                                                                                "Bodyguard : " . $listVehicle['tbrk_nm_pengawal'] . "</br>" .
+                                                                                "Delivery No : " . $listVehicle['tbrk_surat_jalan'] . "</br>" .
+                                                                                "Eseal No : " . $listVehicle['tbrk_no_eseal']; ?>
+                                                                </td>
                                                                 <td><img src="<?php echo $listVehicle['tbrk_ttd']; ?>" width="100px" height="100px"></td>
                                                             </tr>
 
@@ -171,12 +162,12 @@ session_start();
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <form method="POST" action="cetak_cek_cctv.php" target="_blank">
+                        <form method="POST" action="print_kendaraan_shipment.php" target="_blank">
                             <div class="modal-body">
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Month</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                         <div class="col-sm-10">
-                                            <input type="month" name="input_print_pdf" class="form-control">
+                                            <input type="date" name="input_print_pdf" class="form-control">
                                         </div>
                                 </div>                                
                             </div>

@@ -1,5 +1,6 @@
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<h5 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h5>
 
     <!-- Sidebar Toggle (Topbar) -->
     <form class="form-inline">

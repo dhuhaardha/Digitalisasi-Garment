@@ -69,17 +69,28 @@ $sql = "SELECT * FROM `tb_register_surat_transit` WHERE
         ORDER BY ID_register ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
-$pdf->Cell(2,1,$no++,'LB',0,'C');
-$pdf->Cell(5,1,'' . $row['date'] . '','LB',0,'C');
-$pdf->Cell(5,1,'' . $row['time'] . '','LB',0,'C');
-$pdf->Cell(6,1,'' . $row['pengirim'] . '','LRB',0,'C');
-$pdf->Cell(5,1,'' . $row['kurir'] . '','RB',0,'C');
-$pdf->Cell(6,1,'' . $row['kepada'] . '','B',0,'C');
-$pdf->Cell(5,1,'' . $row['kondisi_barang'] . '','LB',0,'C');
-$pdf->Cell(2,1,'' . $row['security_recieved'] . '','LRB',0,'C');
-$pdf->Cell(6, 1, $row['ttd_office'] . "\n" . $row['person_office_recieved'], 'B', 0, 'C');
-$pdf->Cell(8,1,'' . $row['amount'] . '','LB',0,'C');
-$pdf->Cell(7,1,'' . $row['keterangan'] . '','LRB',0,'C');
+$pdf->Cell(2,5,$no++,'LB',0,'C');
+$pdf->Cell(5,5,'' . $row['date'] . '','LB',0,'C');
+$pdf->Cell(5,5,'' . $row['time'] . '','LB',0,'C');
+$pdf->Cell(6,5,'' . $row['pengirim'] . '','LRB',0,'C');
+$pdf->Cell(5,5,'' . $row['kurir'] . '','RB',0,'C');
+$pdf->Cell(6,5,'' . $row['kepada'] . '','B',0,'C');
+$pdf->Cell(5,5,'' . $row['kondisi_barang'] . '','LB',0,'C');
+// $imagePath = $row['ttd_office'];
+//     if (file_exists($imagePath)) {
+    //         $pdf->Cell(5, 1, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8) . "\n" . $row['person_office_recieved'], 1, 0, 'L', true);
+    //     }else {
+        //         $pdf->Cell(6, 1, $row['ttd_office'] . "\n" . $row['person_office_recieved'], 'B', 0, 'C');
+        //     }
+        $pdf->Cell(2,5,'' . $row['amount'] . '','LB',0,'C');
+        $pdf->Cell(6,5,'' . $row['keterangan'] . '','LRB',0,'C');
+        $pdf->Cell(8,5,'' . $row['security_recieved'] . '','LRB',0,'C'); 
+        $imagePath = $row['ttd_office'];
+    if (file_exists($imagePath)) {
+            $pdf->Cell(7, 5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 7, 2.5) . "\n" . "\n" . $row['person_office_recieved'], 1, 1, 'C', false);
+        }else {
+$pdf->Cell(7, 5, '-', '1', 1, 'C');
+        }
 }
 
 

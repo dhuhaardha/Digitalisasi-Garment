@@ -29,37 +29,28 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h3 class="m-0 text-dark">Mutasi Shift Checking</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                            Export PDF
+                                        </button>
                         </div>
 
                         <div class="card-body">
 
-
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
-
                             </br>
 
                             <div class="row">
-                                <div class="card text-center">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
-                                        
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
+                                <div class=" text-center">
+                                    
+
+                                        <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Operasional Shift Hari Ini
                                         </button>
                                         
-                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -136,7 +127,9 @@ session_start();
                                                         <td><?php echo $Mutasi['pos_04']; ?></td>
                                                         
                                                         <td><?php echo $Mutasi['pos_05']; ?></td>
-                                                        <td><?php echo $Mutasi['paraf_05']; ?></td>
+                                                        <td><img src="<?php echo $Mutasi['paraf_05']; ?>" style="width: 100px; height: 50px;"></td>
+                                                        </td>
+                                                        
                                                         <td><?php echo $Mutasi['keterangan']; ?></td>
                                                         <td>
 
@@ -205,6 +198,69 @@ session_start();
                                                 <input type="date" name="input_print_pdf" class="form-control">
                                             </div>
                                         </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Diterima</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="input_diterima_shift">
+                                                    <option selected disabled>DITERIMA SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Oleh
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_diterima" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DITERIMA)...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                        <div class="row mb-3">
+                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Diserahkan
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control selectpicker" name="input_nama_diserahkan" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nama']; ?>" selected>PILIH SECURITY(DISERAHKAN)...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">HR/GA</label>
+                                            <div class="col-sm-10">
+                                            <select id="inputState" class="form-select" name="input_hr">
+                                                    <option selected disabled>DISERAHKAN HR...</option>
+                                                    <option value="REDY HARYOKO">REDY HARYOKO</option>
+                                                    <option value="RIZKI AKBAR">RIZKI AKBAR</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" target="_blank" class="btn btn-success">Export</button>
@@ -234,23 +290,21 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                <select class="form-control" name="nama">
+                                                <select class="form-control selectpicker" name="nama" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                         <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
-                                                        $sql = "SELECT tbls_nama FROM tb_list_security";
-                                                        $result = mysqli_query($koneksi, $sql);
-                        
-                                                        // Populate select options
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo "<option value='" . $row['tbls_nama'] . "''>" . $row['tbls_nama'] . "</option>";
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No security available</option>";
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
+
+                                                    <?php
                                                         }
-                                                        // Close database connection
-                                                        ?>
-                                                    </select>
+                                                    ?>
+                                                    
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -297,8 +351,8 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_10">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_10" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -375,8 +429,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_11">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_11" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -455,8 +509,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 12</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_12">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_12" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -533,8 +587,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 01</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_01">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_01" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -614,8 +668,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 02</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_02">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_02" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -695,8 +749,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 03</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_03">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_03" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -776,8 +830,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 04</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_04">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_04" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -857,8 +911,8 @@ session_start();
                                             <div class="row mb-3">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">POS 05</label>
                                                 <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="pos_05">
-                                                    <option selected disabled>Choose POS...</option>
+                                                <select id="inputState" class="form-select" name="pos_05" required>
+                                                    <option value="" selected>Choose POS...</option>
                                                     <option value="K">K</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>

@@ -281,17 +281,22 @@ if (isset($_POST['tombol_register_kendaraan'])){
     $uidVehicle = "REPVEHICLE/" . $_POST['input_nomor_kontainer'] . "/" . DATE('Y/m/d');
 
     $sim = $_POST['input_nomor_sim'];
-    $folderPath = "upload/";
-    $image_parts = explode(";base64,", $_POST['signature']);
-    $image_type_aux = explode("image/", $image_parts[0]);
+    $signatureData = $_POST['signatureFilename'];
 
-    $image_type = $image_type_aux[1];
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
 
-    $image_base64 = base64_decode($image_parts[1]);
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
 
-    $file = $folderPath . $sim . "_" . uniqid() . '.' . $image_type;
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
 
-    file_put_contents($file, $image_base64);
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_kendaraan (tbrk_uid, 
                                                                         tbrk_tanggal, 
@@ -318,7 +323,7 @@ if (isset($_POST['tombol_register_kendaraan'])){
                                                         UPPER('$_POST[input_tipe_sim]'),
                                                         UPPER('$_POST[input_nomor_sim]'),
                                                         UPPER('$_POST[input_nomor_kartu]'),
-                                                        '$file')");
+                                                        '$filePath')");
     
     $kartuQuery = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY' WHERE tblic_uid LIKE '$_POST[input_nomor_kartu]'");
 
@@ -415,6 +420,23 @@ if (isset($_POST['tombol_register_kendaraan_umum'])){
     // UID kendaraan
     $register = "PTU1/KU/" . $uidKendaraan;
 
+    $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
     $tambahQuery = mysqli_query($koneksi,"INSERT INTO tb_kendaraan_umum (tbu_uid,
                                                         tbu_tgl_masuk,
                                                         tbu_jam_masuk,
@@ -426,7 +448,8 @@ if (isset($_POST['tombol_register_kendaraan_umum'])){
                                                         tbu_nmr_kontainer,
                                                         tbu_nmr_seal,
                                                         tbu_bc_masuk,
-                                                        tbu_brg_masuk) 
+                                                        tbu_brg_masuk,
+                                                        tbu_ttd) 
                                             VALUES (UPPER('$register'),
                                                         DATE_FORMAT(NOW(),'%Y-%m-%d'),
                                                         DATE_FORMAT(NOW(),'%H:%s'),
@@ -438,7 +461,8 @@ if (isset($_POST['tombol_register_kendaraan_umum'])){
                                                         UPPER('$_POST[input_nomor_kontainer]'),
                                                         UPPER('$_POST[input_nomor_seal]'),
                                                         UPPER('$_POST[input_bc_masuk]'),
-                                                        UPPER('$_POST[input_barang_masuk]'))");
+                                                        UPPER('$_POST[input_barang_masuk]'),
+                                                        '$filePath')");
 
     $kartuQuery = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY' WHERE tblic_uid LIKE '$_POST[input_nomor_kartu]'");
 
@@ -468,7 +492,7 @@ if (isset($_POST['tombol_checkout_kendaraan_umum'])){
                                                                         tbu_jam_keluar = DATE_FORMAT(NOW(),'%H:%s'),
                                                                         tbu_bc_keluar = UPPER('$InputBC'),
                                                                         tbu_brg_keluar = UPPER('$InputBarangKeluar'),
-                                                                        tbu_nm_security = UPPER('$InputNamaSecurity')");
+                                                                        tbu_nm_security = UPPER('$InputNamaSecurity') WHERE tbu_uid LIKE '$InputUID'");
 
     $queryKartu = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY' WHERE tblic_no_id LIKE '$InputNoKartu'");
 
@@ -700,7 +724,26 @@ if (isset($_POST['tombol_register_tamu'])){
     $InputTujuanKunjungan = $_POST['input_tujuan_kunjungan'];
     $InputCekMetal = $_POST['input_cek_metal'];
     $InputCekMirror = $_POST['input_cek_mirror'];
-    $InputUID = "PTU1/" . $InputJenisKunjungan . "/" . $InputTanggalKunjungan;
+
+    $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
+    $uniqueID = uniqid();
+    $InputUID = "PTU1/" . $InputJenisKunjungan . "/" . $InputTanggalKunjungan . "/" . $uniqueID;
 
     $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_report_tamu (tbrt_uid,
                                                                         tbrt_jns_kunjungan,
@@ -713,7 +756,8 @@ if (isset($_POST['tombol_register_tamu'])){
                                                                         tbrt_cek_metal,
                                                                         tbrt_cek_mirror,
                                                                         tbrt_nmr_identitas,
-                                                                        tbrt_nmr_kartu)
+                                                                        tbrt_nmr_kartu,
+                                                                        tbrt_ttd_tamu)
                                             VALUES (UPPER('$InputUID'),
                                                     UPPER('$InputJenisKunjungan'),
                                                     '$InputTanggalKunjungan',
@@ -725,7 +769,8 @@ if (isset($_POST['tombol_register_tamu'])){
                                                     UPPER('$InputCekMetal'),
                                                     UPPER('$InputCekMirror'),
                                                     UPPER('$InputNomorIdentitas'),
-                                                    UPPER('$InputNomorKartu'))");
+                                                    UPPER('$InputNomorKartu'),
+                                                    '$filePath')");
 
     $queryUpdate = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'NOT READY'
                                             WHERE tblic_uid LIKE '$InputNomorKartu'");
@@ -745,16 +790,22 @@ if (isset($_POST['tombol_register_tamu'])){
 
 if (isset($_POST['tombol_checkout_visitor'])){
     $InputUID = $_POST['show_uid'];
-    $InputCard = $_POST['show_card_uid'];
     $InputTanggalKeluar = date("Y-m-d");
     $InputJamKeluar = date("h:i:s");
 
+    $query = mysqli_query($koneksi, "SELECT tbrt_nmr_kartu FROM tb_report_tamu WHERE tbrt_uid LIKE '$InputUID'");
+
+    if ($query) {
+        // Fetch row as an associative array
+        $data = mysqli_fetch_assoc($query);
+
+        $queryUpdateKartu = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY'
+                                                    WHERE tblic_uid LIKE '$data[tbrt_nmr_kartu]'");
+
+    }
     $queryUpdate = mysqli_query($koneksi,"UPDATE tb_report_tamu SET tbrt_tgl_keluar = '$InputTanggalKeluar',
                                                                     tbrt_jam_keluar = '$InputJamKeluar'
-                                            WHERE tbrt_uid LIKE '$InputUID' AND tbrt_nmr_kartu LIKE '$InputCard'");
-
-    $queryUpdateKartu = mysqli_query($koneksi,"UPDATE tb_list_card SET tblic_status = 'READY'
-                                                WHERE tblic_uid LIKE '$InputCard'");
+                                            WHERE tbrt_uid LIKE '$InputUID'");
 
     // session
     if($queryUpdate && $queryUpdateKartu){
@@ -788,6 +839,8 @@ if (isset($_POST['tombol_tambah_keyroom'])) {
 
     // Generating the new ID
     $register = "KeyR" . sprintf("%03s", $noUrut);
+
+    
 
     $tambahQuery = mysqli_query($koneksi, "INSERT INTO tb_list_key_room VALUES ('$register', UPPER('$_POST[input_name_key_room]'), '$_POST[input_amount_key_room]')");
 
@@ -988,6 +1041,23 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_serahterima'])) {
     $amount_handover = $selected_amount_of_key;
     $signature_handover = mysqli_real_escape_string($koneksi, $_POST['signature_handover']);
 
+    $signatureData = $_POST['signatureFilenameSerahTerima'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
     // Construct the SQL update query
     $updateQuery = "UPDATE tb_kunci_ruangan SET 
                         status = '$status',
@@ -995,7 +1065,7 @@ if (isset($_POST['tombol_enable_change_status_keyroom_to_serahterima'])) {
                         time_handover = '$time_handover', 
                         handover_to = UPPER('$handover_to'), 
                         amount_handover = '$amount_handover', 
-                        signature_handover = '$signature_handover'  
+                        signature_handover = '$filePath'  
                     WHERE ID_kunci_ruangan = '$ID_kunci_ruangan'";
 
     // Execute the update query
@@ -1048,25 +1118,22 @@ if (isset($_POST['tombol_tambah_key_vehicle'])) {
 
 if (isset($_POST['tombol_tambah_operasional_key_vehicle'])) {
     // Get the data URL of the canvas
-    $dataURL = $_POST['signatureData'];
-    
-    // Remove the "data:image/png;base64," part from the data URL
-    $data = substr($dataURL, strpos($dataURL, ",") + 1);
-    
-    // Decode the base64-encoded image data
-    $imageData = base64_decode($data);
-    
-    // Generate a unique filename for the image
-    $filename =  uniqid() . '.png';
-    
-    // Specify the folder path to store the images
-    $folderPath = "upload/";
-    
-    // Combine the folder path and filename to create the full path
-    $filePath = $folderPath . $filename;
-    
-    // Save the image data to a file
-    file_put_contents($filePath, $imageData);
+    $signatureData = $_POST['signatureFilenamePengambilanVehicle'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
 
     // Assuming $koneksi is your database connection
     $genUID = mysqli_query($koneksi, "SELECT MAX(id_vehicle_key) AS max_id FROM tb_kunci_kendaraan");
@@ -1118,7 +1185,7 @@ if (isset($_POST['tombol_tambah_operasional_key_vehicle'])) {
                  '$_POST[date_taken]',
                   '$_POST[time_taken]',
                    UPPER('$_POST[name_taken]'),
-                    '$filename',
+                    '$filePath',
                       UPPER('$_POST[submitted_to]'),
                       '$_POST[amount_taken]',
                        '$_POST[keterangan_taken]',
@@ -1142,7 +1209,7 @@ if (isset($_POST['tombol_tambah_operasional_key_vehicle'])) {
     }
 }
 
-if (isset($_POST['tombol_enable_change_status_key_vehicle'])) {
+    if (isset($_POST['tombol_enable_change_status_key_vehicle'])) {
 
     $id_vehicle_key = $_POST['id_vehicle_key'];
     $status = 'DISERAHKAN';
@@ -1160,13 +1227,30 @@ if (isset($_POST['tombol_enable_change_status_key_vehicle'])) {
     $signature_returned = mysqli_real_escape_string($koneksi, $_POST['signature_returned']);
     $keterangan_returned = mysqli_real_escape_string($koneksi, $_POST['keterangan_returned']);
 
+    $signatureData = $_POST['signatureFilenamePengembalian'];
+
+        // Remove the "data:image/png;base64," prefix
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+        $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+    $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+    $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+    file_put_contents($filePath, $signatureData);
+
     // Construct the SQL update query
     $updateQuery = "UPDATE tb_kunci_kendaraan SET 
                         status = '$status',
                         date_returned = '$date_returned', 
                         time_returned = '$time_returned', 
                         name_returned = UPPER('$name_returned'), 
-                        signature_returned = '$signature_returned',
+                        signature_returned = '$filePath',
                         recieved_to = UPPER('$recieved_to'), 
                         amount_returned = '$amount_returned', 
                         keterangan_returned = '$keterangan_returned'
@@ -1237,7 +1321,8 @@ if (isset($_POST['tombol_tambah_register_surat_transit'])) {
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_register_surat_transit
-         (ID_register, 
+         (ID_register,
+         jenis_transit, 
          date, 
          time, 
          pengirim, 
@@ -1251,6 +1336,7 @@ if (isset($_POST['tombol_tambah_register_surat_transit'])) {
          keterangan)
         VALUES (
             '$register',
+            '$_POST[jenis_transit]',
                  '$_POST[date]',
                   '$_POST[time]',
                    UPPER('$_POST[pengirim]'),
@@ -2160,3 +2246,67 @@ if (isset($_POST['tombol_update_waktu_selesai_kontrol_pagar'])) {
         exit;
     }
 }
+
+
+if (isset($_POST['tombol_tambah_ttd_danru'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(uid_export) AS max_id FROM tb_export");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    if ($lastId === NULL) {
+        // If there are no existing records, start with ShiftMut001
+        $nextId = "PTU1/export/EX001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 15) + 1; 
+        // Generating the new ID
+        $nextId = "PTU1/export/EX" . sprintf("%03s", $numericPart);
+    }
+
+     $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_export
+         (uid_export, 
+         jenis_bagian_export,
+         date, 
+         danru_export, 
+         ttd_danru, 
+         dibuat_pada)
+        VALUES (
+            '$nextId',
+            '$_POST[input_jns_kunjungan]',
+                  '$_POST[input_print_pdf]',
+                  '$_POST[input_nama_danru]',
+                    '$filePath',
+                    current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_tamu_applicant.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_tamu_applicant.php');
+        exit;
+    }
+}
+

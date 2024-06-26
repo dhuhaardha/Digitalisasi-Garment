@@ -112,10 +112,18 @@ while ($row = $result->fetch_assoc()) {
         // operasional 1
     $pdf->Cell(2.5,1,'' . $row['date_retrieval'] . '',1,0,'C');
     $pdf->Cell(2.5,1,'' . $row['time_retrieval'] . '',1,0,'C');
-    $pdf->Cell(4,2,'' . $row['signature_retrieval'] . '',1,0,'C');
+    $imagePath = $row['signature_retrieval']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(4, 2, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 4, 2), 1, 0, 'L', false);
+    }
+    // $pdf->Cell(4,2,'' . $row['signature_retrieval'] . '',1,0,'C');
     $pdf->Cell(2.5,1,'' . $row['date_returned'] . '',1,0,'C');
     $pdf->Cell(2.5,1,'' . $row['time_returned'] . '',1,0,'C');
-    $pdf->Cell(4,2,'' . $row['signature_returned'] . '',1,0,'C');
+    $imagePath = $row['signature_returned']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(4, 2, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 4, 2), 1, 0, 'L', false);
+    }
+    // $pdf->Cell(4,2,'' . $row['signature_returned'] . '',1,0,'C');
     
     // operasional 2
     $pdf->Cell(2.5,1,'',1,0,'C');

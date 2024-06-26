@@ -4,7 +4,7 @@ $currentDate = date("Y-m-d");
 
 $jenis = intval($_GET['q']);
 
-$sql = "SELECT nama, NIK, jabatan, pos, ttd, keterangan  FROM tb_mutasi_shift_1_to_gs WHERE jenis  = ? AND DATE(dibuat_pada) = '$currentDate'";
+$sql = "SELECT * FROM tb_mutasi_shift_1_to_gs WHERE jenis  LIKE ? AND DATE(dibuat_pada) = CURDATE()";
 
 $stmt = $koneksi->prepare($sql);
 $stmt->bind_param("i", $jenis);
@@ -14,13 +14,12 @@ $result = $stmt->get_result();
 
 $noUrut = 1;
 
-        if ($result->num_rows > 0) {
-          // Output data of each row
-          while ($row = $result->fetch_assoc()) {
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
             echo  "<tr>";
             echo  "<td>". $noUrut++ ."</td>";
             echo "<td>";
-              if ($jenis == 0 || $jenis == "GS") {
+              if ($jenis == 0) {
                   echo "Shift GS";
               } else {
                   echo "Shift " . $jenis;
@@ -30,7 +29,7 @@ $noUrut = 1;
               echo "<td>" . $row["NIK"] . "</td>";
               echo "<td>" . $row["jabatan"] . "</td>";
               echo "<td>" . $row["pos"] . "</td>";
-              echo "<td>" . $row["ttd"] . "</td>";
+              echo '<td><img src="' . $row["ttd"] . '" alt="Signature" style="width: 100px; height: 50px;"></td>';
               echo "<td>" . $row["keterangan"] . "</td>";
               echo "</tr>";
           }

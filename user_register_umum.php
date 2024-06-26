@@ -37,6 +37,7 @@ session_start();
                             <div class="card-header py-3">
                                 <h3 class="m-0 text-dark">Registrasi Kendaraan Umum</h3>
                             </div>
+                            
 
                             <div class="card-body">
                                 <form method="POST" action="aksi_security.php">
@@ -136,12 +137,16 @@ session_start();
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Tanda Tangan</label>
                                             <div class="col-sm-10">
-                                                <div name="sig" id="sig"></div>
-                                                    <br />
-                                                    <textarea id="signature64" name="signature" style="display: none"></textarea>
-                                                        <div class="col-12">
-                                                            <button class="btn btn-sm btn-warning" id="clear">&#x232B;Clear Signature</button>
-                                                        </div>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                </div>
+                                            
                                             </div>
                                     </div>
 
@@ -149,13 +154,39 @@ session_start();
 
                                     <div class="form-group row">
                                         <div class="col-sm-10 text-center">
-                                            <button type="submit" class="btn btn-success" name="tombol_register_kendaraan_umum">
+                                            <button type="submit" class="btn btn-success" name="tombol_register_kendaraan_umum" id="saveSignatureBtn">
                                                         <i class="fa-solid fa-square-plus">&nbsp</i>
                                                             Add Kendaraan Umum
                                             </button>
+                                            <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         </div>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
                             </div>
 
                         </div>
@@ -240,44 +271,7 @@ session_start();
         }
     ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <!-- Menampilkan 2 datatable atau lebih -->
-    <script>
-        $(document).ready(function() {
-        $('table.table').DataTable();
-        } );
-    </script>
-
-    <!-- script signature -->
-    <script type="text/javascript">
-        var sig = $('#sig').signature({
-            syncField: '#signature64',
-            syncFormat: 'PNG'
-        });
-        $('#clear').click(function(e) {
-            e.preventDefault();
-            sig.signature('clear');
-            $("#signature64").val('');
-        });
-        var can = document.getElementById('sig');
-        can.addEventListener( 'touchstart', onTouchStart, false);
-    </script>
+<?php require_once "templates/footer.php" ?>
 
 </body>
 

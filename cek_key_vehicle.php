@@ -29,30 +29,18 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h3 class="m-0 text-dark">Kunci Kendaraan Checking</h3>
-                        </div>
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h3 class="m-0 text-dark">Kunci Kendaraan Checking</h3>                      
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
+                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
+                        </button>
+</div>
 
                         <div class="card-body">
-
-
-                            <p class="fs-3 fw-bold text-center">
-                                PT. UNGARAN SARI GARMENTS </br>
-                                SECURITY - UNGARAN </br>
-                                </br>
-                                DAILY CHECK</br>
-                            <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                            </p>
-
-                            </br>
 
                             <div class="row">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF Pada Tanggal
-                                        </button>
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambah">
                                             <i class="fa-solid fa-pen-to-square">&nbsp</i>
                                             Input Operasional Kunci Kendaraan Hari Ini
@@ -210,13 +198,9 @@ session_start();
                                                 <input type="text" class="form-control" name="status" value="DIAMBIL"  disabled>
                                             </div>
                                         </div> 
-                                            <div class="row mb-3">
-                                                <label for="pengambilanDate" class="col-sm-2 col-form-label">Date
-                                                    </label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="diambilDate" name="date_taken" value="<?php echo date('Y-m-d'); ?>" readonly>
-                                                </div>
-                                            </div>
+                                            
+                                                    <input type="hidden" class="form-control" id="diambilDate" name="date_taken" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     </label>
@@ -241,6 +225,7 @@ session_start();
                                                         <option value="UNGARAN">UNGARAN</option>
                                                         <option value="PRINGAPUS">PRINGAPUS</option>
                                                         <option value="CONGOL">CONGOL</option>
+                                                        <option value="OTHER">OTHER</option>
                                                         <!-- Add more options as needed -->
                                                     </select>
                                                 </div>
@@ -276,27 +261,50 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    </label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
                                                 <style>
                                                     canvas {
                                                         border: 1px solid #000;
                                                     }
-                                                
-                                                    </style>
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureData" name="signatureData">
+                                                        <canvas id="signatureCanvasPengambilanVehicle" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenamePengambilanVehicle" name="signatureFilenamePengambilanVehicle">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to pengambilan here -->
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_tambah_operasional_key_vehicle" class="btn btn-success">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_tambah_operasional_key_vehicle" class="btn btn-success" id="saveSignatureBtnPengambilanVehicle">Add</button>
+                                        <button class="btn btn-primary" id="clear_signaturePengambilanVehicle" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvasPengambilanVehicle = document.getElementById('signatureCanvasPengambilanVehicle');
+        var signaturePadPengambilanVehicle = new SignaturePad(canvasPengambilanVehicle, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signaturePengambilanVehicle').addEventListener('click', function() {
+            signaturePadPengambilanVehicle.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtnPengambilanVehicle').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePadPengambilanVehicle.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilenamePengambilanVehicle').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>
@@ -315,14 +323,10 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                             <input type="hidden" id="InputID" class="form-control" name="id_vehicle_key">
-                                            <div class="row mb-3">
-                                                <label for="pengembalianDate" class="col-sm-2 col-form-label">Date
-                                                    Pengembalian
-                                                </label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>" readonly>
-                                                </div>
-                                            </div>
+                                            
+                                            
+                                                    <input type="hidden" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                            
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
                                                     Pengembalian</label>
@@ -382,27 +386,50 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    </label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
                                                 <style>
                                                     canvas {
                                                         border: 1px solid #000;
                                                     }
-                                                
-                                                    </style>
+                                                </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas2" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureData2" name="signatureData2">
+                                                        <canvas id="signatureCanvasPengembalian" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilenamePengembalian" name="signatureFilenamePengembalian">
                                                 </div>
                                             </div>
                                             <!-- Add other fields related to pengembalian here -->
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="tombol_enable_change_status_key_vehicle" class="btn btn-success">Add</button>
-                                        <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                        <button type="submit" name="tombol_enable_change_status_key_vehicle" class="btn btn-success" id="saveSignatureBtnPengembalian">Add</button>
+                                        <button class="btn btn-primary" id="clear_signaturePengembalian" type="button">Clear Signature</button>
                                         <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvasPengembalian = document.getElementById('signatureCanvasPengembalian');
+        var signaturePadPengembalian = new SignaturePad(canvasPengembalian, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signaturePengembalian').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtnPengembalian').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePadPengembalian.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilenamePengembalian').value = dataURL;
+        });
+    });
+</script>
                             </div>
                         </div>
                     </div>

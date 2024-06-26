@@ -64,7 +64,7 @@ session_start();
                                                     <option value="0" selected>PILIH CARD NUMBER...</option>
 
                                                         <?php
-                                                            $queryKartu = mysqli_query($koneksi,"SELECT * FROM tb_list_card WHERE tblic_jns_kartu LIKE 'TAMU' AND tblic_status LIKE 'READY'");
+                                                            $queryKartu = mysqli_query($koneksi,"SELECT * FROM tb_list_card WHERE tblic_jns_kartu LIKE 'PELAMAR KERJA' AND tblic_status LIKE 'READY'");
 
                                                             while ($tabelKartu = mysqli_fetch_array($queryKartu)){
                                                         ?>
@@ -126,18 +126,57 @@ session_start();
                                                 </select>
                                             </div>
                                     </div>
+                                    <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
+                                                <style>
+                                                    canvas {
+                                                        border: 1px solid #000;
+                                                    }
+                                                </style>
+                                                <div class="col-sm-10">
+                                                        <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                                    <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                                                </div>
+                                            </div>
+
 
                                     </br>
 
                                     <div class="form-group row">
                                         <div class="col-sm-10 text-center">
-                                            <button type="submit" class="btn btn-success" name="tombol_register_tamu">
+                                            <button type="submit" class="btn btn-success" name="tombol_register_tamu" id="saveSignatureBtn">
                                                         <i class="fa-solid fa-square-plus">&nbsp</i>
                                                             Add Visitor
                                             </button>
+                                            <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
                                         </div>
                                     </div>
                                 </form>
+                                <script src="signature_pad.umd.min.js"></script>
+                                <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Signature Pad
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // set background color
+        });
+
+        // Clear Signature function
+        document.getElementById('clear_signature').addEventListener('click', function() {
+            signaturePad.clear(); // Clear the signature pad
+        });
+
+        // Form submission
+        document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+            // Get the data URL of the signature
+            var dataURL = signaturePad.toDataURL();
+
+            // Set the data URL to the hidden input field
+            document.getElementById('signatureFilename').value = dataURL;
+        });
+    });
+</script>
                             </div>
 
                     </div>

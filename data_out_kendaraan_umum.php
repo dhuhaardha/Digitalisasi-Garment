@@ -51,7 +51,7 @@ session_start();
                                         while($infoKendaraan = mysqli_fetch_array($queryCari)){
                                     ?>
 
-                                    <input type="hidden" class="form-control" name="info_uid_kendaraan" value="<?php echo $infoKendaraan['tbu_uid']; ?>" readonly>
+                                    <input type="text" class="form-control" name="info_uid_kendaraan" value="<?php echo $infoKendaraan['tbu_uid']; ?>" readonly>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Card Number</label>
                                             <div class="col-sm-10">
@@ -84,21 +84,24 @@ session_start();
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Checker Name</label>
                                             <div class="col-sm-10">
-                                                <select class="form-select" name="input_nama_security">
-                                                    <option value="0" selected>Choose Type...</option>
+                                                
+                                                <select class="form-control selectpicker" name="input_nama_security" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
-                                                    <?php
-                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security WHERE tbls_status LIKE 'ACTIVE' ORDER BY tbls_nama ASC");
-                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
                                                     ?>
 
-                                                        <option value="<?php echo $tabelSecurity['tbls_uid']; ?>"><?php echo $tabelSecurity['tbls_nama']; ?></option>
+                                                            <option value='<?php echo $tabelSecurity['tbls_nama']; ?>'><?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?></option>
 
                                                     <?php
                                                         }
                                                     ?>
-
+                                                    
                                                 </select>
+
+                                                
                                             </div>
                                     </div>
                                     <div class="form-group row">
@@ -227,42 +230,7 @@ session_start();
         }
     ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <!-- Menampilkan 2 datatable atau lebih -->
-    <script>
-        $(document).ready(function() {
-        $('table.table').DataTable();
-        } );
-    </script>
-
-    <!-- script signature -->
-    <script type="text/javascript">
-        var sig = $('#sig').signature({
-            syncField: '#signature64',
-            syncFormat: 'PNG'
-        });
-        $('#clear').click(function(e) {
-            e.preventDefault();
-            sig.signature('clear');
-            $("#signature64").val('');
-        });
-    </script>
+<?php require_once "templates/footer.php" ?>
 
 </body>
 
