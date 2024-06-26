@@ -31,24 +31,29 @@ session_start();
                     <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h3 class="m-0 text-dark">Mutasi Shift Checking</h3>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Export PDF
-                                        </button>
                         </div>
-
+                        
                         <div class="card-body">
-
+                            
                             </br>
-
+                            
                             <div class="row">
-                                <div class=" text-center">
+                                <div class="d-flex justify-content-end">
+                                    <div>
+                                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
+                                                <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                                Input Data
+                                            </button>
                                     
-
-                                        <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                            Input Operasional Shift Hari Ini
-                                        </button>
+                                    </div>
+                                    &nbsp
+                                            <div>
+                                            <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#modalPDF">
+                                                    <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                                    Export PDF
+                                                </button>        
+</div>
+                                                    
                                         
                                     
                                 </div>
