@@ -19,38 +19,36 @@ if(!$koneksi){ // cek koneksi
 
 $date = $_POST['input_print_pdf'];
 $kode_kunjungan = $_POST['input_jns_kunjungan'];
-$shift_diterima = $_POST['input_diterima_shift'];
-$security_diterima = $_POST['input_nama_diterima'];
-$shift_diserahkan = $_POST['input_diserahkan_shift'];
-$security_diserahkan = $_POST['input_nama_diserahkan'];
-$danru = $_POST['input_nama_danru'];
 $HR = $_POST['input_hr'];
 
+// Query to get shift_diterima and shift_diserahkan
+$shift_diterima = '';
+$shift_diserahkan = '';
+$nama_diterima = '';
+$nama_diserahkan = '';
+$ttd_diterima = '';
+$ttd_diserahkan = '';
+$nama_danru = '';
+$ttd_danru = '';
 
+$query_shift = "SELECT `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru` FROM `tb_export` WHERE `date` LIKE '$date' AND `jenis_bagian_export` LIKE '$kode_kunjungan'";
+$result_shift = mysqli_query($koneksi, $query_shift);
 
-// Process to save signature images (already provided)
+while ($row_shift = mysqli_fetch_assoc($result_shift)) {
+    if ($row_shift['jabatan_ttd'] == 'DITERIMA') {
+        $shift_diterima = $row_shift['shift'];
+        $nama_diterima = $row_shift['danru_export'];
+        $ttd_diterima = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DISERAHKAN') {
+        $shift_diserahkan = $row_shift['shift'];
+        $nama_diserahkan = $row_shift['danru_export'];
+        $ttd_diserahkan = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DANRU') {
+        $nama_danru = $row_shift['danru_export'];
+        $ttd_danru = $row_shift['ttd_danru'];
+    }
+}
 
-$signatureData3 = $_POST['signatureFilenameCommander'];
-
-// Remove the "data:image/png;base64," prefix
-
-$signatureData3 = str_replace('data:image/png;base64,', '', $signatureData3);
-
-// Decode the base64-encoded image data
-
-$signatureData3 = base64_decode($signatureData3);
-
-// Generate unique filenames using uniqid()
-
-$uniqueFilename3 = uniqid('signature_printtamu_commander') . '.png';
-
-// Set the file paths where you want to save the signature images
-
-$filePath3 = 'upload/' . $uniqueFilename3;
-
-// Save the signature images to the specified file paths
-
-file_put_contents($filePath3, $signatureData3);
 
 
 // BUAT PDF BARU
@@ -96,32 +94,32 @@ $pdf->Cell(9,1,'',0,1,'C');
 
 
 // DATA
-// $no = 1;
-// $query = "SELECT `tbrt_tgl_masuk`, `tbrt_jam_masuk`, `tbrt_tgl_keluar`, `tbrt_jam_keluar`, `tbrt_nm_tamu`, `tbrt_alm_tamu`, `tbrt_jnj_temu`, `tbrt_keperluan`, `tbrt_cek_metal`, `tbrt_cek_mirror`, `tbrt_nmr_identitas`, `tbrt_nmr_kartu`, `tbrt_ttd_tamu` FROM `tb_report_tamu` WHERE `tbrt_jns_kunjungan` LIKE '$kode_kunjungan' AND `tbrt_tgl_masuk` LIKE '$date'";
-// $result = mysqli_query($koneksi, $query);
-// while ($row = mysqli_fetch_assoc($result)) {
-//     // Example of adding data to PDF cells
-//     $pdf->Cell(1, 3, $no++, 1, 0, 'C'); // vertically merged cell, height=3x row height=3x10=30
-//     $pdf->Cell(5, 3, $row['tbrt_tgl_masuk'], 'TB', 0, 'C'); // vertically merged cell with data from query result
-//     $pdf->Cell(4, 3, $row['tbrt_jam_masuk'], 'LTB', 0, 'C'); // vertically merged cell with data from query result
-//     $pdf->Cell(4, 3, $row['tbrt_jam_keluar'], 'LTB', 0, 'C'); // vertically merged cell with data from query result
-//     $pdf->Cell(9, 3, $row['tbrt_nm_tamu'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_alm_tamu'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_jnj_temu'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_keperluan'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_cek_metal'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_cek_mirror'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_nmr_identitas'], 1, 0, 'C'); // normal height cell with data from query result
-//     $pdf->Cell(5, 3, $row['tbrt_nmr_kartu'], 1, 0, 'C'); // normal height cell with data from query result
-//     $imagePath = $row['tbrt_ttd_tamu']; // Adjust path as needed
-//     if (file_exists($imagePath)) {
-//         $pdf->Cell(5, 3, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 5, 2), 1, 0, 'L', false);
-//     }
+$no = 1;
+$query = "SELECT `tbrt_tgl_masuk`, `tbrt_jam_masuk`, `tbrt_tgl_keluar`, `tbrt_jam_keluar`, `tbrt_nm_tamu`, `tbrt_alm_tamu`, `tbrt_jnj_temu`, `tbrt_keperluan`, `tbrt_cek_metal`, `tbrt_cek_mirror`, `tbrt_nmr_identitas`, `tbrt_nmr_kartu`, `tbrt_ttd_tamu` FROM `tb_report_tamu` WHERE `tbrt_jns_kunjungan` LIKE '$kode_kunjungan' AND `tbrt_tgl_masuk` LIKE '$date'";
+$result = mysqli_query($koneksi, $query);
+while ($row = mysqli_fetch_assoc($result)) {
+    // Example of adding data to PDF cells
+    $pdf->Cell(1, 3, $no++, 1, 0, 'C'); // vertically merged cell, height=3x row height=3x10=30
+    $pdf->Cell(5, 3, $row['tbrt_tgl_masuk'], 'TB', 0, 'C'); // vertically merged cell with data from query result
+    $pdf->Cell(4, 3, $row['tbrt_jam_masuk'], 'LTB', 0, 'C'); // vertically merged cell with data from query result
+    $pdf->Cell(4, 3, $row['tbrt_jam_keluar'], 'LTB', 0, 'C'); // vertically merged cell with data from query result
+    $pdf->Cell(9, 3, $row['tbrt_nm_tamu'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_alm_tamu'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_jnj_temu'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_keperluan'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_cek_metal'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_cek_mirror'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_nmr_identitas'], 1, 0, 'C'); // normal height cell with data from query result
+    $pdf->Cell(5, 3, $row['tbrt_nmr_kartu'], 1, 0, 'C'); // normal height cell with data from query result
+    $imagePath = $row['tbrt_ttd_tamu']; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(5, 3, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 5, 2), 1, 0, 'L', false);
+    }
     
     
-//     // Move to the next line (row)
-//     $pdf->Ln();
-// }
+    // Move to the next line (row)
+    $pdf->Ln();
+}
 
 
 
@@ -147,18 +145,63 @@ $pdf->Cell(6, 1, 'HR & GA, ', 0, 0, 'L');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 13);
-$pdf->Cell(0.1, 4, '', 0, 0, 'L');
-$pdf->Cell(19, 4, '', 0, 0, 'R');
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_diterima; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(0.1, 4, 'image not found', 0, 0, 'L');
+}
+// $pdf->Cell(0.1, 4, '', 0, 0, 'L');
+$pdf->SetX(14); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_diserahkan; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(19, 4, 'image not found', 0, 0, 'R');
+}
+// $pdf->Cell(19, 4, '', 0, 0, 'R');
 $pdf->Cell(14, 4, '', 0, 0, 'R');
-$pdf->Cell(10, 4, $filePath3, 0, 0, 'R');
+// Set the X and Y positions for the image
+$pdf->SetX(40); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_danru; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+}
+// $pdf->Cell(10, 4, $ttd_danru, 0, 0, 'R');
 $pdf->Cell(13, 4, '', 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 13);
-$pdf->Cell(0.1, 4, $security_diterima, 0, 0, 'L');
-$pdf->Cell(19, 4, $security_diserahkan, 0, 0, 'R');
+$pdf->Cell(0.1, 4, $nama_diterima, 0, 0, 'L');
+$pdf->Cell(19, 4, $nama_diserahkan, 0, 0, 'R');
 $pdf->Cell(14, 4, '', 0, 0, 'R');
-$pdf->Cell(10, 4, $danru, 0, 0, 'R');
+$pdf->Cell(10, 4, $nama_danru, 0, 0, 'R');
 $pdf->Cell(13, 4, $HR, 0, 0, 'R');
 $pdf->Ln();
 

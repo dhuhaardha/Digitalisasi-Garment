@@ -2248,7 +2248,7 @@ if (isset($_POST['tombol_update_waktu_selesai_kontrol_pagar'])) {
 }
 
 
-if (isset($_POST['tombol_tambah_ttd_danru'])) {
+if (isset($_POST['tombol_tambah_ttd'])) {
     // Assuming $koneksi is your database connection
     $genUID = mysqli_query($koneksi, "SELECT MAX(uid_export) AS max_id FROM tb_export");
     $row = mysqli_fetch_assoc($genUID);
@@ -2286,6 +2286,7 @@ if (isset($_POST['tombol_tambah_ttd_danru'])) {
         "INSERT INTO tb_export
          (uid_export, 
          jenis_bagian_export,
+         jabatan_ttd,
          date, 
          danru_export, 
          ttd_danru, 
@@ -2293,8 +2294,9 @@ if (isset($_POST['tombol_tambah_ttd_danru'])) {
         VALUES (
             '$nextId',
             '$_POST[input_jns_kunjungan]',
+            '$_POST[jabatan_ttd]',
                   '$_POST[input_print_pdf]',
-                  '$_POST[input_nama_danru]',
+                  '$_POST[input_nama]',
                     '$filePath',
                     current_timestamp())");
     
