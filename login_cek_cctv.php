@@ -39,13 +39,6 @@ session_start();
 
                             <div class="card-body">
                             <div class="d-flex justify-content-end">
-                                    <div class="">
-
-                                    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#exportDaily">
-                                            <i class="fa-solid fa-file-pdf">&nbsp</i>
-                                                Daily Export
-                                        </button>
-                                    </div>
                                     &nbsp
                                     <div>
 
@@ -120,7 +113,7 @@ session_start();
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="tombol_tambah_ttd" class="btn-lg btn-success" id="saveSignatureBtn">Add</button>
+                    <button type="submit" name="tombol_tambah_security_cctv" class="btn-lg btn-success" id="saveSignatureBtn">Add</button>
                     <button class="btn-lg btn-danger" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -155,33 +148,7 @@ session_start();
                 </div>
                 <!-- /.container-fluid -->
 
-            <!-- Modal Cetak PDF Daily-->
-            <div class="modal fade" id="exportDaily" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Export to PDF</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <form method="POST" action="cetak_cek_cctv.php" target="_blank">
-                            <div class="modal-body">
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Date</label>
-                                        <div class="col-sm-10">
-                                            <input type="date" name="input_print_pdf" class="form-control">
-                                        </div>
-                                </div>                                
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" name="tombol_pdf_cctv_daily" target="_blank" class="btn btn-success">Export</button>
-                                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Modal Cetak PDF Monthly-->
             <div class="modal fade" id="exportMonthly" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -193,7 +160,7 @@ session_start();
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <form method="POST" action="cetak_cek_cctv.php" target="_blank">
+                        <form method="POST" action="print_cctv.php" target="_blank">
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Month</label>

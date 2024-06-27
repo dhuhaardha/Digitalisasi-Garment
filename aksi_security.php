@@ -237,10 +237,9 @@ if (isset($_POST['tombol_ok_cctv'])){
     $today = DATE('Y-m-d');
     $time = DATE('H:i:s');
     $uidReport = "REPCCTV/" . $_POST['input_lokasi'] . "/" . DATE('Y/m/d');
-    $namaSecurity = $_POST['input_nama_security'];
 
     $updateQuery = mysqli_query($koneksi,"UPDATE tb_list_cctv SET tblc_cek_cctv = '$today' WHERE tblc_uid LIKE '$_POST[tombol_ok_cctv]'");
-    $updateQuery1 = mysqli_query($koneksi,"INSERT INTO tb_report_cctv VALUES ('$uidReport', '$_POST[tombol_ok_cctv]', '$today', '$time', '$namaSecurity', 'OK')");
+    $updateQuery1 = mysqli_query($koneksi, "INSERT INTO tb_report_cctv (tbrc_uid, tbrc_uid_cctv, tbrc_tgl_cek, tbrc_status_cek) VALUES ('$uidReport', '$_POST[tombol_ok_cctv]', '$today', 'OK')");
 
     if($updateQuery && $updateQuery1){
         $_SESSION['sukses'] = 'data updated successfully';
@@ -2359,3 +2358,77 @@ if (isset($_POST['tombol_tambah_driver'])){
     }
 }
 
+if (isset($_POST['tombol_tambah_security_cctv'])) {
+    // Assuming $koneksi is your database connection
+    $genUID = mysqli_query($koneksi, "SELECT MAX(uid_export) AS max_id FROM tb_export");
+    $row = mysqli_fetch_assoc($genUID);
+    $lastId = $row['max_id'];
+
+    if ($lastId === NULL) {
+        // If there are no existing records, start with ShiftMut001
+        $nextId = "PTU1/export/EX001";
+    } else {
+        // Extract the numeric part of the last ID and increment it
+        $numericPart = (int)substr($lastId, 15) + 1; 
+        // Generating the new ID
+        $nextId = "PTU1/export/EX" . sprintf("%03s", $numericPart);
+    }
+
+     $signatureData = $_POST['signatureFilename'];
+
+        // Remove the "data:image/png;base64," prefix
+     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+
+        // Decode the base64-encoded image data
+     $signatureData = base64_decode($signatureData);
+
+        // Generate a unique filename using uniqid()
+     $uniqueFilename = uniqid('signature_') . '.png';
+
+    // Set the file path where you want to save the signature image
+     $filePath = 'upload/' . $uniqueFilename; // Update with your desired file path and name
+
+    // Save the signature image to the specified file path
+     file_put_contents($filePath, $signatureData);
+
+     $input_nama = '';
+    if ($_POST['jabatan_ttd'] === 'DANRU') {
+        $input_nama = $_POST['input_nama_danru'];
+    } elseif ($_POST['jabatan_ttd'] === 'DITERIMA' || $_POST['jabatan_ttd'] === 'DISERAHKAN') {
+        $input_nama = $_POST['input_nama_anggota'];
+    } else {
+        $input_nama = $_POST['input_nama_anggota'];
+    }
+
+    $tambahQuery = mysqli_query(
+        $koneksi,
+        "INSERT INTO tb_export
+         (uid_export, 
+         jenis_bagian_export,
+         jabatan_ttd,
+         shift,
+         date, 
+         danru_export, 
+         ttd_danru, 
+         dibuat_pada)
+        VALUES (
+            '$nextId',
+            '$_POST[input_jns_kunjungan]',
+            '$_POST[jabatan_ttd]',
+            '$_POST[shift]',
+                  '$_POST[input_print_pdf]',
+                  '$input_nama',
+                    '$filePath',
+                    current_timestamp())");
+    
+
+    if ($tambahQuery) {
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:cek_cctv.php');
+        exit;
+    } else {
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:cek_cctv.php');
+        exit;
+    }
+}

@@ -36,23 +36,29 @@ session_start();
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col align-self-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
-                                                Export PDF
+                                <div class="d-flex justify-content-end">
+                                    <div class="">
+
+                                    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#exportDaily">
+                                            <i class="fa-solid fa-file-pdf">&nbsp</i>
+                                                Daily Export
                                         </button>
                                     </div>
+                                    &nbsp
+                                    <div>
+
+                                    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#exportMonthly">
+                                            <i class="fa-solid fa-file-pdf">&nbsp</i>
+                                                Monthly Export
+                                        </button>
+                                    </div>
+                                        
+                                    
+                                </div>
+                            
                                 </div>
                                 
-                                </br>
-
-                                <p class="fs-3 fw-bold text-center">
-                                    PT. UNGARAN SARI GARMENTS </br>
-                                    SECURITY - UNGARAN </br>
-                                    </br>
-                                    DAILY CHECK</br>
-                                    <h6 class="text-center">Date : <?php echo DATE('d-m-Y'); ?></h6>
-                                </p>
+                                
 
                                 </br>
                                 
@@ -107,6 +113,35 @@ session_start();
 
                 </div>
                 <!-- /.container-fluid -->
+
+                <!-- Modal Cetak PDF Daily-->
+            <div class="modal fade" id="exportDaily" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Export to PDF</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="print_daily_cctv.php" target="_blank">
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Date</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" name="input_print_pdf" class="form-control">
+                                        </div>
+                                </div>                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="" target="_blank" class="btn btn-success">Export</button>
+                                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             
             <!-- Modal Tambah -->
             <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
