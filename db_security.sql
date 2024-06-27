@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 11:53 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jun 28, 2024 at 01:43 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -197,25 +197,25 @@ CREATE TABLE `tb_driver` (
 --
 
 INSERT INTO `tb_driver` (`uid_driver`, `unit`, `nama`, `dibuat_pada`) VALUES
-('PTU1/driver/DR001', 'PTU1', 'SUNARTO', '2024-06-26 08:56:34'),
-('PTU1/driver/DR002', 'PTU1', 'TEGUH', '2024-06-27 05:13:06'),
-('PTU1/driver/DR003', 'PTU1', 'IBNU', '2024-06-27 05:14:24'),
-('PTU1/driver/DR004', 'PTU1', 'IMAN', '2024-06-27 05:14:39'),
-('PTU1/driver/DR005', 'PTU1', 'DWI', '2024-06-27 05:14:52'),
-('PTU1/driver/DR006', 'PTU1', 'ERNA', '2024-06-27 05:17:01'),
-('PTU1/driver/DR007', 'PTU1', 'GANI', '2024-06-27 05:17:16'),
-('PTU1/driver/DR008', 'PTU1', 'YOHANES', '2024-06-27 05:17:36'),
-('PTU1/driver/DR009', 'PTU1', 'HANIF', '2024-06-27 05:17:45'),
-('PTU1/driver/DR010', 'PTU1', 'HANA', '2024-06-27 05:17:54'),
-('PTU2/driver/DR016', 'PTU2', 'RADITYA', '2024-06-27 05:23:52'),
-('PTU2/driver/DR017', 'PTU2', 'HERMAWAN', '2024-06-27 05:24:01'),
-('PTU2/driver/DR018', 'PTU2', 'UMAM', '2024-06-27 05:24:58'),
-('PTU2/driver/DR019', 'PTU2', 'RIZAL', '2024-06-27 05:25:06'),
-('PTU3/driver/DR011', 'PTU3', 'FAISAL', '2024-06-27 05:22:24'),
-('PTU3/driver/DR012', 'PTU3', 'GAGAS', '2024-06-27 05:22:54'),
-('PTU3/driver/DR013', 'PTU3', 'YUSUF', '2024-06-27 05:23:11'),
-('PTU3/driver/DR014', 'PTU3', 'MAHMUDI', '2024-06-27 05:23:27'),
-('PTU3/driver/DR015', 'PTU3', 'DION', '2024-06-27 05:23:37');
+('PTU1/driver/DR001', 'UNGARAN', 'SUNARTO', '2024-06-26 08:56:34'),
+('PTU1/driver/DR002', 'PTU1', 'TEGUH', '2024-06-26 22:13:06'),
+('PTU1/driver/DR003', 'PTU1', 'IBNU', '2024-06-26 22:14:24'),
+('PTU1/driver/DR004', 'PTU1', 'IMAN', '2024-06-26 22:14:39'),
+('PTU1/driver/DR005', 'PTU1', 'DWI', '2024-06-26 22:14:52'),
+('PTU1/driver/DR006', 'PTU1', 'ERNA', '2024-06-26 22:17:01'),
+('PTU1/driver/DR007', 'PTU1', 'GANI', '2024-06-26 22:17:16'),
+('PTU1/driver/DR008', 'PTU1', 'YOHANES', '2024-06-26 22:17:36'),
+('PTU1/driver/DR009', 'PTU1', 'HANIF', '2024-06-26 22:17:45'),
+('PTU1/driver/DR010', 'PTU1', 'HANA', '2024-06-26 22:17:54'),
+('PTU2/driver/DR016', 'PTU2', 'RADITYA', '2024-06-26 22:23:52'),
+('PTU2/driver/DR017', 'PTU2', 'HERMAWAN', '2024-06-26 22:24:01'),
+('PTU2/driver/DR018', 'PTU2', 'UMAM', '2024-06-26 22:24:58'),
+('PTU2/driver/DR019', 'PTU2', 'RIZAL', '2024-06-26 22:25:06'),
+('PTU3/driver/DR011', 'PTU3', 'FAISAL', '2024-06-26 22:22:24'),
+('PTU3/driver/DR012', 'PTU3', 'GAGAS', '2024-06-26 22:22:54'),
+('PTU3/driver/DR013', 'PTU3', 'YUSUF', '2024-06-26 22:23:11'),
+('PTU3/driver/DR014', 'PTU3', 'MAHMUDI', '2024-06-26 22:23:27'),
+('PTU3/driver/DR015', 'PTU3', 'DION', '2024-06-26 22:23:37');
 
 -- --------------------------------------------------------
 
@@ -227,7 +227,7 @@ CREATE TABLE `tb_export` (
   `uid_export` varchar(25) NOT NULL,
   `jenis_bagian_export` varchar(100) NOT NULL,
   `jabatan_ttd` varchar(20) NOT NULL,
-  `shift` varchar(3) NOT NULL,
+  `shift` int(3) NOT NULL,
   `date` date NOT NULL,
   `danru_export` varchar(100) NOT NULL,
   `ttd_danru` text NOT NULL,
@@ -239,10 +239,19 @@ CREATE TABLE `tb_export` (
 --
 
 INSERT INTO `tb_export` (`uid_export`, `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru`, `dibuat_pada`) VALUES
-('PTU1/export/EX001', 'B009', '', '', '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
-('PTU1/export/EX002', 'B009', 'DANRU', '1', '2024-06-27', 'APRILYA PUSPITASARI', 'upload/signature_667d264c6a0ce.png', '2024-06-27 08:43:56'),
-('PTU1/export/EX003', 'B009', 'DITERIMA', '1', '2024-06-27', 'DIMAS SULISTYO', 'upload/signature_667d265c9c99b.png', '2024-06-27 08:44:12'),
-('PTU1/export/EX004', 'B009', 'DISERAHKAN', '2', '2024-06-27', 'SRI RAHAYU', 'upload/signature_667d301dc5e19.png', '2024-06-27 09:25:49');
+('PTU1/export/EX001', 'B009', '', 0, '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
+('PTU1/export/EX002', 'B009', '', 0, '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b882fdc001.png', '2024-06-26 03:17:03'),
+('PTU1/export/EX003', 'B009', '', 0, '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b88cc4dad5.png', '2024-06-26 03:19:40'),
+('PTU1/export/EX004', 'B009', '', 0, '2024-06-21', 'MARYANTO ', 'upload/signature_667b9f4ad38a3.png', '2024-06-26 04:55:38'),
+('PTU1/export/EX005', 'B009', '', 0, '2024-06-22', 'MARYANTO ', 'upload/signature_667babd159e56.png', '2024-06-26 05:49:05'),
+('PTU1/export/EX006', 'B009', '', 0, '2024-06-05', 'MARYANTO ', 'upload/signature_667bad1e34fa3.png', '2024-06-26 05:54:38'),
+('PTU1/export/EX007', 'B009', 'DANRU', 0, '2024-06-25', 'APRILLIA', 'upload/signature_667c48f629d2f.png', '2024-06-26 16:59:34'),
+('PTU1/export/EX010', 'CCTV', 'SECURITY', 1, '2024-06-28', 'ANGELIKA KUSUMA', 'upload/signature_667dc2ce9c93a.png', '2024-06-27 19:51:42'),
+('PTU1/export/EX012', 'B009', 'DITERIMA', 1, '2024-06-28', 'BAGAS DANISWARA', 'upload/signature_667ddc5c25711.png', '2024-06-27 21:40:44'),
+('PTU1/export/EX013', 'B009', 'DISERAHKAN', 2, '2024-06-28', 'AGUS ANGGORO ', 'upload/signature_667ddf1399437.png', '2024-06-27 21:52:19'),
+('PTU1/export/EX014', 'B011', 'PETUGAS', 1, '2024-06-28', 'ADI ARDIANSYAH', 'upload/signature_667de36c9ebff.png', '2024-06-27 22:10:52'),
+('PTU1/export/EX015', 'B011', 'DANRU', 1, '2024-06-28', '', 'upload/signature_667de6730ba35.png', '2024-06-27 22:23:47'),
+('PTU1/export/EX016', 'B011', 'DANRU', 1, '2024-06-28', 'NAWOLO PRASETYO', 'upload/signature_667de6bdaab74.png', '2024-06-27 22:25:01');
 
 -- --------------------------------------------------------
 
@@ -398,12 +407,6 @@ CREATE TABLE `tb_kontrol_pagar` (
   `shift` int(4) NOT NULL,
   `time_kontrol_created` time NOT NULL,
   `uraian` text NOT NULL,
-  `kondisi_pagar_keliling` text NOT NULL,
-  `kondisi_pintu_gerbang` text NOT NULL,
-  `kondisi_kawat_berduri` text NOT NULL,
-  `kondisi_bangunan` text NOT NULL,
-  `kondisi_linkungan` text NOT NULL,
-  `kondisi_tanaman_liar_dan_dahan_pohon` text NOT NULL,
   `time_kontrol_finished` time NOT NULL,
   `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -412,15 +415,15 @@ CREATE TABLE `tb_kontrol_pagar` (
 -- Dumping data for table `tb_kontrol_pagar`
 --
 
-INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `kondisi_pagar_keliling`, `kondisi_pintu_gerbang`, `kondisi_kawat_berduri`, `kondisi_bangunan`, `kondisi_linkungan`, `kondisi_tanaman_liar_dan_dahan_pohon`, `time_kontrol_finished`, `dibuat_pada`) VALUES
-('KonPag001', 3, '09:52:00', 'harus OKE', '', '', '', '', '', '', '10:44:01', '2024-06-14 03:44:11'),
-('KonPag002', 3, '10:01:40', 'harus OK', '', '', '', '', '', '', '10:42:53', '2024-06-14 03:44:01'),
-('KonPag003', 1, '13:08:31', 'asfasff', '', '', '', '', '', '', '13:09:40', '2024-06-14 06:09:44'),
-('KonPag004', 2, '13:09:29', 'qwrwrqw', '', '', '', '', '', '', '13:09:34', '2024-06-14 06:09:40'),
-('KonPag005', 1, '16:12:44', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:08'),
-('KonPag006', 1, '16:12:27', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:11'),
-('KonPag007', 1, '13:33:23', '', '', '', '', '', '', '', '00:00:00', '2024-06-22 06:33:29'),
-('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '', '', '', '', '', '', '16:06:35', '2024-06-22 09:09:00');
+INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `time_kontrol_finished`, `dibuat_pada`) VALUES
+('KonPag001', 3, '09:52:00', 'harus OKE', '10:44:01', '2024-06-14 03:44:11'),
+('KonPag002', 3, '10:01:40', 'harus OK', '10:42:53', '2024-06-14 03:44:01'),
+('KonPag003', 1, '13:08:31', 'asfasff', '13:09:40', '2024-06-14 06:09:44'),
+('KonPag004', 2, '13:09:29', 'qwrwrqw', '13:09:34', '2024-06-14 06:09:40'),
+('KonPag005', 1, '16:12:44', '', '00:00:00', '2024-06-14 09:13:08'),
+('KonPag006', 1, '16:12:27', '', '00:00:00', '2024-06-14 09:13:11'),
+('KonPag007', 1, '13:33:23', '', '00:00:00', '2024-06-22 06:33:29'),
+('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '16:06:35', '2024-06-22 09:09:00');
 
 -- --------------------------------------------------------
 
@@ -912,7 +915,7 @@ CREATE TABLE `tb_list_cctv` (
   `tblc_lokasi` varchar(10) NOT NULL,
   `tblc_nama_cctv` varchar(50) NOT NULL,
   `tblc_status` varchar(10) NOT NULL,
-  `tblc_cek_cctv` date DEFAULT NULL
+  `tblc_cek_cctv` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -920,21 +923,21 @@ CREATE TABLE `tb_list_cctv` (
 --
 
 INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_status`, `tblc_cek_cctv`) VALUES
-('PTU1/001', 'PTU1', 'POS INDUK', 'ACTIVE', '2024-06-22'),
-('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', '2024-06-22'),
-('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', '2024-06-27'),
-('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', '2024-06-22'),
-('PTU1/005', 'PTU1', 'STORE ACCESSORIES', 'ACTIVE', '2024-05-31'),
-('PTU1/006', 'PTU1', 'STORE ACCESSORIES DALAM', 'ACTIVE', '2024-05-31'),
-('PTU1/007', 'PTU1', 'RUANG SERVER', 'ACTIVE', '2024-05-30'),
-('PTU1/008', 'PTU1', 'PACKING DRESS 1', 'ACTIVE', '2024-05-30'),
-('PTU1/009', 'PTU1', 'POLYBAG DRESS 1', 'ACTIVE', '2024-05-30'),
-('PTU1/010', 'PTU1', 'STORE FABRIC', 'ACTIVE', NULL),
+('PTU1/001', 'PTU1', 'POS INDUK', 'INACTIVE', '2024-06-28'),
+('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', ''),
+('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', ''),
+('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', ''),
+('PTU1/005', 'PTU1', 'STORE ACCESSORIES', 'ACTIVE', ''),
+('PTU1/006', 'PTU1', 'STORE ACCESSORIES DALAM', 'ACTIVE', ''),
+('PTU1/007', 'PTU1', 'RUANG SERVER', 'ACTIVE', ''),
+('PTU1/008', 'PTU1', 'PACKING DRESS 1', 'ACTIVE', ''),
+('PTU1/009', 'PTU1', 'POLYBAG DRESS 1', 'ACTIVE', ''),
+('PTU1/010', 'PTU1', 'STORE FABRIC', 'ACTIVE', ''),
 ('PTU1/011', 'PTU1', 'STORE FABRIC DALAM', 'ACTIVE', NULL),
-('PTU1/012', 'PTU1', 'EXPORT DRESS 2', 'ACTIVE', '2024-05-24'),
+('PTU1/012', 'PTU1', 'EXPORT DRESS 2', 'ACTIVE', ''),
 ('PTU1/013', 'PTU1', 'PINTU LOADING 2 DRESS 2', 'ACTIVE', NULL),
-('PTU1/014', 'PTU1', 'PINTU LOADING SHIRT', 'ACTIVE', '2024-06-22'),
-('PTU1/015', 'PTU1', 'EXPORT SHIRT', 'ACTIVE', '2024-06-22'),
+('PTU1/014', 'PTU1', 'PINTU LOADING SHIRT', 'ACTIVE', ''),
+('PTU1/015', 'PTU1', 'EXPORT SHIRT', 'ACTIVE', ''),
 ('PTU1/016', 'PTU1', 'GUDANG BARANG JADI', 'ACTIVE', NULL),
 ('PTU1/017', 'PTU1', 'GUDANG AVAL', 'ACTIVE', NULL),
 ('PTU1/018', 'PTU1', 'POLYBAG SHIRT', 'ACTIVE', NULL),
@@ -961,14 +964,14 @@ INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_s
 ('PTU1/039', 'PTU1', 'AREA WASHING & QC', 'ACTIVE', NULL),
 ('PTU1/040', 'PTU1', 'PINTU DARURAT 1', 'ACTIVE', NULL),
 ('PTU1/041', 'PTU1', 'CUTTING DRESS 2', 'ACTIVE', NULL),
-('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', '2024-06-27'),
+('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', NULL),
 ('PTU1/043', 'PTU1', 'AREA LOKER', 'ACTIVE', NULL),
 ('PTU1/044', 'PTU1', 'SEWING LINE 1', 'ACTIVE', NULL),
 ('PTU1/045', 'PTU1', 'KANTIN LT.2', 'ACTIVE', NULL),
 ('PTU1/046', 'PTU1', 'DEPAN TUKANG KAYU', 'ACTIVE', NULL),
 ('PTU1/047', 'PTU1', 'DEPAN LINE PRESS', 'ACTIVE', NULL),
-('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', '0000-00-00'),
-('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '0000-00-00');
+('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', ''),
+('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '');
 
 -- --------------------------------------------------------
 
@@ -1464,8 +1467,7 @@ INSERT INTO `tb_report_cctv` (`tbrc_uid`, `tbrc_uid_cctv`, `tbrc_tgl_cek`, `tbrc
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/004', '2024-06-22', 'OK'),
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/014', '2024-06-22', 'OK'),
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/015', '2024-06-22', 'OK'),
-('REPCCTV/PTU1/2024/06/27', 'PTU1/003', '2024-06-27', 'OK'),
-('REPCCTV/PTU1/2024/06/27', 'PTU1/042', '2024-06-27', 'OK');
+('REPCCTV/PTU1/2024/06/28', 'PTU1/001', '2024-06-28', 'OK');
 
 -- --------------------------------------------------------
 
@@ -1494,6 +1496,7 @@ INSERT INTO `tb_report_patroli` (`tbrp_uid`, `tbrp_jns_report`, `tbrp_tgl_mulai`
 ('PTU1/B001/2024-06-14', 'B001', '2024-06-14', '04:44:47', '2024-06-14', '04:48:27', '23', 'GS', 'SITUASI AMAN'),
 ('PTU1/B001/2024-06-19', 'B001', '2024-06-19', '10:47:26', '2024-06-21', '02:36:46', '', '1', 'ASDADAD'),
 ('PTU1/B001/2024-06-21', 'B001', '2024-06-21', '02:44:46', '2024-06-21', '02:50:11', '', '2', 'SUDAH MANTAP'),
+('PTU1/B001/2024-06-28', 'B001', '2024-06-28', '06:38:45', '2024-06-28', '06:39:03', '199910010', '1', 'MANTAP'),
 ('PTU1/B003/2024-06-13', 'B003', '2024-06-13', '09:24:57', '2024-06-14', '02:25:08', '13', '2', '~MPROFMEA'),
 ('PTU1/B003/2024-06-14', 'B003', '2024-06-14', '04:44:47', '2024-06-14', '04:48:10', '18', '1', 'ADA SHIPMENT DI SHIRT BELUM SELESAI DAN KONDISI AMAN '),
 ('PTU1/B003/2024-06-19', 'B003', '2024-06-19', '10:50:44', '2024-06-21', '02:36:59', '', '1', 'ASDADA'),
@@ -1614,15 +1617,9 @@ CREATE TABLE `tb_unit` (
 --
 
 INSERT INTO `tb_unit` (`tbu_uid`, `tbu_kd_unit`, `tbu_nama_unit`, `tbu_status`) VALUES
-('001', 'PTU1', 'PT. UNGARAN SARI GARMENTS 1', 'ACTIVE'),
-('002', 'PTU2', 'PT. UNGARAN SARI GARMENTS 2', 'ACTIVE'),
-('003', 'PTU3', 'PT. UNGARAN SARI GARMENTS 3', 'ACTIVE'),
-('001', 'PTU1', 'PT. UNGARAN SARI GARMENTS 1', 'ACTIVE'),
-('002', 'PTU2', 'PT. UNGARAN SARI GARMENTS 2', 'ACTIVE'),
-('003', 'PTU3', 'PT. UNGARAN SARI GARMENTS 3', 'ACTIVE'),
-('001', 'PTU1', 'PT. UNGARAN SARI GARMENTS 1', 'ACTIVE'),
-('002', 'PTU2', 'PT. UNGARAN SARI GARMENTS 2', 'ACTIVE'),
-('003', 'PTU3', 'PT. UNGARAN SARI GARMENTS 3', 'ACTIVE');
+('001	', 'PTU1	', 'PT. UNGARAN SARI GARMENTS 1 (UNGARAN)', 'ACTIVE'),
+('002	', 'PTU2	', 'PT. UNGARAN SARI GARMENTS 2 (CONGOL)', 'ACTIVE'),
+('003', 'PTU3', 'PT. UNGARAN SARI GARMENTS 1 (PRINGAPUS)', 'ACTIVE');
 
 --
 -- Indexes for dumped tables
@@ -1678,6 +1675,12 @@ ALTER TABLE `tb_list_card`
   ADD PRIMARY KEY (`tblic_uid`);
 
 --
+-- Indexes for table `tb_list_cctv`
+--
+ALTER TABLE `tb_list_cctv`
+  ADD PRIMARY KEY (`tblc_uid`);
+
+--
 -- Indexes for table `tb_list_kendaraan`
 --
 ALTER TABLE `tb_list_kendaraan`
@@ -1706,6 +1709,12 @@ ALTER TABLE `tb_list_security`
 --
 ALTER TABLE `tb_report_patroli`
   ADD PRIMARY KEY (`tbrp_uid`);
+
+--
+-- Indexes for table `tb_unit`
+--
+ALTER TABLE `tb_unit`
+  ADD PRIMARY KEY (`tbu_uid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
