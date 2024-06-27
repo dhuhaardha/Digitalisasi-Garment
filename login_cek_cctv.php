@@ -33,50 +33,78 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
+                        <div class="card-header py-3 text-center">
                                 <h3 class="m-0 text-dark">CCTV Checking</h3>
                             </div>
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col align-self-end">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportDaily">
+                            <div class="d-flex justify-content-end">
+                                    <div class="">
+
+                                    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#exportDaily">
                                             <i class="fa-solid fa-file-pdf">&nbsp</i>
                                                 Daily Export
                                         </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportMonthly">
+                                    </div>
+                                    &nbsp
+                                    <div>
+
+                                    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#exportMonthly">
                                             <i class="fa-solid fa-file-pdf">&nbsp</i>
                                                 Monthly Export
                                         </button>
                                     </div>
+                                        
+                                    
                                 </div>
 
-                                </br>
-                                </br>
+                                <br>
                                 
-                                <form method="POST" action="cek_cctv.php">
-                                    <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Security Name</label>
-                                            <div class="col-sm-4">
-                                                <select id="inputState" class="form-select" name="input_nama">
-                                                    <option selected>Choose Security...</option>
-
-                                                    <?php
-                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
-                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){
-                                                    ?>
-                                                        <option value="<?php echo $tabelSecurity['tbls_uid']; ?>"><?php echo $tabelSecurity['tbls_nama']; ?></option>
-                                                    <?php
-                                                        }
-                                                    ?>
-
-                                                    
+                                
+                                <form method="POST" action="aksi_security.php">
+                                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-9">
+                            <input type="hidden" name="jabatan_ttd" value="SECURITY">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
+                        <div class="col-sm-9">
+                            <input type="date" name="input_print_pdf" class="form-control">
+                            <input type="hidden" name="input_jns_kunjungan" value="CCTV" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Shift</label>
+                                            <div class="col-sm-9">
+                                            <select id="inputState" class="form-select" name="shift">
+                                                    <option selected disabled>PILIH SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="GS">GS</option>
                                                 </select>
                                             </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">TTD</label>
+                                        </div>
+                    <div>
+                        <div class="row mb-3">
+                            <label for="anggotaName" class="col-sm-3 col-form-label">Anggota</label>
+                            <div class="col-sm-9">
+                                <select class="form-control selectpicker" name="input_nama_anggota" data-live-search="true">
+                                    <option value="" selected>PILIH ANGGOTA...</option>
+                                    <?php
+                                    $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
+                                    while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
+                                        echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
                         <div class="col-sm-9">
                             <style>
                                 canvas {
@@ -90,16 +118,13 @@ session_start();
                             </div>
                         </div>
                     </div>
-
-                                    <div class="row">
-                                    <div class="col-sm-12 text-center">
-                                            <button type="submit" class="btn btn-success" name="tombol_masuk_cctv">
-                                                Proceed
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <script src="signature_pad.umd.min.js"></script>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="tombol_tambah_ttd" class="btn-lg btn-success" id="saveSignatureBtn">Add</button>
+                    <button class="btn-lg btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+            <script src="signature_pad.umd.min.js"></script>
             <script>
                 // Wait for the document to be fully loaded
                 document.addEventListener("DOMContentLoaded", function() {
@@ -123,9 +148,7 @@ session_start();
                         document.getElementById('signatureFilename').value = dataURL;
                     });
                 });
-                </script>
-                                
-                            
+            </script>
                             </div>
                         </div>
 

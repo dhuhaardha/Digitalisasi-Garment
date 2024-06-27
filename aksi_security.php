@@ -2281,12 +2281,22 @@ if (isset($_POST['tombol_tambah_ttd'])) {
     // Save the signature image to the specified file path
      file_put_contents($filePath, $signatureData);
 
+     $input_nama = '';
+    if ($_POST['jabatan_ttd'] === 'DANRU') {
+        $input_nama = $_POST['input_nama_danru'];
+    } elseif ($_POST['jabatan_ttd'] === 'DITERIMA' || $_POST['jabatan_ttd'] === 'DISERAHKAN') {
+        $input_nama = $_POST['input_nama_anggota'];
+    } else {
+        $input_nama = $_POST['input_nama_anggota'];
+    }
+
     $tambahQuery = mysqli_query(
         $koneksi,
         "INSERT INTO tb_export
          (uid_export, 
          jenis_bagian_export,
          jabatan_ttd,
+         shift,
          date, 
          danru_export, 
          ttd_danru, 
@@ -2295,8 +2305,9 @@ if (isset($_POST['tombol_tambah_ttd'])) {
             '$nextId',
             '$_POST[input_jns_kunjungan]',
             '$_POST[jabatan_ttd]',
+            '$_POST[shift]',
                   '$_POST[input_print_pdf]',
-                  '$_POST[input_nama]',
+                  '$input_nama',
                     '$filePath',
                     current_timestamp())");
     
@@ -2308,6 +2319,42 @@ if (isset($_POST['tombol_tambah_ttd'])) {
     } else {
         $_SESSION['gagal'] = 'data cannot be added';
         header('Location:data_tamu_applicant.php');
+        exit;
+    }
+}
+
+if (isset($_POST['tombol_tambah_driver'])){
+
+    // ambil inputan dari input box
+    $InputUnit = $_POST['input_unit'];
+    $InputNama = $_POST['input_name'];
+
+    // cari UID tertinggi
+    $queryCari = mysqli_query($koneksi,"SELECT MAX(SUBSTRING(uid_driver,15)) AS Kode_Terbesar FROM tb_driver");
+    $tabelCari = mysqli_fetch_array($queryCari);
+    $UID = (int) $tabelCari['Kode_Terbesar'];
+    $UID++;
+    $InputUID = "$InputUnit/driver/DR" . sprintf("%03s",$UID);
+
+    // tambah input ke database
+    $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_driver (uid_driver,
+                                                                        unit,
+                                                                        nama,
+                                                                        dibuat_pada)
+                                            VALUES (
+                                            '$InputUID',
+                                                    UPPER('$InputUnit'),
+                                                    UPPER('$InputNama'),
+                                                    current_timestamp())");
+
+    // session
+    if($queryTambah){
+        $_SESSION['sukses'] = 'data added successfully';
+        header('Location:data_list_driver.php');
+        exit;
+    }else{
+        $_SESSION['gagal'] = 'data cannot be added';
+        header('Location:data_list_driver.php');
         exit;
     }
 }

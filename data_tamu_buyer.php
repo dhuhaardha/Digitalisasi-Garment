@@ -32,6 +32,35 @@ session_start();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                <!-- Card Status -->
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h6>
+    </div>
+    <div class="card-body">
+        <?php
+        // Query untuk mendapatkan data tanda tangan terakhir berdasarkan jabatan_ttd
+        $queryStatus = mysqli_query($koneksi, "SELECT DISTINCT jabatan_ttd, danru_export FROM tb_export WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')");
+        
+        // Lakukan iterasi untuk setiap jabatan_ttd
+        while ($row = mysqli_fetch_assoc($queryStatus)) {
+            $jabatan_ttd = $row['jabatan_ttd'];
+            $danru_export = $row['danru_export'];
+            
+            // Tampilkan status sesuai dengan jabatan_ttd
+            echo "<p><strong>$jabatan_ttd:</strong> ";
+            if (!empty($danru_export)) {
+                echo "Sudah melakukan tanda tangan.";
+            } else {
+                echo "Belum melakukan tanda tangan.";
+            }
+            echo "</p>";
+        }
+        ?>
+    </div>
+</div>
+
+
 
 
                     <!-- Container Data Karyawan -->

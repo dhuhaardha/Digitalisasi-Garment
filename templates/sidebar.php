@@ -41,6 +41,7 @@
                 <h6 class="collapse-header">Master Data :</h6>
                 <a class="collapse-item" href="data_list_bc.php">Bea Cukai List</a>
                 <a class="collapse-item" href="data_list_buku.php">Buku List</a>
+                <a class="collapse-item" href="data_list_driver.php">Driver List</a>
                 <a class="collapse-item" href="data_list_security.php">Security List</a>
                 <a class="collapse-item" href="data_cctv.php">CCTV List</a>
                 <a class="collapse-item" href="data_keyroom.php">Kunci Ruangan</a>

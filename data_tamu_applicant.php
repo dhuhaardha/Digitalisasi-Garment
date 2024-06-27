@@ -31,6 +31,92 @@ session_start();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                <div class="row d-flex align-items-stretch">
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+                <?php
+                $current_date = date('Y-m-d');
+                $jenis_bagian_export = 'B009';
+                // Query untuk mendapatkan data tanda tangan terakhir berdasarkan jabatan_ttd
+                $queryStatus = mysqli_query($koneksi, 
+                    "SELECT jabatan_ttd, jenis_bagian_export,  danru_export, dibuat_pada
+                    FROM tb_export
+                    WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')
+                    AND jenis_bagian_export = '$jenis_bagian_export'
+                    AND DATE(dibuat_pada) = '$current_date'");
+
+                // Lakukan iterasi untuk setiap jabatan_ttd
+                while ($row = mysqli_fetch_assoc($queryStatus)) {
+                    $jabatan_ttd = $row['jabatan_ttd'];
+                    $danru_export = $row['danru_export'];
+
+                    // Tampilkan status sesuai dengan jabatan_ttd
+                    echo "<p><strong>$jabatan_ttd:</strong> ";
+                    if (!empty($danru_export)) {
+                        echo "Sudah melakukan tanda tangan.";
+                    } else {
+                        echo "Belum melakukan tanda tangan.";
+                    }
+                    echo "</p>";
+
+                    // // Jika salah satu sudah melakukan tanda tangan, nonaktifkan tombol TTD Export
+                    // while ($row = mysqli_fetch_assoc($queryStatus)) {
+                    //     $statusTtd[$row['jabatan_ttd']] = $row['danru_export'];
+                    // }
+        
+                    // // Cek apakah 'DANRU', 'DITERIMA', atau 'DISERAHKAN' sudah melakukan tanda tangan
+                    // $danruTtd = !empty($statusTtd['DANRU']);
+                    // $diterimaTtd = !empty($statusTtd['DITERIMA']);
+                    // $diserahkanTtd = !empty($statusTtd['DISERAHKAN']);
+                    // $disableTtdExport = $danruTtd && $diterimaTtd && $diserahkanTtd;
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Proses Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+                <!-- <div class="text-center">
+
+                    <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+                    </button>
+                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
+                        <i class="fa-solid fa-signature">&nbsp</i>
+                        TTD Export
+                    </button>
+                </div> -->
+                <div class="d-flex justify-content-between">
+
+    <div class="w-50">
+        <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+            <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+        </button>
+    </div>
+
+    <div class="w-50 ml-2"> <!-- ml-2 untuk memberi jarak antar tombol -->
+        <button type="button" class="btn-lg btn-success btn-block" data-toggle="modal" data-target="#modalTambah">
+            <i class="fa-solid fa-signature"></i>&nbsp; TTD Export
+        </button>
+    </div>
+
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                <br>
 
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
@@ -41,25 +127,7 @@ session_start();
 
                             <div class="card-body">
 
-                            <div class="d-flex justify-content-end">
-                                    <div class="">
-
-                                        <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                        <i class="fa-solid fa-file-pdf">&nbsp</i>
-                                                    Export PDF
-                                                </button>
-                                    </div>
-                                    &nbsp
-                                    <div>
-
-                                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
-                                    <i class="fa-solid fa-signature">&nbsp</i>
-                                            TTD Export
-                                        </button>
-                                    </div>
-                                        
-                                    
-                                </div>
+                            
 
                                 <br>
                                 <div class="row">
@@ -150,11 +218,23 @@ session_start();
                             <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
                         </div>
                     </div>
+                    <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Shift</label>
+                                            <div class="col-sm-9">
+                                            <select id="inputState" class="form-select" name="shift">
+                                                    <option selected disabled>PILIH SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
                     <div id="danruFields" style="display: none;">
                         <div class="row mb-3">
                             <label for="danruName" class="col-sm-3 col-form-label">Danru</label>
                             <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
+                                <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
                                     <option value="" selected>PILIH DANRU...</option>
                                     <?php
                                     $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
@@ -170,7 +250,7 @@ session_start();
                         <div class="row mb-3">
                             <label for="anggotaName" class="col-sm-3 col-form-label">Anggota</label>
                             <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
+                                <select class="form-control selectpicker" name="input_nama_anggota" data-live-search="true">
                                     <option value="" selected>PILIH ANGGOTA...</option>
                                     <?php
                                     $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
