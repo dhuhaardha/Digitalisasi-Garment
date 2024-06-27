@@ -17,12 +17,28 @@ if(!$koneksi){ // cek koneksi
 
 $date = $_POST['input_print_pdf'];
 $kode_kunjungan = $_POST['input_jns_kunjungan'];
-$shift1 = '1';
-$shift2 = '2';
-$shift3 = '3';
-$danru = $_POST['input_nama_danru'];
-$petugas = $_POST['input_nama_petugas'];
 $HR = $_POST['input_hr'];
+
+// Query to get shift_diterima and shift_diserahkan
+$shift_petugas = '';
+$nama_petugas = '';
+$ttd_petugas = '';
+$nama_danru = '';
+$ttd_danru = '';
+
+$query_shift = "SELECT `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru` FROM `tb_export` WHERE `date` LIKE '$date' AND `jenis_bagian_export` LIKE '$kode_kunjungan'";
+$result_shift = mysqli_query($koneksi, $query_shift);
+
+while ($row_shift = mysqli_fetch_assoc($result_shift)) {
+    if ($row_shift['jabatan_ttd'] == 'PETUGAS') {
+        $shift_petugas = $row_shift['shift'];
+        $nama_petugas = $row_shift['danru_export'];
+        $ttd_petugas = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DANRU') {
+        $nama_danru = $row_shift['danru_export'];
+        $ttd_danru = $row_shift['ttd_danru'];
+    }
+}
 // BUAT PDF BARU
 $pdf = new FPDF('L','cm',array(65, 40));
 
@@ -100,7 +116,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
 //SET FONT STYLE
-$pdf->SetFont('Times', 'B', 15);
+$pdf->SetFont('Times', 'B', 16);
 
 $pdf->Ln();
 
@@ -116,13 +132,51 @@ $pdf->Cell(14, 1, 'KOMANDAN REGU, ', 0, 0, 'L');
 $pdf->Cell(6, 1, 'HR & GA, ', 0, 0, 'L');
 $pdf->Ln();
 
+$pdf->SetX(1); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_petugas; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(19, 4, 'image not found', 0, 0, 'R');
+}
+// $pdf->Cell(19, 4, '', 0, 0, 'R');
+$pdf->Cell(14, 4, '', 0, 0, 'R');
+// Set the X and Y positions for the image
+$pdf->SetX(40); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_danru; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+}
+// $pdf->Cell(10, 4, $ttd_danru, 0, 0, 'R');
+$pdf->Cell(13, 4, '', 0, 0, 'R');
+$pdf->Ln();
+
 $pdf->SetFont('Times', 'U', 13);
-$pdf->Cell(0.1, 4, $petugas, 0, 0, 'L');
+$pdf->Cell(0.1, 4, $nama_petugas, 0, 0, 'L');
 $pdf->Cell(19, 4, '', 0, 0, 'R');
-$pdf->Cell(16, 4, '', 0, 0, 'R');
-$pdf->Cell(10, 4, $danru, 0, 0, 'R');
+$pdf->Cell(15, 4, '', 0, 0, 'R');
+$pdf->Cell(10, 4, $nama_danru, 0, 0, 'R');
 $pdf->Cell(13, 4, $HR, 0, 0, 'R');
 $pdf->Ln();
+
 
 $pdf->Output();
 ?>

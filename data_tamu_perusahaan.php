@@ -40,49 +40,23 @@ session_start();
             <div class="card-body">
     <?php
     $current_date = date('Y-m-d');
-    $jenis_bagian_export = 'B006';
+    $jenis_bagian_export = 'B020';
     
-    // Query to retrieve signature status for specific roles and current date
+    // Query to retrieve signature status and details for specific roles and current date
     $queryStatus = mysqli_query($koneksi, 
         "SELECT jabatan_ttd, danru_export, shift 
         FROM tb_export
-        WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')
+        WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN', 'PETUGAS')
         AND jenis_bagian_export = '$jenis_bagian_export'
         AND DATE(dibuat_pada) = '$current_date'");
     
-    // // Initialize status variables
-    // $danru_signed = false;
-    // $diterima_signed = false;
-    // $diserahkan_signed = false;
-
     // Initialize arrays to store signature status and details
     $signature_status = array(
         'DANRU' => array('signed' => false, 'signer' => '', 'shift' => ''),
         'DITERIMA' => array('signed' => false, 'signer' => '', 'shift' => ''),
-        'DISERAHKAN' => array('signed' => false, 'signer' => '', 'shift' => '')
+        'DISERAHKAN' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'PETUGAS' => array('signed' => false, 'signer' => '', 'shift' => '')
     );
-
-    // // Iterate through query results
-    // while ($row = mysqli_fetch_assoc($queryStatus)) {
-    //     $jabatan_ttd = $row['jabatan_ttd'];
-    //     $danru_export = $row['danru_export'];
-        
-        
-    //     // Check each role and update status variables
-    //     switch ($jabatan_ttd) {
-    //         case 'DANRU':
-    //             $danru_signed = !empty($danru_export);
-    //             break;
-    //         case 'DITERIMA':
-    //             $diterima_signed = !empty($danru_export);
-    //             break;
-    //         case 'DISERAHKAN':
-    //             $diserahkan_signed = !empty($danru_export);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
 
     // Iterate through query results
     while ($row = mysqli_fetch_assoc($queryStatus)) {
@@ -107,24 +81,16 @@ session_start();
                 $signature_status['DISERAHKAN']['signer'] = $danru_export;
                 $signature_status['DISERAHKAN']['shift'] = $shift;
                 break;
+            case 'PETUGAS':
+                $signature_status['PETUGAS']['signed'] = !empty($danru_export);
+                $signature_status['PETUGAS']['signer'] = $danru_export;
+                $signature_status['PETUGAS']['shift'] = $shift;
+                break;
             default:
                 break;
         }
     }
     
-    // // Display status based on the gathered information
-    // echo "<p><strong>DANRU:</strong> ";
-    // echo $danru_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
-    
-    // echo "<p><strong>DITERIMA:</strong> ";
-    // echo $diterima_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
-    
-    // echo "<p><strong>DISERAHKAN:</strong> ";
-    // echo $diserahkan_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
-
     // Display status and signer details for each role
     echo "<p><strong>DANRU:</strong> ";
     if ($signature_status['DANRU']['signed']) {
@@ -133,24 +99,17 @@ session_start();
         echo "Belum melakukan tanda tangan.";
     }
     echo "</p>";
-    
-    echo "<p><strong>DITERIMA:</strong> ";
-    if ($signature_status['DITERIMA']['signed']) {
-        echo "Sudah melakukan tanda tangan oleh {$signature_status['DITERIMA']['signer']} pada shift {$signature_status['DITERIMA']['shift']}.";
-    } else {
-        echo "Belum melakukan tanda tangan.";
-    }
-    echo "</p>";
-    
-    echo "<p><strong>DISERAHKAN:</strong> ";
-    if ($signature_status['DISERAHKAN']['signed']) {
-        echo "Sudah melakukan tanda tangan oleh {$signature_status['DISERAHKAN']['signer']} pada shift {$signature_status['DISERAHKAN']['shift']}.";
+
+    echo "<p><strong>PETUGAS:</strong> ";
+    if ($signature_status['PETUGAS']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['PETUGAS']['signer']} pada shift {$signature_status['PETUGAS']['shift']}.";
     } else {
         echo "Belum melakukan tanda tangan.";
     }
     echo "</p>";
     ?>
 </div>
+
         </div>
     </div>
     <div class="col-sm-6">
@@ -191,11 +150,11 @@ session_start();
 </div>
 
                 <br>
-
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
                     <div class="card-header py-3 text-center">
-                        <h3 class="m-0 text-dark">Data Buyer</h3>
+                        <h3 class="m-0 text-dark">Data Segregation</h3>
+                        
                         </div>
 
                             <div class="card-body">
@@ -245,7 +204,7 @@ session_start();
                                                         $noUrut = 1;
                                                         $queryCari = mysqli_query($koneksi,"SELECT * FROM tb_report_tamu LEFT JOIN tb_list_buku ON tb_report_tamu.tbrt_jns_kunjungan = tb_list_buku.tblu_kd_buku
                                                                                                                             LEFT JOIN tb_list_card ON tb_report_tamu.tbrt_nmr_kartu = tb_list_card.tblic_uid
-                                                                                                                            WHERE tbrt_jns_kunjungan LIKE 'B006'");
+                                                                                                                            WHERE tbrt_jns_kunjungan LIKE 'B020'");
                                                         while($tabelCari = mysqli_fetch_array($queryCari)){
                                                     ?>
 
@@ -295,8 +254,7 @@ session_start();
                             <select id="inputState" class="form-select" name="jabatan_ttd" onchange="toggleTTDFields()" required>
                                 <option value="">Choose TTD...</option>
                                 <option value="DANRU">DANRU</option>
-                                <option value="DITERIMA">DITERIMA</option>
-                                <option value="DISERAHKAN">DISERAHKAN</option>
+                                <option value="PETUGAS">PETUGAS</option>
                             </select>
                         </div>
                     </div>
@@ -304,7 +262,7 @@ session_start();
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
                         <div class="col-sm-9">
                             <input type="date" name="input_print_pdf" class="form-control">
-                            <input type="hidden" name="input_jns_kunjungan" value="B006" class="form-control">
+                            <input type="hidden" name="input_jns_kunjungan" value="B020" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -427,13 +385,13 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                    <form method="POST" action="print_tamu.php" target="_blank">
+                                    <form method="POST" action="print_tamu_for_gs.php" target="_blank">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" name="input_print_pdf" class="form-control">
-                                                    <input type="hidden" name="input_jns_kunjungan" value="B006" class="form-control">
+                                                    <input type="hidden" name="input_jns_kunjungan" value="B020" class="form-control">
                                                 </div>
                                             </div>
                                                 <div class="row mb-3">

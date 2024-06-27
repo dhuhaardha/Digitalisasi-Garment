@@ -659,7 +659,7 @@ if (isset($_POST['tombol_register_patroli'])){
     $InputJenisReport = $_POST['input_nama_buku'];
     $InputJamMulai = date("h:i:s");
     $InputHariMulai = date("Y-m-d");
-    $InputNamaSecurity = SUBSTR($_POST['input_nama_security'],0,2);
+    $InputNamaSecurity = $_POST['input_nama_security'];
     $InputShift = $_POST['input_shift'];
     $InputUID = "PTU1/" . $InputJenisReport . "/" . $InputHariMulai;
 
@@ -2392,13 +2392,9 @@ if (isset($_POST['tombol_tambah_security_cctv'])) {
      file_put_contents($filePath, $signatureData);
 
      $input_nama = '';
-    if ($_POST['jabatan_ttd'] === 'DANRU') {
+    if ($_POST['jabatan_ttd'] === 'SECURITY') {
         $input_nama = $_POST['input_nama_danru'];
-    } elseif ($_POST['jabatan_ttd'] === 'DITERIMA' || $_POST['jabatan_ttd'] === 'DISERAHKAN') {
-        $input_nama = $_POST['input_nama_anggota'];
-    } else {
-        $input_nama = $_POST['input_nama_anggota'];
-    }
+    } 
 
     $tambahQuery = mysqli_query(
         $koneksi,

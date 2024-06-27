@@ -103,6 +103,7 @@
                 <h6 class="collapse-header">Administrasi :</h6>
                 <a class="collapse-item" href="input_data_tamu.php">Input Pengunjung</a>
                 <a class="collapse-item" href="data_tamu_applicant.php">Pelamar</a>
+                <a class="collapse-item" href="data_tamu_perusahaan.php">Tamu Perusahaan</a>
                 <a class="collapse-item" href="data_tamu_buyer.php">Buyer</a>
                 <a class="collapse-item" href="data_tamu_factory_visitor.php">Kunjungan Pabrik</a>
                 <a class="collapse-item" href="data_tamu_segregation.php">Segregation</a>

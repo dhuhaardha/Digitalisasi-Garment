@@ -38,45 +38,119 @@ session_start();
                 <h5 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h5>
             </div>
             <div class="card-body">
-                <?php
-                $current_date = date('Y-m-d');
-                $jenis_bagian_export = 'B009';
-                // Query untuk mendapatkan data tanda tangan terakhir berdasarkan jabatan_ttd
-                $queryStatus = mysqli_query($koneksi, 
-                    "SELECT jabatan_ttd, jenis_bagian_export,  danru_export, dibuat_pada
-                    FROM tb_export
-                    WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')
-                    AND jenis_bagian_export = '$jenis_bagian_export'
-                    AND DATE(dibuat_pada) = '$current_date'");
+    <?php
+    $current_date = date('Y-m-d');
+    $jenis_bagian_export = 'B009';
+    
+    // Query to retrieve signature status for specific roles and current date
+    $queryStatus = mysqli_query($koneksi, 
+        "SELECT jabatan_ttd, danru_export, shift 
+        FROM tb_export
+        WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')
+        AND jenis_bagian_export = '$jenis_bagian_export'
+        AND DATE(dibuat_pada) = '$current_date'");
+    
+    // // Initialize status variables
+    // $danru_signed = false;
+    // $diterima_signed = false;
+    // $diserahkan_signed = false;
 
-                // Lakukan iterasi untuk setiap jabatan_ttd
-                while ($row = mysqli_fetch_assoc($queryStatus)) {
-                    $jabatan_ttd = $row['jabatan_ttd'];
-                    $danru_export = $row['danru_export'];
+    // Initialize arrays to store signature status and details
+    $signature_status = array(
+        'DANRU' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DITERIMA' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DISERAHKAN' => array('signed' => false, 'signer' => '', 'shift' => '')
+    );
 
-                    // Tampilkan status sesuai dengan jabatan_ttd
-                    echo "<p><strong>$jabatan_ttd:</strong> ";
-                    if (!empty($danru_export)) {
-                        echo "Sudah melakukan tanda tangan.";
-                    } else {
-                        echo "Belum melakukan tanda tangan.";
-                    }
-                    echo "</p>";
-
-                    // // Jika salah satu sudah melakukan tanda tangan, nonaktifkan tombol TTD Export
-                    // while ($row = mysqli_fetch_assoc($queryStatus)) {
-                    //     $statusTtd[$row['jabatan_ttd']] = $row['danru_export'];
-                    // }
+    // // Iterate through query results
+    // while ($row = mysqli_fetch_assoc($queryStatus)) {
+    //     $jabatan_ttd = $row['jabatan_ttd'];
+    //     $danru_export = $row['danru_export'];
         
-                    // // Cek apakah 'DANRU', 'DITERIMA', atau 'DISERAHKAN' sudah melakukan tanda tangan
-                    // $danruTtd = !empty($statusTtd['DANRU']);
-                    // $diterimaTtd = !empty($statusTtd['DITERIMA']);
-                    // $diserahkanTtd = !empty($statusTtd['DISERAHKAN']);
-                    // $disableTtdExport = $danruTtd && $diterimaTtd && $diserahkanTtd;
-                }
-                ?>
+        
+    //     // Check each role and update status variables
+    //     switch ($jabatan_ttd) {
+    //         case 'DANRU':
+    //             $danru_signed = !empty($danru_export);
+    //             break;
+    //         case 'DITERIMA':
+    //             $diterima_signed = !empty($danru_export);
+    //             break;
+    //         case 'DISERAHKAN':
+    //             $diserahkan_signed = !empty($danru_export);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 
-            </div>
+    // Iterate through query results
+    while ($row = mysqli_fetch_assoc($queryStatus)) {
+        $jabatan_ttd = $row['jabatan_ttd'];
+        $danru_export = $row['danru_export'];
+        $shift = $row['shift'];
+        
+        // Update signature status and details for each role
+        switch ($jabatan_ttd) {
+            case 'DANRU':
+                $signature_status['DANRU']['signed'] = !empty($danru_export);
+                $signature_status['DANRU']['signer'] = $danru_export;
+                $signature_status['DANRU']['shift'] = $shift;
+                break;
+            case 'DITERIMA':
+                $signature_status['DITERIMA']['signed'] = !empty($danru_export);
+                $signature_status['DITERIMA']['signer'] = $danru_export;
+                $signature_status['DITERIMA']['shift'] = $shift;
+                break;
+            case 'DISERAHKAN':
+                $signature_status['DISERAHKAN']['signed'] = !empty($danru_export);
+                $signature_status['DISERAHKAN']['signer'] = $danru_export;
+                $signature_status['DISERAHKAN']['shift'] = $shift;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    // // Display status based on the gathered information
+    // echo "<p><strong>DANRU:</strong> ";
+    // echo $danru_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
+    // echo "</p>";
+    
+    // echo "<p><strong>DITERIMA:</strong> ";
+    // echo $diterima_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
+    // echo "</p>";
+    
+    // echo "<p><strong>DISERAHKAN:</strong> ";
+    // echo $diserahkan_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
+    // echo "</p>";
+
+    // Display status and signer details for each role
+    echo "<p><strong>DANRU:</strong> ";
+    if ($signature_status['DANRU']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['DANRU']['signer']} pada shift {$signature_status['DANRU']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+    
+    echo "<p><strong>DITERIMA:</strong> ";
+    if ($signature_status['DITERIMA']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['DITERIMA']['signer']} pada shift {$signature_status['DITERIMA']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+    
+    echo "<p><strong>DISERAHKAN:</strong> ";
+    if ($signature_status['DISERAHKAN']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['DISERAHKAN']['signer']} pada shift {$signature_status['DISERAHKAN']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+    ?>
+</div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -280,7 +354,6 @@ session_start();
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="tombol_tambah_ttd" class="btn btn-success" id="saveSignatureBtn">Add</button>
-                    
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </form>

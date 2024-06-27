@@ -144,7 +144,7 @@ session_start();
                                                             <td><?php echo $noUrut++; ?></td>
                                                             <td><?php echo $tabelCari['tblu_nm_buku']; ?></td>
                                                             <td><?php echo $tabelCari['tbrp_tgl_mulai'] . " - " . $tabelCari['tbrp_jam_mulai']; ?></td>
-                                                            <td><?php echo $tabelCari['tbls_uid'] . " - " . $tabelCari['tbls_nama']; ?></td>
+                                                            <td><?php echo $tabelCari['tbls_nik'] . " - " . $tabelCari['tbls_nama']; ?></td>
                                                             <td>
                                                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ModalSelesaiPatroli">
                                                                     <i class="fa-solid fa-clipboard-check"></i> <b>Finish Patrol</b>

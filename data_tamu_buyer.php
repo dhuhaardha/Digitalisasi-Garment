@@ -33,34 +33,125 @@ session_start();
                 <div class="container-fluid">
 
                 <!-- Card Status -->
-<div class="card mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h6>
-    </div>
-    <div class="card-body">
-        <?php
-        // Query untuk mendapatkan data tanda tangan terakhir berdasarkan jabatan_ttd
-        $queryStatus = mysqli_query($koneksi, "SELECT DISTINCT jabatan_ttd, danru_export FROM tb_export WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN')");
+                <div class="row d-flex align-items-stretch">
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+    <?php
+    $current_date = date('Y-m-d');
+    $jenis_bagian_export = 'B007';
+    
+    // Query to retrieve signature status and details for specific roles and current date
+    $queryStatus = mysqli_query($koneksi, 
+        "SELECT jabatan_ttd, danru_export, shift 
+        FROM tb_export
+        WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN', 'PETUGAS')
+        AND jenis_bagian_export = '$jenis_bagian_export'
+        AND DATE(dibuat_pada) = '$current_date'");
+    
+    // Initialize arrays to store signature status and details
+    $signature_status = array(
+        'DANRU' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DITERIMA' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DISERAHKAN' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'PETUGAS' => array('signed' => false, 'signer' => '', 'shift' => '')
+    );
+
+    // Iterate through query results
+    while ($row = mysqli_fetch_assoc($queryStatus)) {
+        $jabatan_ttd = $row['jabatan_ttd'];
+        $danru_export = $row['danru_export'];
+        $shift = $row['shift'];
         
-        // Lakukan iterasi untuk setiap jabatan_ttd
-        while ($row = mysqli_fetch_assoc($queryStatus)) {
-            $jabatan_ttd = $row['jabatan_ttd'];
-            $danru_export = $row['danru_export'];
-            
-            // Tampilkan status sesuai dengan jabatan_ttd
-            echo "<p><strong>$jabatan_ttd:</strong> ";
-            if (!empty($danru_export)) {
-                echo "Sudah melakukan tanda tangan.";
-            } else {
-                echo "Belum melakukan tanda tangan.";
-            }
-            echo "</p>";
+        // Update signature status and details for each role
+        switch ($jabatan_ttd) {
+            case 'DANRU':
+                $signature_status['DANRU']['signed'] = !empty($danru_export);
+                $signature_status['DANRU']['signer'] = $danru_export;
+                $signature_status['DANRU']['shift'] = $shift;
+                break;
+            case 'DITERIMA':
+                $signature_status['DITERIMA']['signed'] = !empty($danru_export);
+                $signature_status['DITERIMA']['signer'] = $danru_export;
+                $signature_status['DITERIMA']['shift'] = $shift;
+                break;
+            case 'DISERAHKAN':
+                $signature_status['DISERAHKAN']['signed'] = !empty($danru_export);
+                $signature_status['DISERAHKAN']['signer'] = $danru_export;
+                $signature_status['DISERAHKAN']['shift'] = $shift;
+                break;
+            case 'PETUGAS':
+                $signature_status['PETUGAS']['signed'] = !empty($danru_export);
+                $signature_status['PETUGAS']['signer'] = $danru_export;
+                $signature_status['PETUGAS']['shift'] = $shift;
+                break;
+            default:
+                break;
         }
-        ?>
+    }
+    
+    // Display status and signer details for each role
+    echo "<p><strong>DANRU:</strong> ";
+    if ($signature_status['DANRU']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['DANRU']['signer']} pada shift {$signature_status['DANRU']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+
+    echo "<p><strong>PETUGAS:</strong> ";
+    if ($signature_status['PETUGAS']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['PETUGAS']['signer']} pada shift {$signature_status['PETUGAS']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+    ?>
+</div>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Proses Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+                <!-- <div class="text-center">
+
+                    <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+                    </button>
+                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
+                        <i class="fa-solid fa-signature">&nbsp</i>
+                        TTD Export
+                    </button>
+                </div> -->
+                <div class="d-flex justify-content-between">
+
+    <div class="w-50">
+        <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+            <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+        </button>
+    </div>
+
+    <div class="w-50 ml-2"> <!-- ml-2 untuk memberi jarak antar tombol -->
+        <button type="button" class="btn-lg btn-success btn-block" data-toggle="modal" data-target="#modalTambah">
+            <i class="fa-solid fa-signature"></i>&nbsp; TTD Export
+        </button>
+    </div>
+
+</div>
+
+            </div>
+        </div>
     </div>
 </div>
 
-
+<br>
 
 
                     <!-- Container Data Karyawan -->
@@ -148,6 +239,145 @@ session_start();
                                                                     }
                                                                 ?>
 
+                                            <!-- Modal Tambah TTD -->
+<div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Malam</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" action="aksi_security.php">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label for="inputState" class="col-sm-3 col-form-label">Bagian TTD</label>
+                        <div class="col-sm-9">
+                            <select id="inputState" class="form-select" name="jabatan_ttd" onchange="toggleTTDFields()" required>
+                                <option value="">Choose TTD...</option>
+                                <option value="DANRU">DANRU</option>
+                                <option value="PETUGAS">PETUGAS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
+                        <div class="col-sm-9">
+                            <input type="date" name="input_print_pdf" class="form-control">
+                            <input type="hidden" name="input_jns_kunjungan" value="B007" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Shift</label>
+                                            <div class="col-sm-9">
+                                            <select id="inputState" class="form-select" name="shift">
+                                                    <option selected disabled>PILIH SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                    <div id="danruFields" style="display: none;">
+                        <div class="row mb-3">
+                            <label for="danruName" class="col-sm-3 col-form-label">Danru</label>
+                            <div class="col-sm-9">
+                                <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
+                                    <option value="" selected>PILIH DANRU...</option>
+                                    <?php
+                                    $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
+                                    while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
+                                        echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="anggotaFields" style="display: none;">
+                        <div class="row mb-3">
+                            <label for="anggotaName" class="col-sm-3 col-form-label">Anggota</label>
+                            <div class="col-sm-9">
+                                <select class="form-control selectpicker" name="input_nama_anggota" data-live-search="true">
+                                    <option value="" selected>PILIH ANGGOTA...</option>
+                                    <?php
+                                    $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
+                                    while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
+                                        echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
+                        <div class="col-sm-9">
+                            <style>
+                                canvas {
+                                    border: 1px solid #000;
+                                }
+                            </style>
+                            <div class="col-sm-4">
+                                <canvas id="signatureCanvas" width="300" height="150"></canvas>
+                                <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
+                                <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="tombol_tambah_ttd" class="btn btn-success" id="saveSignatureBtn">Add</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+            <script src="signature_pad.umd.min.js"></script>
+            <script>
+                // Wait for the document to be fully loaded
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Initialize Signature Pad
+                    var canvas = document.getElementById('signatureCanvas');
+                    var signaturePad = new SignaturePad(canvas, {
+                        backgroundColor: 'rgb(255, 255, 255)' // set background color
+                    });
+
+                    // Clear Signature function
+                    document.getElementById('clear_signature').addEventListener('click', function() {
+                        signaturePad.clear(); // Clear the signature pad
+                    });
+
+                    // Form submission
+                    document.getElementById('saveSignatureBtn').addEventListener('click', function() {
+                        // Get the data URL of the signature
+                        var dataURL = signaturePad.toDataURL();
+
+                        // Set the data URL to the hidden input field
+                        document.getElementById('signatureFilename').value = dataURL;
+                    });
+                });
+
+                function toggleTTDFields() {
+                    var selectedOption = document.getElementById("inputState").value;
+                    var danruFields = document.getElementById("danruFields");
+                    var anggotaFields = document.getElementById("anggotaFields");
+
+                    if (selectedOption === "DANRU") {
+                        danruFields.style.display = "block";
+                        anggotaFields.style.display = "none";
+                    } else {
+                        danruFields.style.display = "none";
+                        anggotaFields.style.display = "block";
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+                    <!-- End Modal -->
+
                                                                     <!-- Modal Cetak PDF -->
                         <!-- Modal Cetak PDF -->
                     <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -159,13 +389,13 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                    <form method="POST" action="print_tamu.php" target="_blank">
+                                    <form method="POST" action="print_tamu_for_gs.php" target="_blank">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" name="input_print_pdf" class="form-control">
-                                                    <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
+                                                    <input type="hidden" name="input_jns_kunjungan" value="B007" class="form-control">
                                                 </div>
                                             </div>
                                                 <div class="row mb-3">
@@ -215,134 +445,6 @@ session_start();
                         </div>
                     <!-- End Modal -->
                                                                 
-                        <!-- Modal Tambah TTD -->
-<div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Malam</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <form method="POST" action="aksi_security.php">
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <label for="inputState" class="col-sm-3 col-form-label">Bagian TTD</label>
-                        <div class="col-sm-9">
-                            <select id="inputState" class="form-select" name="jabatan_ttd" onchange="toggleTTDFields()" required>
-                                <option value="">Choose TTD...</option>
-                                <option value="DANRU">DANRU</option>
-                                <option value="DITERIMA">DITERIMA</option>
-                                <option value="DISERAHKAN">DISERAHKAN</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
-                        <div class="col-sm-9">
-                            <input type="date" name="input_print_pdf" class="form-control">
-                            <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
-                        </div>
-                    </div>
-                    <div id="danruFields" style="display: none;">
-                        <div class="row mb-3">
-                            <label for="danruName" class="col-sm-3 col-form-label">Danru</label>
-                            <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
-                                    <option value="" selected>PILIH DANRU...</option>
-                                    <?php
-                                    $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
-                                    while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
-                                        echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="anggotaFields" style="display: none;">
-                        <div class="row mb-3">
-                            <label for="anggotaName" class="col-sm-3 col-form-label">Anggota</label>
-                            <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
-                                    <option value="" selected>PILIH ANGGOTA...</option>
-                                    <?php
-                                    $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
-                                    while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
-                                        echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
-                        <div class="col-sm-9">
-                            <style>
-                                canvas {
-                                    border: 1px solid #000;
-                                }
-                            </style>
-                            <div class="col-sm-4">
-                                <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                <button class="btn btn-primary" id="clear_signature" type="button">Clear Signature</button>
-                                <input type="hidden" class="form-control" id="signatureFilename" name="signatureFilename">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="tombol_tambah_ttd" class="btn btn-success" id="saveSignatureBtn">Add</button>
-                    
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-            <script src="signature_pad.umd.min.js"></script>
-            <script>
-                // Wait for the document to be fully loaded
-                document.addEventListener("DOMContentLoaded", function() {
-                    // Initialize Signature Pad
-                    var canvas = document.getElementById('signatureCanvas');
-                    var signaturePad = new SignaturePad(canvas, {
-                        backgroundColor: 'rgb(255, 255, 255)' // set background color
-                    });
-
-                    // Clear Signature function
-                    document.getElementById('clear_signature').addEventListener('click', function() {
-                        signaturePad.clear(); // Clear the signature pad
-                    });
-
-                    // Form submission
-                    document.getElementById('saveSignatureBtn').addEventListener('click', function() {
-                        // Get the data URL of the signature
-                        var dataURL = signaturePad.toDataURL();
-
-                        // Set the data URL to the hidden input field
-                        document.getElementById('signatureFilename').value = dataURL;
-                    });
-                });
-
-                function toggleTTDFields() {
-                    var selectedOption = document.getElementById("inputState").value;
-                    var danruFields = document.getElementById("danruFields");
-                    var anggotaFields = document.getElementById("anggotaFields");
-
-                    if (selectedOption === "DANRU") {
-                        danruFields.style.display = "block";
-                        anggotaFields.style.display = "none";
-                    } else {
-                        danruFields.style.display = "none";
-                        anggotaFields.style.display = "block";
-                    }
-                }
-            </script>
-        </div>
-    </div>
-</div>
-
-                    <!-- End Modal -->
 
                                                                     <!-- Modal Selesai Patroli -->
                                                                         <div class="modal fade" id="ModalSelesaiPatroli" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
