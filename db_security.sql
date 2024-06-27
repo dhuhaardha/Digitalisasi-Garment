@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2024 at 12:06 PM
+-- Generation Time: Jun 27, 2024 at 11:53 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -197,7 +197,25 @@ CREATE TABLE `tb_driver` (
 --
 
 INSERT INTO `tb_driver` (`uid_driver`, `unit`, `nama`, `dibuat_pada`) VALUES
-('PTU1/driver/DR001', 'UNGARAN', 'SUNARTO', '2024-06-26 08:56:34');
+('PTU1/driver/DR001', 'PTU1', 'SUNARTO', '2024-06-26 08:56:34'),
+('PTU1/driver/DR002', 'PTU1', 'TEGUH', '2024-06-27 05:13:06'),
+('PTU1/driver/DR003', 'PTU1', 'IBNU', '2024-06-27 05:14:24'),
+('PTU1/driver/DR004', 'PTU1', 'IMAN', '2024-06-27 05:14:39'),
+('PTU1/driver/DR005', 'PTU1', 'DWI', '2024-06-27 05:14:52'),
+('PTU1/driver/DR006', 'PTU1', 'ERNA', '2024-06-27 05:17:01'),
+('PTU1/driver/DR007', 'PTU1', 'GANI', '2024-06-27 05:17:16'),
+('PTU1/driver/DR008', 'PTU1', 'YOHANES', '2024-06-27 05:17:36'),
+('PTU1/driver/DR009', 'PTU1', 'HANIF', '2024-06-27 05:17:45'),
+('PTU1/driver/DR010', 'PTU1', 'HANA', '2024-06-27 05:17:54'),
+('PTU2/driver/DR016', 'PTU2', 'RADITYA', '2024-06-27 05:23:52'),
+('PTU2/driver/DR017', 'PTU2', 'HERMAWAN', '2024-06-27 05:24:01'),
+('PTU2/driver/DR018', 'PTU2', 'UMAM', '2024-06-27 05:24:58'),
+('PTU2/driver/DR019', 'PTU2', 'RIZAL', '2024-06-27 05:25:06'),
+('PTU3/driver/DR011', 'PTU3', 'FAISAL', '2024-06-27 05:22:24'),
+('PTU3/driver/DR012', 'PTU3', 'GAGAS', '2024-06-27 05:22:54'),
+('PTU3/driver/DR013', 'PTU3', 'YUSUF', '2024-06-27 05:23:11'),
+('PTU3/driver/DR014', 'PTU3', 'MAHMUDI', '2024-06-27 05:23:27'),
+('PTU3/driver/DR015', 'PTU3', 'DION', '2024-06-27 05:23:37');
 
 -- --------------------------------------------------------
 
@@ -208,6 +226,8 @@ INSERT INTO `tb_driver` (`uid_driver`, `unit`, `nama`, `dibuat_pada`) VALUES
 CREATE TABLE `tb_export` (
   `uid_export` varchar(25) NOT NULL,
   `jenis_bagian_export` varchar(100) NOT NULL,
+  `jabatan_ttd` varchar(20) NOT NULL,
+  `shift` varchar(3) NOT NULL,
   `date` date NOT NULL,
   `danru_export` varchar(100) NOT NULL,
   `ttd_danru` text NOT NULL,
@@ -218,13 +238,11 @@ CREATE TABLE `tb_export` (
 -- Dumping data for table `tb_export`
 --
 
-INSERT INTO `tb_export` (`uid_export`, `jenis_bagian_export`, `date`, `danru_export`, `ttd_danru`, `dibuat_pada`) VALUES
-('PTU1/export/EX001', 'B009', '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
-('PTU1/export/EX002', 'B009', '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b882fdc001.png', '2024-06-26 03:17:03'),
-('PTU1/export/EX003', 'B009', '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b88cc4dad5.png', '2024-06-26 03:19:40'),
-('PTU1/export/EX004', 'B009', '2024-06-21', 'MARYANTO ', 'upload/signature_667b9f4ad38a3.png', '2024-06-26 04:55:38'),
-('PTU1/export/EX005', 'B009', '2024-06-22', 'MARYANTO ', 'upload/signature_667babd159e56.png', '2024-06-26 05:49:05'),
-('PTU1/export/EX006', 'B009', '2024-06-05', 'MARYANTO ', 'upload/signature_667bad1e34fa3.png', '2024-06-26 05:54:38');
+INSERT INTO `tb_export` (`uid_export`, `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru`, `dibuat_pada`) VALUES
+('PTU1/export/EX001', 'B009', '', '', '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
+('PTU1/export/EX002', 'B009', 'DANRU', '1', '2024-06-27', 'APRILYA PUSPITASARI', 'upload/signature_667d264c6a0ce.png', '2024-06-27 08:43:56'),
+('PTU1/export/EX003', 'B009', 'DITERIMA', '1', '2024-06-27', 'DIMAS SULISTYO', 'upload/signature_667d265c9c99b.png', '2024-06-27 08:44:12'),
+('PTU1/export/EX004', 'B009', 'DISERAHKAN', '2', '2024-06-27', 'SRI RAHAYU', 'upload/signature_667d301dc5e19.png', '2024-06-27 09:25:49');
 
 -- --------------------------------------------------------
 
@@ -380,6 +398,12 @@ CREATE TABLE `tb_kontrol_pagar` (
   `shift` int(4) NOT NULL,
   `time_kontrol_created` time NOT NULL,
   `uraian` text NOT NULL,
+  `kondisi_pagar_keliling` text NOT NULL,
+  `kondisi_pintu_gerbang` text NOT NULL,
+  `kondisi_kawat_berduri` text NOT NULL,
+  `kondisi_bangunan` text NOT NULL,
+  `kondisi_linkungan` text NOT NULL,
+  `kondisi_tanaman_liar_dan_dahan_pohon` text NOT NULL,
   `time_kontrol_finished` time NOT NULL,
   `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -388,15 +412,15 @@ CREATE TABLE `tb_kontrol_pagar` (
 -- Dumping data for table `tb_kontrol_pagar`
 --
 
-INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `time_kontrol_finished`, `dibuat_pada`) VALUES
-('KonPag001', 3, '09:52:00', 'harus OKE', '10:44:01', '2024-06-14 03:44:11'),
-('KonPag002', 3, '10:01:40', 'harus OK', '10:42:53', '2024-06-14 03:44:01'),
-('KonPag003', 1, '13:08:31', 'asfasff', '13:09:40', '2024-06-14 06:09:44'),
-('KonPag004', 2, '13:09:29', 'qwrwrqw', '13:09:34', '2024-06-14 06:09:40'),
-('KonPag005', 1, '16:12:44', '', '00:00:00', '2024-06-14 09:13:08'),
-('KonPag006', 1, '16:12:27', '', '00:00:00', '2024-06-14 09:13:11'),
-('KonPag007', 1, '13:33:23', '', '00:00:00', '2024-06-22 06:33:29'),
-('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '16:06:35', '2024-06-22 09:09:00');
+INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `kondisi_pagar_keliling`, `kondisi_pintu_gerbang`, `kondisi_kawat_berduri`, `kondisi_bangunan`, `kondisi_linkungan`, `kondisi_tanaman_liar_dan_dahan_pohon`, `time_kontrol_finished`, `dibuat_pada`) VALUES
+('KonPag001', 3, '09:52:00', 'harus OKE', '', '', '', '', '', '', '10:44:01', '2024-06-14 03:44:11'),
+('KonPag002', 3, '10:01:40', 'harus OK', '', '', '', '', '', '', '10:42:53', '2024-06-14 03:44:01'),
+('KonPag003', 1, '13:08:31', 'asfasff', '', '', '', '', '', '', '13:09:40', '2024-06-14 06:09:44'),
+('KonPag004', 2, '13:09:29', 'qwrwrqw', '', '', '', '', '', '', '13:09:34', '2024-06-14 06:09:40'),
+('KonPag005', 1, '16:12:44', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:08'),
+('KonPag006', 1, '16:12:27', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:11'),
+('KonPag007', 1, '13:33:23', '', '', '', '', '', '', '', '00:00:00', '2024-06-22 06:33:29'),
+('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '', '', '', '', '', '', '16:06:35', '2024-06-22 09:09:00');
 
 -- --------------------------------------------------------
 
@@ -888,7 +912,7 @@ CREATE TABLE `tb_list_cctv` (
   `tblc_lokasi` varchar(10) NOT NULL,
   `tblc_nama_cctv` varchar(50) NOT NULL,
   `tblc_status` varchar(10) NOT NULL,
-  `tblc_cek_cctv` varchar(10) DEFAULT NULL
+  `tblc_cek_cctv` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -896,9 +920,9 @@ CREATE TABLE `tb_list_cctv` (
 --
 
 INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_status`, `tblc_cek_cctv`) VALUES
-('PTU1/001', 'PTU1', 'POS INDUK', 'INACTIVE', '2024-06-22'),
+('PTU1/001', 'PTU1', 'POS INDUK', 'ACTIVE', '2024-06-22'),
 ('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', '2024-06-22'),
-('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', '2024-06-22'),
+('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', '2024-06-27'),
 ('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', '2024-06-22'),
 ('PTU1/005', 'PTU1', 'STORE ACCESSORIES', 'ACTIVE', '2024-05-31'),
 ('PTU1/006', 'PTU1', 'STORE ACCESSORIES DALAM', 'ACTIVE', '2024-05-31'),
@@ -937,14 +961,14 @@ INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_s
 ('PTU1/039', 'PTU1', 'AREA WASHING & QC', 'ACTIVE', NULL),
 ('PTU1/040', 'PTU1', 'PINTU DARURAT 1', 'ACTIVE', NULL),
 ('PTU1/041', 'PTU1', 'CUTTING DRESS 2', 'ACTIVE', NULL),
-('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', NULL),
+('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', '2024-06-27'),
 ('PTU1/043', 'PTU1', 'AREA LOKER', 'ACTIVE', NULL),
 ('PTU1/044', 'PTU1', 'SEWING LINE 1', 'ACTIVE', NULL),
 ('PTU1/045', 'PTU1', 'KANTIN LT.2', 'ACTIVE', NULL),
 ('PTU1/046', 'PTU1', 'DEPAN TUKANG KAYU', 'ACTIVE', NULL),
 ('PTU1/047', 'PTU1', 'DEPAN LINE PRESS', 'ACTIVE', NULL),
-('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', ''),
-('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '');
+('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', '0000-00-00'),
+('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1391,8 +1415,6 @@ CREATE TABLE `tb_report_cctv` (
   `tbrc_uid` varchar(25) NOT NULL,
   `tbrc_uid_cctv` varchar(10) NOT NULL,
   `tbrc_tgl_cek` date NOT NULL,
-  `tbrc_jam_cek` time DEFAULT NULL,
-  `tbrc_nama_security` varchar(60) DEFAULT NULL,
   `tbrc_status_cek` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1400,48 +1422,50 @@ CREATE TABLE `tb_report_cctv` (
 -- Dumping data for table `tb_report_cctv`
 --
 
-INSERT INTO `tb_report_cctv` (`tbrc_uid`, `tbrc_uid_cctv`, `tbrc_tgl_cek`, `tbrc_jam_cek`, `tbrc_nama_security`, `tbrc_status_cek`) VALUES
-('REPCCTV/PTU1/2024/05/22', 'PTU1/001', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/003', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/001', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/002', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/004', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/005', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/006', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/22', 'PTU1/007', '2024-05-22', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/24', 'PTU1/001', '2024-05-24', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/24', 'PTU1/002', '2024-05-24', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/24', 'PTU1/003', '2024-05-24', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/24', 'PTU1/012', '2024-05-24', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/25', 'PTU1/001', '2024-05-25', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/28', 'PTU1/001', '2024-05-28', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/001', '2024-05-29', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/004', '2024-05-29', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/005', '2024-05-29', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/003', '2024-05-29', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/006', '2024-05-29', NULL, NULL, 'OK'),
-('REPCCTV/PTU1/2024/05/29', 'PTU1/007', '2024-05-29', '14:12:53', 'coba1', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/001', '2024-05-30', '13:03:45', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/003', '2024-05-30', '13:03:48', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/004', '2024-05-30', '13:03:50', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/005', '2024-05-30', '13:03:51', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/006', '2024-05-30', '13:03:53', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/007', '2024-05-30', '13:03:54', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/008', '2024-05-30', '13:03:55', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/30', 'PTU1/009', '2024-05-30', '13:03:57', 'coba2', 'OK'),
-('REPCCTV/PTU1/2024/05/31', 'PTU1/001', '2024-05-31', '16:26:49', 'April', 'OK'),
-('REPCCTV/PTU1/2024/05/31', 'PTU1/003', '2024-05-31', '16:26:56', 'April', 'OK'),
-('REPCCTV/PTU1/2024/05/31', 'PTU1/004', '2024-05-31', '16:27:03', 'April', 'OK'),
-('REPCCTV/PTU1/2024/05/31', 'PTU1/005', '2024-05-31', '16:27:41', 'April', 'OK'),
-('REPCCTV/PTU1/2024/05/31', 'PTU1/006', '2024-05-31', '16:27:44', 'April', 'OK'),
-('REPCCTV/PTU1/2024/06/05', 'PTU1/002', '2024-06-05', '11:21:09', 'PTU1/0033', 'OK'),
-('REPCCTV/PTU1/2024/06/21', 'PTU1/001', '2024-06-21', '17:24:02', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/001', '2024-06-22', '15:31:55', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/002', '2024-06-22', '15:32:01', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/003', '2024-06-22', '15:32:06', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/004', '2024-06-22', '15:32:12', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/014', '2024-06-22', '15:32:17', '', 'OK'),
-('REPCCTV/PTU1/2024/06/22', 'PTU1/015', '2024-06-22', '15:32:23', '', 'OK');
+INSERT INTO `tb_report_cctv` (`tbrc_uid`, `tbrc_uid_cctv`, `tbrc_tgl_cek`, `tbrc_status_cek`) VALUES
+('REPCCTV/PTU1/2024/05/22', 'PTU1/001', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/003', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/001', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/002', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/004', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/005', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/006', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/22', 'PTU1/007', '2024-05-22', 'OK'),
+('REPCCTV/PTU1/2024/05/24', 'PTU1/001', '2024-05-24', 'OK'),
+('REPCCTV/PTU1/2024/05/24', 'PTU1/002', '2024-05-24', 'OK'),
+('REPCCTV/PTU1/2024/05/24', 'PTU1/003', '2024-05-24', 'OK'),
+('REPCCTV/PTU1/2024/05/24', 'PTU1/012', '2024-05-24', 'OK'),
+('REPCCTV/PTU1/2024/05/25', 'PTU1/001', '2024-05-25', 'OK'),
+('REPCCTV/PTU1/2024/05/28', 'PTU1/001', '2024-05-28', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/001', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/004', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/005', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/003', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/006', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/29', 'PTU1/007', '2024-05-29', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/001', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/003', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/004', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/005', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/006', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/007', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/008', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/30', 'PTU1/009', '2024-05-30', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/001', '2024-05-31', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/003', '2024-05-31', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/004', '2024-05-31', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/005', '2024-05-31', 'OK'),
+('REPCCTV/PTU1/2024/05/31', 'PTU1/006', '2024-05-31', 'OK'),
+('REPCCTV/PTU1/2024/06/05', 'PTU1/002', '2024-06-05', 'OK'),
+('REPCCTV/PTU1/2024/06/21', 'PTU1/001', '2024-06-21', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/001', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/002', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/003', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/004', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/014', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/22', 'PTU1/015', '2024-06-22', 'OK'),
+('REPCCTV/PTU1/2024/06/27', 'PTU1/003', '2024-06-27', 'OK'),
+('REPCCTV/PTU1/2024/06/27', 'PTU1/042', '2024-06-27', 'OK');
 
 -- --------------------------------------------------------
 
