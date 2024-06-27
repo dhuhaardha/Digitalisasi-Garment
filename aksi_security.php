@@ -1985,7 +1985,7 @@ if (isset($_POST['tombol_tambah_shift_1_2'])) {
         // Generating the new ID
         $nextId = "ShiftMut" . sprintf("%03s", $numericPart);
     }
-     $jenisShift1 = 1;
+     $jenisShift = $_POST['shift'];
 
      $signatureData = $_POST['signatureFilename'];
 
@@ -2018,7 +2018,7 @@ if (isset($_POST['tombol_tambah_shift_1_2'])) {
          dibuat_pada)
         VALUES (
             '$nextId',
-            '$jenisShift1',
+            '$jenisShift',
                   UPPER('$_POST[nama]'),
                   '$_POST[NIK]',
                    UPPER('$_POST[jabatan]'),

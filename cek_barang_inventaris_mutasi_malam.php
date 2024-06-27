@@ -29,7 +29,7 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                        <div class="card-header py-3 text-center">
                             <h3 class="m-0 text-dark">Barang Inventaris Mutasi Shift Checking</h3>
                         </div>
 
@@ -39,13 +39,13 @@ session_start();
                             
 
                             <div class="row">
-                                <div class="card text-center">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalBarangInventarisHariIni">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                <div class="text-end">
+                                    
+                                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalBarangInventarisHariIni">
+                                    <i class="fa-solid fa-square-pen">&nbsp</i>
                                             Input List Barang Inventaris
                                         </button>
-                                    </div>
+                                    
                                 </div>
                             </div>
 

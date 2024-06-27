@@ -2,6 +2,7 @@
 
 require('fpdf/fpdf.php');
 date_default_timezone_set('Asia/Jakarta');
+// $date = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
 
 $server     = "localhost";
 $user       = "root";

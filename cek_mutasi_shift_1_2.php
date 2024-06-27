@@ -29,17 +29,14 @@ session_start();
 
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <div class="card-header text-center">
                         <h3 class="m-0 text-dark">Mutasi Shift 1 & 2 Checking</h3>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF
-                        </button>
-</div>
+                    </div>
 
 
                         <div class="card-body">
-                        <div class="row">
-    <div class="col-sm">
+                        <div class="d-flex justify-content-between">
+    <div class="col-sm-4">
     <select name="jenis" onchange="showCustomer(this.value)" style="width: 90%;" class="form-control form-control-lg">
                                 <option value="">Select a Shift:</option>
                                 <option value="1">Shift 1</option>
@@ -47,25 +44,17 @@ session_start();
                                 <option value="GS">Shift GS</option>
                             </select>
     </div>
-    <div class="col-sm">
-      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShift1">
-        <i class="fa-solid fa-plus">&nbsp</i>
-        Input Shift 1
-        <i class="fa-solid fa-plus">&nbsp</i>
-    </button>
+    
+    <div class="">
+    <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#modalPDF">
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp;Export PDF
+                        </button>
     </div>
-    <div class="col-sm">
-      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShift2">
-        <i class="fa-solid fa-plus">&nbsp</i>
-        Input Shift 2
-        <i class="fa-solid fa-plus">&nbsp</i>
-    </button>
-    </div>
-    <div class="col-sm">
-      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShiftGS">
-        <i class="fa-solid fa-plus">&nbsp</i>
-        Input Shift GS
-        <i class="fa-solid fa-plus">&nbsp</i>
+    <div class="">
+      <button type="button" class="btn-lg btn-success"  data-toggle="modal" data-target="#modalTambahShift">
+      <i class="fa-solid fa-square-pen">&nbsp</i>
+        Input Operasional 
+        
     </button>
     </div>
   </div>
@@ -265,7 +254,7 @@ session_start();
                     <!-- End Modal -->
 
                     <!-- Modal Tambah -->
-                    <div class="modal fade" id="modalTambahShift1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalTambahShift" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -278,6 +267,17 @@ session_start();
                                     <div class="modal-body">
                                         <div id="pengambilanFields">
                                         <input type="hidden" class="form-control" id="" name="date" value="<?php echo date('Y-m-d'); ?>">
+                                        <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">SHIFT</label>
+                                                <div class="col-sm-10">
+                                                <select id="inputState" class="form-select" name="shift" required>
+                                                    <option value="">PILIH SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                                </div>
+                                            </div>
                                             <div class="row mb-3">
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>

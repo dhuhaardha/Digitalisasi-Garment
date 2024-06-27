@@ -41,14 +41,15 @@ session_start();
                                     <div class="">
 
                                         <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#modalPDF">
-                                                    <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                        <i class="fa-solid fa-file-pdf">&nbsp</i>
                                                     Export PDF
                                                 </button>
                                     </div>
-                                    <div class="col-2">
+                                    &nbsp
+                                    <div class="">
 
                                         <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
-                                            <i class="fa-solid fa-pen-to-square">&nbsp</i>
+                                        <i class="fa-solid fa-square-pen">&nbsp</i>
                                             Input Operasional
                                         </button>
                                     </div>
