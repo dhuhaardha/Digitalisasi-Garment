@@ -409,15 +409,22 @@ if (isset($_POST['tombol_tambah_kendaraan'])){
 
 if (isset($_POST['tombol_register_kendaraan_umum'])){
 
-    // cari kode terbesar
-    $queryNo = mysqli_query($koneksi,"SELECT MAX(SUBSTRING(tbu_uid,9,10)) AS Kode_Terbesar FROM tb_kendaraan_umum");
+   
+    // Query to find the maximum tbu_uid
+$queryNo = mysqli_query($koneksi, "SELECT MAX(tbu_uid) AS Kode_Terbesar FROM tb_kendaraan_umum");
+$tabel = mysqli_fetch_assoc($queryNo);
 
-    $noTerbesar = mysqli_fetch_array($queryNo);
-    $uidKendaraan = (int) $noTerbesar['Kode_Terbesar'];
-    $uidKendaraan++;
+// Extract the numeric part and increment it
+if ($tabel['Kode_Terbesar']) {
+    $noUID = (int) substr($tabel['Kode_Terbesar'], 9); // Assuming the format is PTU1/KU/#
+    $noUID++;
+} else {
+    $noUID = 1; // If no existing rows, start from 1
+}
+
 
     // UID kendaraan
-    $register = "PTU1/KU/" . $uidKendaraan;
+    $register = "PTU1/KU/" . uniqid();
 
     $signatureData = $_POST['signatureFilename'];
 

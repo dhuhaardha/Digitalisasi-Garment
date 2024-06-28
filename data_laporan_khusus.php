@@ -31,12 +31,124 @@ session_start();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                <div class="row d-flex align-items-stretch">
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+    <?php
+    $current_date = date('Y-m-d');
+    $jenis_bagian_export = 'B005';
+    
+    // Query to retrieve signature status and details for specific roles and current date
+    $queryStatus = mysqli_query($koneksi, 
+        "SELECT jabatan_ttd, danru_export, shift 
+        FROM tb_export
+        WHERE jabatan_ttd IN ('DANRU', 'DITERIMA', 'DISERAHKAN', 'PETUGAS')
+        AND jenis_bagian_export = '$jenis_bagian_export'
+        AND DATE(dibuat_pada) = '$current_date'");
+    
+    // Initialize arrays to store signature status and details
+    $signature_status = array(
+        'DANRU' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DITERIMA' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'DISERAHKAN' => array('signed' => false, 'signer' => '', 'shift' => ''),
+        'PETUGAS' => array('signed' => false, 'signer' => '', 'shift' => '')
+    );
 
+    // Iterate through query results
+    while ($row = mysqli_fetch_assoc($queryStatus)) {
+        $jabatan_ttd = $row['jabatan_ttd'];
+        $danru_export = $row['danru_export'];
+        $shift = $row['shift'];
+        
+        // Update signature status and details for each role
+        switch ($jabatan_ttd) {
+            case 'DANRU':
+                $signature_status['DANRU']['signed'] = !empty($danru_export);
+                $signature_status['DANRU']['signer'] = $danru_export;
+                $signature_status['DANRU']['shift'] = $shift;
+                break;
+            case 'DITERIMA':
+                $signature_status['DITERIMA']['signed'] = !empty($danru_export);
+                $signature_status['DITERIMA']['signer'] = $danru_export;
+                $signature_status['DITERIMA']['shift'] = $shift;
+                break;
+            case 'DISERAHKAN':
+                $signature_status['DISERAHKAN']['signed'] = !empty($danru_export);
+                $signature_status['DISERAHKAN']['signer'] = $danru_export;
+                $signature_status['DISERAHKAN']['shift'] = $shift;
+                break;
+            case 'PETUGAS':
+                $signature_status['PETUGAS']['signed'] = !empty($danru_export);
+                $signature_status['PETUGAS']['signer'] = $danru_export;
+                $signature_status['PETUGAS']['shift'] = $shift;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    // Display status and signer details for each role
+
+    echo "<p><strong>PETUGAS:</strong> ";
+    if ($signature_status['PETUGAS']['signed']) {
+        echo "Sudah melakukan tanda tangan oleh {$signature_status['PETUGAS']['signer']} pada shift {$signature_status['PETUGAS']['shift']}.";
+    } else {
+        echo "Belum melakukan tanda tangan.";
+    }
+    echo "</p>";
+    ?>
+</div>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card mb-4 h-100">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Proses Tanda Tangan</h5>
+            </div>
+            <div class="card-body">
+                <!-- <div class="text-center">
+
+                    <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+                    </button>
+                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
+                        <i class="fa-solid fa-signature">&nbsp</i>
+                        TTD Export
+                    </button>
+                </div> -->
+                <div class="d-flex justify-content-between">
+
+    <div class="w-50">
+        <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+            <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+        </button>
+    </div>
+
+    <div class="w-50 ml-2"> <!-- ml-2 untuk memberi jarak antar tombol -->
+        <button type="button" class="btn-lg btn-success btn-block" data-toggle="modal" data-target="#modalTambah">
+            <i class="fa-solid fa-signature"></i>&nbsp; TTD Export
+        </button>
+    </div>
+
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                <br>
                     <!-- Container Data Karyawan -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3 text-center">
-                        <h3 class="m-0 text-dark">Laporan Khusus Security</h3>
-                            </div>
+                    <div class="card shadow mb-4">
+                    <div class="card-header py-3 text-center">
+                    <h3 class="m-0 text-dark">GS Patrol Data</h3>
+                        
+                        </div>
 
                             <div class="card-body">
                             <div class="d-flex justify-content-end">
@@ -60,11 +172,9 @@ session_start();
                                 </div>
 
                                 <br>
-                                
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <form method="POST" action="data_out_kendaraan_umum.php">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -100,8 +210,15 @@ session_start();
 
                                                         <?php
                                                             }
-                                                        ?>
-                                                    <!-- Modal Tambah TTD -->
+                                                        ?>              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Tambah TTD -->
 <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -118,7 +235,6 @@ session_start();
                         <div class="col-sm-9">
                             <select id="inputState" class="form-select" name="jabatan_ttd" onchange="toggleTTDFields()" required>
                                 <option value="">Choose TTD...</option>
-                                <option value="DANRU">DANRU</option>
                                 <option value="PETUGAS">PETUGAS</option>
                             </select>
                         </div>
@@ -127,14 +243,26 @@ session_start();
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
                         <div class="col-sm-9">
                             <input type="date" name="input_print_pdf" class="form-control">
-                            <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
+                            <input type="hidden" name="input_jns_kunjungan" value="B005" class="form-control">
                         </div>
                     </div>
+                    <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Shift</label>
+                                            <div class="col-sm-9">
+                                            <select id="inputState" class="form-select" name="shift">
+                                                    <option selected disabled>PILIH SHIFT...</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="GS">GS</option>
+                                                </select>
+                                            </div>
+                                        </div>
                     <div id="danruFields" style="display: none;">
                         <div class="row mb-3">
                             <label for="danruName" class="col-sm-3 col-form-label">Danru</label>
                             <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
+                                <select class="form-control selectpicker" name="input_nama_danru" data-live-search="true">
                                     <option value="" selected>PILIH DANRU...</option>
                                     <?php
                                     $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'DANRU' ORDER BY tbls_nama ASC");
@@ -150,7 +278,7 @@ session_start();
                         <div class="row mb-3">
                             <label for="anggotaName" class="col-sm-3 col-form-label">Anggota</label>
                             <div class="col-sm-9">
-                                <select class="form-control selectpicker" name="input_nama" data-live-search="true">
+                                <select class="form-control selectpicker" name="input_nama_anggota" data-live-search="true">
                                     <option value="" selected>PILIH ANGGOTA...</option>
                                     <?php
                                     $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
@@ -180,7 +308,6 @@ session_start();
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="tombol_tambah_ttd" class="btn btn-success" id="saveSignatureBtn">Add</button>
-                    
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -228,19 +355,9 @@ session_start();
 </div>
 
                     <!-- End Modal -->
-                                                </tbody>
-                                            </table>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                </div>
-                <!-- /.container-fluid -->
-
-             <!-- Modal Cetak PDF -->
-             <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <!-- Modal Cetak PDF -->
+                    <div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -249,13 +366,13 @@ session_start();
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                    <form method="POST" action="print_tamu.php" target="_blank">
+                                    <form method="POST" action="print_patroli.php" target="_blank">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Tanggal</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" name="input_print_pdf" class="form-control">
-                                                    <input type="hidden" name="input_jns_kunjungan" value="B009" class="form-control">
+                                                    <input type="hidden" name="input_jns_kunjungan" value="B005" class="form-control">
                                                 </div>
                                             </div>
                                                 <div class="row mb-3">
@@ -305,6 +422,36 @@ session_start();
                         </div>
                     <!-- End Modal -->
 
+                    
+
+                                                                    <!-- Modal Selesai Patroli -->
+                                                                        <div class="modal fade" id="ModalSelesaiPatroli" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="exampleModalLabel">Patrol Information</h5>
+                                                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">×</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <form method="POST" action="aksi_security.php">
+                                                                                    <div class="modal-body">
+                                                                                            <h5 class="text-center"> Apakah anda yakin ingin Check out Card</h5>
+                                                                                                        <input type="text" class="form-control" id="IDInput" name="show_uid" readonly>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" name="tombol_checkout_visitor" class="btn btn-success">Check Out</button>
+                                                                                            <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+            
             </div>
             <!-- End of Main Content -->
 
@@ -348,6 +495,26 @@ session_start();
         </div>
     </div>
 
+    <!-- Script Button -->
+    <script>
+            // Get all elements with the data-target attribute
+            var buttons = document.querySelectorAll(
+                '[data-target="#ModalSelesaiPatroli"]');
+
+            // Loop through each button
+            buttons.forEach(function(button) {
+                // Add click event listener to the button
+                button.addEventListener("click", function() {
+                    // Get the value from the button
+                    var IDValue = button.value;
+
+                    // Set the value to the input field
+                    document.getElementById("IDInput").value = IDValue;
+                });
+            });
+        </script>
+                                                    
+
     <!-- Cek Session -->
     <?php 
         if(@$_SESSION['sukses']){ 
@@ -380,7 +547,6 @@ session_start();
         unset($_SESSION['gagal']);
         }
     ?>
-
 <?php require_once "templates/footer.php" ?>
 
 </body>

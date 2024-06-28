@@ -15,68 +15,30 @@ if(!$koneksi){ // cek koneksi
     die("Tidak terkoneksi ke database");
 }
 
-// // Handle signature data for Petugas
-// if (isset($_POST['signatureFilename'])) {
-//     $signatureData = $_POST['signatureFilename'];
-
-//     // Remove the "data:image/png;base64," prefix
-//     $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
-
-//     // Decode the base64-encoded image data
-//     $signatureData = base64_decode($signatureData);
-
-//     // Generate a unique filename using uniqid()
-//     $uniqueFilename = uniqid('signature_petugas_') . '.png';
-
-//     // Set the file path where you want to save the signature image
-//     $filePath = 'upload/' . $uniqueFilename;
-
-//     // Save the signature image to the specified file path
-//     $success = file_put_contents($filePath, $signatureData);
-
-//     if ($success !== false) {
-//         echo "Signature for Petugas saved successfully as: " . $filePath . "<br>";
-//     } else {
-//         echo "Failed to save signature for Petugas.<br>";
-//     }
-// } else {
-//     echo "No signature data received for Petugas.<br>";
-// }
-
-// // Handle signature data for Ketua Regu
-// if (isset($_POST['signatureFilenameCommander'])) {
-//     $signatureDataCommander = $_POST['signatureFilenameCommander'];
-
-//     // Remove the "data:image/png;base64," prefix
-//     $signatureDataCommander = str_replace('data:image/png;base64,', '', $signatureDataCommander);
-
-//     // Decode the base64-encoded image data
-//     $signatureDataCommander = base64_decode($signatureDataCommander);
-
-//     // Generate a unique filename using uniqid()
-//     $uniqueFilenameCommander = uniqid('signature_ketua_regu_') . '.png';
-
-//     // Set the file path where you want to save the signature image
-//     $filePathCommander = 'upload/' . $uniqueFilenameCommander;
-
-//     // Save the signature image to the specified file path
-//     $successCommander = file_put_contents($filePathCommander, $signatureDataCommander);
-
-//     if ($successCommander !== false) {
-//         echo "Signature for Ketua Regu saved successfully as: " . $filePathCommander . "<br>";
-//     } else {
-//         echo "Failed to save signature for Ketua Regu.<br>";
-//     }
-// } else {
-//     echo "No signature data received for Ketua Regu.<br>";
-// }
-
-
 $date = $_POST['input_print_pdf'];
-$kode = $_POST['informasi_kode'];
-$petugas = $_POST['input_nama_petugas'];
+$kode_kunjungan = $_POST['input_jns_kunjungan'];
 $HR = $_POST['input_hr'];
-$komandan_regu = $_POST['input_nama_danru'];
+
+// Query to get shift_diterima and shift_diserahkan
+$shift_petugas = '';
+$nama_petugas = '';
+$ttd_petugas = '';
+$nama_danru = '';
+$ttd_danru = '';
+
+$query_shift = "SELECT `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru` FROM `tb_export` WHERE `date` LIKE '$date' AND `jenis_bagian_export` LIKE '$kode_kunjungan'";
+$result_shift = mysqli_query($koneksi, $query_shift);
+
+while ($row_shift = mysqli_fetch_assoc($result_shift)) {
+    if ($row_shift['jabatan_ttd'] == 'PETUGAS') {
+        $shift_petugas = $row_shift['shift'];
+        $nama_petugas = $row_shift['danru_export'];
+        $ttd_petugas = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DANRU') {
+        $nama_danru = $row_shift['danru_export'];
+        $ttd_danru = $row_shift['ttd_danru'];
+    }
+}
 
 
 
@@ -121,7 +83,7 @@ $pdf->Cell(9,1,'',0,1,'C');
 $no = 1;
 $query = "SELECT * FROM tb_report_patroli LEFT JOIN tb_list_security ON 
          tb_report_patroli.tbrp_nm_security = tb_list_security.tbls_nik 
-         WHERE tbrp_jns_report LIKE '$kode' AND `tbrp_tgl_mulai` LIKE '$date'";
+         WHERE tbrp_jns_report LIKE '$kode_kunjungan' AND `tbrp_tgl_mulai` LIKE '$date'";
 $result = mysqli_query($koneksi, $query);
 while ($row = mysqli_fetch_assoc($result)) {
 $pdf->Cell(2,1,$no++,1,0,'C'); //vertically merged cell, height=3x row height=3x10=30
@@ -150,10 +112,45 @@ $pdf->Cell(0.1, 0.5, 'PETUGAS / PELAPOR, ', 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'MENGETAHUI, ', 0, 1, 'C');
 $pdf->Ln();
 
+$pdf->SetX(0.5); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 7; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_petugas; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} else {
+    $pdf->Cell(19, 4, 'image not found', 0, 0, 'R');
+}
+// $pdf->Cell(19, 4, '', 0, 0, 'R');
+$pdf->Cell(14, 4, '', 0, 0, 'R');
+// Set the X and Y positions for the image
+$pdf->SetX(24); // Adjust this value to move the image further to the right
+$x = $pdf->GetX();
+$y = $pdf->GetY();
+$imageWidth = 5; // Width of the image in cm
+$imageHeight = 5; // Height of the image in cm
+
+// Check if the image file exists
+$imagePath = $ttd_danru; // Path to the image file
+if (file_exists($imagePath)) {
+    $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+    // Move the cursor to the right after placing the image
+    $pdf->SetX($x + $imageWidth);
+} 
+// $pdf->Cell(10, 4, $ttd_danru, 0, 0, 'R');
+$pdf->Cell(13, 4, '', 0, 0, 'R');
+$pdf->Ln();
+
 $pdf->SetFont('Times', 'U', 13);
-$pdf->Cell(0.1, 4, $petugas, 0, 0, 'L');
+$pdf->Cell(0.1, 4, $nama_petugas, 0, 0, 'L');
 $pdf->Cell(23, 4, '', 0, 0, 'R');
-$pdf->Cell(5, 4, $komandan_regu, 0, 0, 'R');
+$pdf->Cell(5, 4, $nama_danru, 0, 0, 'R');
 $pdf->Cell(5, 4, $HR, 0, 0, 'R');
 $pdf->Ln();
 
