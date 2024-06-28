@@ -18,13 +18,44 @@ if(!$koneksi){ // cek koneksi
 $date = $_POST['input_print_pdf'];
 $time_mulai = $_POST['input_time_mulai'];
 $time_selesai = $_POST['input_time_selesai'];
-$shift_diterima = $_POST['input_diterima_shift'];
-$security_diterima = $_POST['input_nama_diterima'];
-$shift_diserahkan = $_POST['input_diserahkan_shift'];
-$security_diserahkan = $_POST['input_nama_diserahkan'];
-$danru = $_POST['input_nama_danru'];
-$petugas = $_POST['input_nama_petugas'];
 $HR = $_POST['input_hr'];
+$kode_kunjungan = 'CEK MUTASI SHIFT 1 & 2';
+$HR = $_POST['input_hr'];
+
+// Query to get shift_diterima and shift_diserahkan
+$shift_diterima = '';
+$shift_diserahkan = '';
+$nama_diterima = '';
+$nama_diserahkan = '';
+$ttd_diterima = '';
+$ttd_diserahkan = '';
+$nama_danru = '';
+$ttd_danru = '';
+$nama_petugas = '';
+$ttd_petugas = '';
+
+$query_shift = "SELECT `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru` FROM `tb_export` WHERE `date` LIKE '$date' AND `jenis_bagian_export` LIKE '$kode_kunjungan'";
+$result_shift = mysqli_query($koneksi, $query_shift);
+
+while ($row_shift = mysqli_fetch_assoc($result_shift)) {
+    if ($row_shift['jabatan_ttd'] == 'DITERIMA') {
+        $shift_diterima = $row_shift['shift'];
+        $nama_diterima = $row_shift['danru_export'];
+        $ttd_diterima = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DISERAHKAN') {
+        $shift_diserahkan = $row_shift['shift'];
+        $nama_diserahkan = $row_shift['danru_export'];
+        $ttd_diserahkan = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'DANRU') {
+        $nama_danru = $row_shift['danru_export'];
+        $ttd_danru = $row_shift['ttd_danru'];
+    } elseif ($row_shift['jabatan_ttd'] == 'PETUGAS') {
+        $nama_petugas = $row_shift['danru_export'];
+        $ttd_petugas = $row_shift['ttd_danru'];
+    }
+}
+
+
 
 
 // BUAT PDF BARU
@@ -51,7 +82,7 @@ $pdf->Cell(10, 0.5, "JAM                        : " . $time_mulai . "-" . $time_
 $pdf->Ln();
 
 $pdf->Cell(18, 0.5, 'SHIFT                           :  '  . $shift_diterima, 0, 1, 'L');
-$pdf->Cell(10, 0.5, "DAN RU                        : ". $danru, 0, 1, 'L');
+$pdf->Cell(10, 0.5, "DAN RU                        : ". $nama_danru, 0, 1, 'L');
 
 $pdf->Ln();
 
@@ -175,9 +206,9 @@ $pdf->Cell(0, 0.6,  '', 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(0.1, 4, $security_diterima, 0, 0, 'L');
-$pdf->Cell(0, 4, $security_diserahkan, 0, 0, 'C');
-$pdf->Cell(0, 4, $petugas, 0, 0, 'R');
+$pdf->Cell(0.1, 4, $nama_diterima, 0, 0, 'L');
+$pdf->Cell(0, 4, $nama_diserahkan, 0, 0, 'C');
+$pdf->Cell(0, 4, $nama_petugas, 0, 0, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'B', 10);
@@ -188,7 +219,7 @@ $pdf->Cell(0, 0.5, 'HR / GA, ', 0, 1, 'R');
 $pdf->Ln();
 
 $pdf->SetFont('Times', 'U', 10);
-$pdf->Cell(29, 4, $danru, 0, 0, 'L');
+$pdf->Cell(29, 4, $nama_danru, 0, 0, 'L');
 $pdf->Cell(0, 4, $HR, 0, 0, 'R');
 
 
