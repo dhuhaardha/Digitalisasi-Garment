@@ -75,7 +75,7 @@ session_start();
 
                                                             <tr>
                                                                 <td><?php echo $noUrut++; ?></td>
-                                                                <td><?php echo $tabelCari['tbu_nama_unit']; ?></td>
+                                                                <td><?php echo $tabelCari['tbls_unit'] . ' ' . $tabelCari['tbu_nama_unit']; ?></td>
                                                                 <td><?php echo $tabelCari['tbls_nama']; ?></td>
                                                                 <td><?php echo $tabelCari['tbls_status']; ?></td>
                                                                 <td>

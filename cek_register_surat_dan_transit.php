@@ -73,6 +73,7 @@ session_start();
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Waktu</th>
+                                                    <th>Jenis Transit</th>
                                                     <th>Pengirim</th>
                                                     <th>Kurir</th>
                                                     <th>Kepada(Penerima)</th>
@@ -103,12 +104,13 @@ session_start();
                                                     <tr>
                                                         <td><?php echo $noUrut++; ?></td>
                                                         <td><?php echo $Register['time']; ?></td>
+                                                        <td><?php echo $Register['jenis_transit']; ?></td>
                                                         <td><?php echo $Register['pengirim']; ?></td>
                                                         <td><?php echo $Register['kurir']; ?></td>
                                                         <td><?php echo $Register['kepada']; ?></td>
                                                         <td><?php echo $Register['kondisi_barang']; ?></td>
                                                         <td><?php echo $Register['security_recieved']; ?></td>
-                                                        <td><?php echo $Register['ttd_office'], $Register['person_office_recieved']; ?></td>
+                                                        <td><?php echo $Register['person_office_recieved']; ?></td>
                                                         <td><?php echo $Register['amount']; ?></td>
                                                         <td><?php echo $Register['keterangan']; ?></td>
                                                         <td>

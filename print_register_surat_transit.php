@@ -35,7 +35,7 @@ $pdf->SetMargins(1, 1, 1);
 
 $pdf->AddPage();
 
-$pdf->SetFont('Times', 'B', 16);
+$pdf->SetFont('Times', 'B', 20);
 
 // AWAL REPORT HEADER
 
@@ -44,15 +44,18 @@ $pdf->Cell(59, 1, "HARI/TANGGAL : " . $date, 0, 1, 'C');
 // $pdf->Cell(87, 10, '', 0, 1, 'C');
 $pdf->SetFont('Times', '', 13);
 // $pdf->Cell(58, 0.8, "Tanggal cetak : " . $date, 0, 0, 'L');
+
+$pdf->Ln();
 // AKHIR REPORT HEADER
 
-$pdf->Cell(2,2,'NO','1',0,'C'); //vertically merged cell, height=3x row height=3x10=30
-$pdf->Cell(5,2,'TANGGAL','TBR',0,'C'); //vertically merged cell
-$pdf->Cell(5,2,'JAM','TBR',0,'C'); //vertically merged cell
+$pdf->Cell(1,2,'NO','1',0,'C'); //vertically merged cell, height=3x row height=3x10=30
+$pdf->Cell(4,2,'TANGGAL','TBR',0,'C'); //vertically merged cell
+$pdf->Cell(3,2,'JAM','TBR',0,'C'); //vertically merged cell
+$pdf->Cell(5,2,'JENIS TRANSIT','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(6,2,'PENGIRIM','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(5,2,'KURIR','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(6,2,'KEPADA','TBR',0,'C'); //vertically merged cell
-$pdf->Cell(5,2,'HASIL DETEKSI','TBR',0,'C'); //vertically merged cell
+$pdf->Cell(4,2,'HASIL DETEKSI','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(2,2,'JUMLAH','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(6,2,'KETERANGAN','TBR',0,'C'); //vertically merged cell
 $pdf->Cell(15,1,'DITERIMA','LTR',1,'C'); // Merged horizontally for "DITERIMA"
@@ -69,13 +72,14 @@ $sql = "SELECT * FROM `tb_register_surat_transit` WHERE
         ORDER BY ID_register ASC";
 $result = $koneksi->query($sql);
 while ($row = $result->fetch_assoc()) {
-$pdf->Cell(2,5,$no++,'LB',0,'C');
-$pdf->Cell(5,5,'' . $row['date'] . '','LB',0,'C');
-$pdf->Cell(5,5,'' . $row['time'] . '','LB',0,'C');
+$pdf->Cell(1,5,$no++,'LB',0,'C');
+$pdf->Cell(4,5,'' . $row['date'] . '','LB',0,'C');
+$pdf->Cell(3,5,'' . $row['time'] . '','LB',0,'C');
+$pdf->Cell(5,5,'' . $row['jenis_transit'] . '','LB',0,'C');
 $pdf->Cell(6,5,'' . $row['pengirim'] . '','LRB',0,'C');
 $pdf->Cell(5,5,'' . $row['kurir'] . '','RB',0,'C');
 $pdf->Cell(6,5,'' . $row['kepada'] . '','B',0,'C');
-$pdf->Cell(5,5,'' . $row['kondisi_barang'] . '','LB',0,'C');
+$pdf->Cell(4,5,'' . $row['kondisi_barang'] . '','LB',0,'C');
 // $imagePath = $row['ttd_office'];
 //     if (file_exists($imagePath)) {
     //         $pdf->Cell(5, 1, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8) . "\n" . $row['person_office_recieved'], 1, 0, 'L', true);

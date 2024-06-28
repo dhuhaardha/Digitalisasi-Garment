@@ -115,7 +115,7 @@ while ($row = $result->fetch_assoc()) {
   $pdf->Cell(3,0.8,'' . $row['pos'] . '','1',0,'C'); //vertically merged cell
   $imagePath = $row['ttd']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(5.4, 0.8, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8), 1, 0, 'L', false);
+        $pdf->Cell(2.5, 0.8, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8), 1, 0, 'C', false);
     }
   $pdf->Cell(4,0.8,'' . $row['keterangan'] . '','BTR',1,'C'); //vertically merged cell  
 }
@@ -205,6 +205,43 @@ $pdf->Cell(0, 0.5, 'SHIFT  '. $shift_diserahkan, 0, 0, 'C');
 $pdf->Cell(0, 0.6,  '', 0, 0, 'R');
 $pdf->Ln();
 
+$imagePath = $ttd_diterima; // Adjust path as needed
+    if (file_exists($imagePath)) {
+        $pdf->Cell(5.4, 0.8, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 5, 2), 0, 0, 'L', false);
+    }
+    $pdf->SetX(13); // Adjust this value to move the image further to the right$pdf->SetX(40); // Adjust this value to move the image further to the right
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $imageWidth = 5; // Width of the image in cm
+    $imageHeight = 2; // Height of the image in cm
+    
+    // Check if the image file exists
+    $imagePath = $ttd_diserahkan; // Path to the image file
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+        // Move the cursor to the right after placing the image
+        $pdf->SetX($x + $imageWidth);
+    } else {
+        $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+    }
+    $pdf->SetX(25); // Adjust this value to move the image further to the right$pdf->SetX(40); // Adjust this value to move the image further to the right
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $imageWidth = 5; // Width of the image in cm
+    $imageHeight = 2; // Height of the image in cm
+    
+    // Check if the image file exists
+    $imagePath = $ttd_petugas; // Path to the image file
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+        // Move the cursor to the right after placing the image
+        $pdf->SetX($x + $imageWidth);
+    } else {
+        $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+    }
+
+$pdf->Ln();
+
 $pdf->SetFont('Times', 'U', 10);
 $pdf->Cell(0.1, 4, $nama_diterima, 0, 0, 'L');
 $pdf->Cell(0, 4, $nama_diserahkan, 0, 0, 'C');
@@ -215,6 +252,26 @@ $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(28, 2, 'MENGETAHUI', 0, 1, 'C');
 $pdf->Cell(29, 0.5, 'DANRU, ', 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'HR / GA, ', 0, 1, 'R');
+
+$pdf->Ln();
+
+
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $imageWidth = 5; // Width of the image in cm
+    $imageHeight = 2; // Height of the image in cm
+    
+    // Check if the image file exists
+    $imagePath = $ttd_danru; // Path to the image file
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+        // Move the cursor to the right after placing the image
+        $pdf->SetX($x + $imageWidth);
+    } else {
+        $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+    }
+
+    
 
 $pdf->Ln();
 

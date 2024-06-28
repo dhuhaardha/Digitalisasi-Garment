@@ -81,6 +81,9 @@ $pdf->Cell(10, 0.5, "DAN RU                        : ". $nama_danru, 0, 1, 'L');
 
 $pdf->Ln();
 
+
+
+
 $pdf->SetFont('Times', 'B', 7);
 
 
@@ -258,6 +261,39 @@ $pdf->Cell(0.1, 0.5, 'SHIFT  '. $shift_diterima, 0, 0, 'L');
 $pdf->Cell(0, 0.5, 'SHIFT  '. $shift_diserahkan, 0, 0, 'R');
 $pdf->Ln();
 
+$x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $imageWidth = 5; // Width of the image in cm
+    $imageHeight = 2; // Height of the image in cm
+    
+    // Check if the image file exists
+    $imagePath = $ttd_diterima; // Path to the image file
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+        // Move the cursor to the right after placing the image
+        $pdf->SetX($x + $imageWidth);
+    } else {
+        $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+    }
+
+    $pdf->SetX(24);
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $imageWidth = 5; // Width of the image in cm
+    $imageHeight = 2; // Height of the image in cm
+    
+    // Check if the image file exists
+    $imagePath = $ttd_diserahkan; // Path to the image file
+    if (file_exists($imagePath)) {
+        $pdf->Image($imagePath, $x, $y, $imageWidth, $imageHeight);
+        // Move the cursor to the right after placing the image
+        $pdf->SetX($x + $imageWidth);
+    } else {
+        $pdf->Cell(10, 4, 'Image not found', 0, 0, 'R'); // Fallback text if image is not found
+    }
+
+$pdf->Ln();
+
 $pdf->SetFont('Times', 'U', 10);
 $pdf->Cell(0.1, 4, $nama_diterima, 0, 0, 'L');
 $pdf->Cell(0, 4, $nama_diserahkan, 0, 0, 'R');
@@ -268,6 +304,8 @@ $pdf->Cell(28, 1, 'MENGETAHUI', 0, 1, 'C');
 $pdf->Cell(28, 0, 'HR / GA', 0, 1, 'C');
 
 $pdf->Ln();
+
+
 
 $pdf->SetFont('Times', 'U', 10);
 $pdf->Cell(28, 8, $HR, 0, 1, 'C');

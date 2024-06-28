@@ -1429,7 +1429,7 @@ if (isset($_POST['tombol_tambah_shift_malam'])) {
 
     $jam_10 = "22:00:00";
 
-    $signatureData = $_POST['signatureFilename'];
+    $signatureData = $_POST['signatureFilename1'];
 
         // Remove the "data:image/png;base64," prefix
         $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
@@ -1993,7 +1993,7 @@ if (isset($_POST['tombol_tambah_shift_1_2'])) {
     }
      $jenisShift = $_POST['shift'];
 
-     $signatureData = $_POST['signatureFilename'];
+     $signatureData = $_POST['signatureFilename1'];
 
         // Remove the "data:image/png;base64," prefix
      $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
@@ -2400,7 +2400,7 @@ if (isset($_POST['tombol_tambah_security_cctv'])) {
 
      $input_nama = '';
     if ($_POST['jabatan_ttd'] === 'SECURITY') {
-        $input_nama = $_POST['input_nama_danru'];
+        $input_nama = $_POST['input_nama_anggota'];
     } 
 
     $tambahQuery = mysqli_query(

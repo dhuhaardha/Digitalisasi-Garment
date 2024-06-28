@@ -47,7 +47,7 @@ session_start();
                                                 <select class="form-select" name="input_nomor_kartu">
                                                 
                                                     <?php
-                                                        $idQuery = mysqli_query($koneksi,"SELECT * FROM tb_list_card WHERE tblic_status LIKE 'READY'");
+                                                        $idQuery = mysqli_query($koneksi,"SELECT * FROM tb_list_card WHERE tblic_status LIKE 'READY' AND tblic_jns_kartu LIKE 'KENDARAAN'");
                                                         while($listID = mysqli_fetch_array($idQuery)){
                                                             echo "<option value='$listID[tblic_uid]'>$listID[tblic_no_id]</option>";
                                                         }
@@ -92,8 +92,22 @@ session_start();
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="unit">Nama Driver</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" style="text-transform:uppercase;" name="input_nama_supir">
+                                        <div class="col-sm-10">
+                                                <select class="form-control selectpicker" name="input_nama_supir" data-live-search="true">
+                                                <option value="<?php echo $tabelSecurity['uid_driver']; ?>" selected>PILIH SECURITY...</option>
+                                                    <?php
+                                                        $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_driver WHERE status LIKE 'ACTIVE' ORDER BY nama ASC");
+
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
+                                                    ?>
+
+                                                            <option value='<?php echo $tabelSecurity['nama']; ?>'><?php echo $tabelSecurity['nama']; ?></option>
+
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                </select>
                                             </div>
                                     </div>
                                     <div class="form-group row">
