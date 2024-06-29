@@ -17,8 +17,8 @@
     <!-- Nav Item - Home -->
     <li class="nav-item">
         <a class="nav-link" href="index.html">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
+            <i class="fa-solid fa-house" style="font-size: 1.1em;"></i>
+            <span style="font-size: 17px;">Home</span>
         </a>
     </li>
 
@@ -26,28 +26,27 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading" style="font-size: 12px;">
         Master Data
     </div>
 
     <!-- Nav Item - MASTER DATA -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasterData" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fa-solid fa-wrench"></i>
-            <span>Master Data</span>
+            <i class="fa-solid fa-wrench" style="font-size: 1.1em;"></i>
+            <span style="font-size: 16px;">Master Data</span>
         </a>
         <div id="collapseMasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Master Data :</h6>
-                <a class="collapse-item" href="data_list_bc.php">Bea Cukai List</a>
-                <a class="collapse-item" href="data_list_buku.php">Buku List</a>
-                <a class="collapse-item" href="data_list_driver.php">Driver List</a>
-                <a class="collapse-item" href="data_list_security.php">Security List</a>
-                <a class="collapse-item" href="data_cctv.php">CCTV List</a>
-                <a class="collapse-item" href="data_keyroom.php">Kunci Ruangan</a>
-                <a class="collapse-item" href="data_key_vehicle.php">Kunci Kendaraan</a>
-                <a class="collapse-item" href="data_barang_inventaris_shift_3.php">Barang Inventaris Pos</a>
-                <a class="collapse-item" href="data_kendaraan.php">Jenis Kendaraan</a>
+                <a class="collapse-item" style="font-size: 15px;"  href="data_list_bc.php">Bea Cukai List</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_list_driver.php">Driver List</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_list_security.php">Security List</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_cctv.php">CCTV List</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_keyroom.php">Kunci Ruangan</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_key_vehicle.php">Kunci Kendaraan</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_barang_inventaris_shift_3.php">Barang Inventaris Pos</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_kendaraan.php">Jenis Kendaraan</a>
             </div>
         </div>
     </li>
@@ -60,7 +59,7 @@
         Jenis Register
     </div>
 
-    <!-- Nav Item - AKTIVITAS KARYAWAN -->
+    <!-- Nav Item - AKTIVITAS KARYAWAN
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fa-solid fa-users"></i>
@@ -72,21 +71,21 @@
                 <a class="collapse-item" href="absensi.php">Absensi</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Nav Item - MUTASI -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fa-solid fa-book"></i>
-            <span>Mutasi</span>
+            <i class="fa-solid fa-book" style="font-size: 1.1em;"></i>
+            <span style="font-size: 16px;">Mutasi</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="cek_mutasi_shift_1_2.php">Mutasi Shift 1 & 2</a>
-                <a class="collapse-item" href="cek_mutasi_shift_3.php">Mutasi Shift 3</a>
-                <a class="collapse-item" href="cek_barang_inventaris_mutasi_malam.php">Input Barang Inventaris</a>
-                <a class="collapse-item" href="cek_uraian_mutasi_malam.php">Input Logs Uraian</a>
+                <a class="collapse-item" style="font-size: 15px;"  href="cek_mutasi_shift_1_2.php">Mutasi Shift 1 & 2</a>
+                <a class="collapse-item" style="font-size: 15px;" href="cek_mutasi_shift_3.php">Mutasi Shift 3</a>
+                <a class="collapse-item" style="font-size: 15px;" href="cek_barang_inventaris_mutasi_malam.php">Input Barang Inventaris</a>
+                <a class="collapse-item" style="font-size: 15px;" href="cek_uraian_mutasi_malam.php">Input Logs Uraian</a>
                 
             </div>
         </div>
@@ -95,21 +94,21 @@
     <!-- Nav Item - Visitor -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fa-solid fa-book"></i>
-            <span>Visitor</span>
+        <i class="fa-solid fa-address-book" style="font-size: 1.1em;"></i>
+            <span style="font-size: 16px;">Visitor</span>
         </a>
         <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="input_data_tamu.php">Input Pengunjung</a>
-                <a class="collapse-item" href="data_tamu_applicant.php">Pelamar</a>
-                <a class="collapse-item" href="data_tamu_perusahaan.php">Tamu Perusahaan</a>
-                <a class="collapse-item" href="data_tamu_buyer.php">Buyer</a>
-                <a class="collapse-item" href="data_tamu_factory_visitor.php">Kunjungan Pabrik</a>
-                <a class="collapse-item" href="data_tamu_segregation.php">Segregation</a>
-                <a class="collapse-item" href="data_tamu_store.php">Store</a>
-                <a class="collapse-item" href="data_tamu_supplier.php">Supplier</a>
-                <a class="collapse-item" href="data_tamu_vip.php">VIP</a>
+                <a class="collapse-item" style="font-size: 15px;" href="input_data_tamu.php">Input Pengunjung</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_applicant.php">Pelamar</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_perusahaan.php">Tamu Perusahaan</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_buyer.php">Buyer</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_factory_visitor.php">Kunjungan Pabrik</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_segregation.php">Segregation</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_store.php">Store</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_supplier.php">Supplier</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_tamu_vip.php">VIP</a>
             </div>
         </div>
     </li>
@@ -117,42 +116,42 @@
     <!-- Nav Item - PATROLI -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie" aria-expanded="true" aria-controls="collapseUtilitie">
-            <i class="fa-solid fa-building-circle-check"></i>
-            <span>Patroli & Facility</span>
+            <i class="fa-solid fa-building-circle-check" style="font-size: 1.1em;"></i>
+            <span style="font-size: 16px;">Patroli & Facility</span>
         </a>
         <div id="collapseUtilitie" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="input_data_patroli.php">Input Data</a>
-                <a class="collapse-item" href="data_patroli_gs.php">GS Patrol</a>
-                <a class="collapse-item" href="data_patroli_shift.php">Shift Patrol</a>
-                <a class="collapse-item" href="data_patroli_danru.php">Danru Patrol</a>
-                <a class="collapse-item" href="data_laporan_khusus.php">Laporan Khusus Security</a>
-                <a class="collapse-item" href="data_pengecekan_pintu_darurat.php">Cek Pintu Emergency</a>
+                <a class="collapse-item" style="font-size: 15px;" href="input_data_patroli.php">Input Data</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_patroli_gs.php">GS Patrol</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_patroli_shift.php">Shift Patrol</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_patroli_danru.php">Danru Patrol</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_laporan_khusus.php">Laporan Khusus Security</a>
+                <a class="collapse-item" style="font-size: 15px;" href="data_pengecekan_pintu_darurat.php">Cek Pintu Emergency</a>
             </div>
         </div>
     </li>
 
     
 
-    <!-- Nav Item - TAMU -->
+    <!-- Nav Item - POS INDUK -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitie2" aria-expanded="true" aria-controls="collapseUtilitie2">
-            <i class="fa-solid fa-address-card"></i>
-            <span>Pos Induk</span>
+            <i class="fa-solid fa-address-card" style="font-size: 1.1em;"></i>
+            <span style="font-size: 16px;">Pos Induk</span>
         </a>
         <div id="collapseUtilitie2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Administrasi :</h6>
-                <a class="collapse-item" href="user_register_umum.php">Input Kendaraan Umum</a>
-                <a class="collapse-item" href="data_kendaraan_umum.php">Kendaraan Umum</a>
-                <a class="collapse-item" href="user_register_kendaraan.php">Input Kendaraan Shipment</a>
-                <a class="collapse-item" href="data_register_kendaraan.php">Shipment</a>
-                <a class="collapse-item" href="login_cek_cctv.php">CCTV Check</a>
-                <a class="collapse-item" href="cek_keyroom.php">Kunci Ruangan Check</a>
-                <a class="collapse-item" href="cek_key_vehicle.php">Kunci Kendaraan Check</a>
-                <a class="collapse-item" href="cek_register_surat_dan_transit.php">Surat dan Transit Paket</a>
-                <a class="collapse-item" href="cek_kontrol_pagar.php">Kontrol Pagar</a>
+                <a class="collapse-item" style="font-size: 15px;" href="user_register_umum.php">Input Kendaraan Umum</a>
+                <a class="collapse-item" style="font-size: 15px;"href="data_kendaraan_umum.php">Kendaraan Umum</a>
+                <a class="collapse-item" style="font-size: 15px;"href="user_register_kendaraan.php">Input Kendaraan Shipment</a>
+                <a class="collapse-item" style="font-size: 15px;"href="data_register_kendaraan.php">Shipment</a>
+                <a class="collapse-item" style="font-size: 15px;"href="login_cek_cctv.php">CCTV Check</a>
+                <a class="collapse-item" style="font-size: 15px;"href="cek_keyroom.php">Kunci Ruangan Check</a>
+                <a class="collapse-item" style="font-size: 15px;"href="cek_key_vehicle.php">Kunci Kendaraan Check</a>
+                <a class="collapse-item" style="font-size: 15px;"href="cek_register_surat_dan_transit.php">Surat dan Transit Paket</a>
+                <a class="collapse-item" style="font-size: 15px;"href="cek_kontrol_pagar.php">Kontrol Pagar</a>
             </div>
         </div>
     </li>
