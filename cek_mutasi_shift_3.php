@@ -307,25 +307,25 @@ session_start();
                                                         <?php
                                                             if ($Mutasi['pos_11'] == "") {
                                                                     // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 11</button>';
+                                                                    echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 11</button>';
                                                             } elseif ($Mutasi['pos_12'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima12" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 12</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima12" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 12</button>';
                                                             } elseif ($Mutasi['pos_01'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima01" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 01</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima01" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 01</button>';
                                                             } elseif ($Mutasi['pos_02'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima02" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 02</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima02" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 02</button>';
                                                             }elseif ($Mutasi['pos_03'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima03" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 03</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima03" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 03</button>';
                                                             } elseif ($Mutasi['pos_04'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima04" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 04</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima04" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 04</button>';
                                                             } elseif ($Mutasi['pos_05'] == "") {
                                                                 // If part_operasional == 2, continue until status becomes 'SERAH TERIMA'
-                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima05" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-handshake"></i> 05</button>';
+                                                                echo '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalGantiSerahTerima05" value="' . $Mutasi['ID_mutasi_shift_3'] . '"><i class="fa-solid fa-flag"></i> Cek Pukul 05</button>';
                                                             } else {
                                                                 echo '<button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>';
                                                             }
@@ -356,7 +356,7 @@ session_start();
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Malam</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Enter TTD Operasional Mutasi Malam</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -562,14 +562,13 @@ session_start();
                                                 <label for="pengambilanDate" class="col-sm-2 col-form-label">Nama Security
                                                     </label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control selectpicker" name="nama" data-live-search="true">
+                                                    <select class="form-control selectpicker" name="nama" data-live-search="true" required>
                                                 <option value="<?php echo $tabelSecurity['tbls_nik']; ?>" selected>PILIH SECURITY...</option>
                                                         <?php
                                                         $querySecurity = mysqli_query($koneksi,"SELECT * FROM tb_list_security ORDER BY tbls_nama ASC");
 
                                                         while ($tabelSecurity = mysqli_fetch_array($querySecurity)){        
                                                     ?>
-
                                                             
                                                             <option value='<?php echo $tabelSecurity['tbls_nama']; ?>' data-nik='<?php echo $tabelSecurity['tbls_nik']; ?>' data-jabatan='<?php echo $tabelSecurity['tb_pangkat']; ?>'>
     <?php echo $tabelSecurity['tbls_nik'] . " - " . $tabelSecurity['tbls_nama']; ?>
@@ -614,13 +613,13 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="NIK">
+                                                    <input type="text" class="form-control" id="" name="NIK" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jabatan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="jabatan">
+                                                    <input type="text" class="form-control" id="" name="jabatan" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

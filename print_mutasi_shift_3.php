@@ -141,42 +141,42 @@ $pdf->Cell(1.7,0.5,'' . $row['keterangan'] . '','BR',0,'C'); //vertically merged
 $pdf->Cell(1,0.5,'' . $row['pos_10'] . '','B',0,'C');
 $imagePath = $row['paraf_10']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_11'] . '','B',0,'C');
 $imagePath = $row['paraf_11']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_12'] . '','B',0,'C');
 $imagePath = $row['paraf_12']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_01'] . '','B',0,'C');
 $imagePath = $row['paraf_01']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_02'] . '','B',0,'C');
 $imagePath = $row['paraf_02']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_03'] . '','B',0,'C');
 $imagePath = $row['paraf_03']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_04'] . '','B',0,'C');
 $imagePath = $row['paraf_04']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 $pdf->Cell(1,0.5,'' . $row['pos_05'] . '','B',0,'C');
 $imagePath = $row['paraf_05']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1, 0.5), 1, 0, 'L', false);
+        $pdf->Cell(1.6, 0.5, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 1.5, 0.5), 1, 0, 'L', false);
     }
 }
 

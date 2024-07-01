@@ -113,7 +113,7 @@ $pdf->Cell(5,1,'' . $tabelKendaraan['tbu_nmr_kontainer'] . '',1,0,'C'); //vertic
 $pdf->Cell(5,1,'' . $tabelKendaraan['tbu_nmr_seal'] . '',1,0,'C'); //vertically merged cell
 $imagePath = $tabelKendaraan['tbu_ttd']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(5, 1, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8), 1, 0, 'L', false);
+        $pdf->Cell(5, 1, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 5, 1), 1, 0, 'L', false);
     } else {
         $pdf->Cell(5, 1, '', 1, 0, 'L', false);
     }

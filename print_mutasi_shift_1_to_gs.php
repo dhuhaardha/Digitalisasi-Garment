@@ -96,7 +96,7 @@ $pdf->Cell(6,1,'NAMA','TB',0,'C'); //vertically merged cell
 $pdf->Cell(4.2,1,'NIK','LBT',0,'C'); //vertically merged cell
 $pdf->Cell(4.4,1,'JABATAN','1',0,'C'); //vertically merged cell
 $pdf->Cell(3,1,'POS','1',0,'C'); //vertically merged cell
-$pdf->Cell(5.4,1,'TANDA TANGAN','1',0,'C'); //vertically merged cell
+$pdf->Cell(3,1,'TANDA TANGAN','1',0,'C'); //vertically merged cell
 $pdf->Cell(4,1,'KETERANGAN','BTR',1,'C'); //vertically merged cell
 
 
@@ -115,7 +115,7 @@ while ($row = $result->fetch_assoc()) {
   $pdf->Cell(3,0.8,'' . $row['pos'] . '','1',0,'C'); //vertically merged cell
   $imagePath = $row['ttd']; // Adjust path as needed
     if (file_exists($imagePath)) {
-        $pdf->Cell(2.5, 0.8, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 2, 0.8), 1, 0, 'C', false);
+        $pdf->Cell(3, 0.8, $pdf->Image($imagePath, $pdf->GetX(), $pdf->GetY(), 3, 0.8), 1, 0, 'C', false);
     }
   $pdf->Cell(4,0.8,'' . $row['keterangan'] . '','BTR',1,'C'); //vertically merged cell  
 }

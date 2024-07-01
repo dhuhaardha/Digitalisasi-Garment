@@ -203,7 +203,7 @@ session_start();
                     <!-- Container Data Karyawan -->
                     <div class="card shadow mb-4">
                     <div class="card-header text-center">
-                        <h3 class="m-0 text-dark">Mutasi Shift 1 & 2 Checking</h3>
+                        <h3 class="m-0 text-dark">Mutasi Shift 1, 2 & GS Checking</h3>
                     </div>
 
 
@@ -269,7 +269,7 @@ session_start();
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Malam</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Enter TTD Operasional Mutasi Shift</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -340,7 +340,7 @@ session_start();
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">TTD Ketua Regu</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">TTD</label>
                         <div class="col-sm-9">
                             <style>
                                 canvas {
@@ -462,7 +462,7 @@ session_start();
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Shift 1</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Enter Operasional Mutasi Shift 1, 2 & GS</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
@@ -538,13 +538,13 @@ session_start();
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">NIK</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control" id="" name="NIK" required maxlength="9">
+                                                    <input type="text" class="form-control" id="" name="NIK" required maxlength="9" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Jabatan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="" name="jabatan">
+                                                    <input type="text" class="form-control" id="" name="jabatan" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
