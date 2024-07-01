@@ -428,6 +428,18 @@ session_start();
                                 <form method="POST" action="aksi_security.php">
                                     <div class="modal-body">
                                         <div id="pengambilanFields">
+                                        <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">POS</label>
+                                                <div class="col-sm-10">
+                                                <select id="inputState" class="form-select" name="pos_10">
+                                                    <option selected disabled>Pilih POS...</option>
+                                                    <option value="K">K</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="4/5">4/5</option>
+                                                </select>
+                                                </div>
+                                            </div>
                                             <div class="row mb-3">
                                                     <label for="pengambilanDate" class="col-sm-2 col-form-label">Barang Inventaris
                                                     </label>

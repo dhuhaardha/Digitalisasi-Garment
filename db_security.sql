@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2024 at 01:43 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jul 01, 2024 at 10:50 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -189,6 +189,7 @@ CREATE TABLE `tb_driver` (
   `uid_driver` varchar(17) NOT NULL,
   `unit` varchar(15) NOT NULL,
   `nama` varchar(200) NOT NULL,
+  `status` varchar(20) NOT NULL,
   `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -196,26 +197,26 @@ CREATE TABLE `tb_driver` (
 -- Dumping data for table `tb_driver`
 --
 
-INSERT INTO `tb_driver` (`uid_driver`, `unit`, `nama`, `dibuat_pada`) VALUES
-('PTU1/driver/DR001', 'UNGARAN', 'SUNARTO', '2024-06-26 08:56:34'),
-('PTU1/driver/DR002', 'PTU1', 'TEGUH', '2024-06-26 22:13:06'),
-('PTU1/driver/DR003', 'PTU1', 'IBNU', '2024-06-26 22:14:24'),
-('PTU1/driver/DR004', 'PTU1', 'IMAN', '2024-06-26 22:14:39'),
-('PTU1/driver/DR005', 'PTU1', 'DWI', '2024-06-26 22:14:52'),
-('PTU1/driver/DR006', 'PTU1', 'ERNA', '2024-06-26 22:17:01'),
-('PTU1/driver/DR007', 'PTU1', 'GANI', '2024-06-26 22:17:16'),
-('PTU1/driver/DR008', 'PTU1', 'YOHANES', '2024-06-26 22:17:36'),
-('PTU1/driver/DR009', 'PTU1', 'HANIF', '2024-06-26 22:17:45'),
-('PTU1/driver/DR010', 'PTU1', 'HANA', '2024-06-26 22:17:54'),
-('PTU2/driver/DR016', 'PTU2', 'RADITYA', '2024-06-26 22:23:52'),
-('PTU2/driver/DR017', 'PTU2', 'HERMAWAN', '2024-06-26 22:24:01'),
-('PTU2/driver/DR018', 'PTU2', 'UMAM', '2024-06-26 22:24:58'),
-('PTU2/driver/DR019', 'PTU2', 'RIZAL', '2024-06-26 22:25:06'),
-('PTU3/driver/DR011', 'PTU3', 'FAISAL', '2024-06-26 22:22:24'),
-('PTU3/driver/DR012', 'PTU3', 'GAGAS', '2024-06-26 22:22:54'),
-('PTU3/driver/DR013', 'PTU3', 'YUSUF', '2024-06-26 22:23:11'),
-('PTU3/driver/DR014', 'PTU3', 'MAHMUDI', '2024-06-26 22:23:27'),
-('PTU3/driver/DR015', 'PTU3', 'DION', '2024-06-26 22:23:37');
+INSERT INTO `tb_driver` (`uid_driver`, `unit`, `nama`, `status`, `dibuat_pada`) VALUES
+('PTU1/driver/DR001', 'PTU1', 'SUNARTO', 'ACTIVE', '2024-06-26 08:56:34'),
+('PTU1/driver/DR002', 'PTU1', 'TEGUH', 'ACTIVE', '2024-06-27 05:13:06'),
+('PTU1/driver/DR003', 'PTU1', 'IBNU', 'ACTIVE', '2024-06-27 05:14:24'),
+('PTU1/driver/DR004', 'PTU1', 'IMAN', 'ACTIVE', '2024-06-27 05:14:39'),
+('PTU1/driver/DR005', 'PTU1', 'DWI', 'ACTIVE', '2024-06-27 05:14:52'),
+('PTU1/driver/DR006', 'PTU1', 'ERNA', 'ACTIVE', '2024-06-27 05:17:01'),
+('PTU1/driver/DR007', 'PTU1', 'GANI', 'ACTIVE', '2024-06-27 05:17:16'),
+('PTU1/driver/DR008', 'PTU1', 'YOHANES', 'ACTIVE', '2024-06-27 05:17:36'),
+('PTU1/driver/DR009', 'PTU1', 'HANIF', 'ACTIVE', '2024-06-27 05:17:45'),
+('PTU1/driver/DR010', 'PTU1', 'HANA', 'ACTIVE', '2024-06-27 05:17:54'),
+('PTU2/driver/DR016', 'PTU2', 'RADITYA', 'ACTIVE', '2024-06-27 05:23:52'),
+('PTU2/driver/DR017', 'PTU2', 'HERMAWAN', 'ACTIVE', '2024-06-27 05:24:01'),
+('PTU2/driver/DR018', 'PTU2', 'UMAM', 'ACTIVE', '2024-06-27 05:24:58'),
+('PTU2/driver/DR019', 'PTU2', 'RIZAL', 'ACTIVE', '2024-06-27 05:25:06'),
+('PTU3/driver/DR011', 'PTU3', 'FAISAL', 'ACTIVE', '2024-06-27 05:22:24'),
+('PTU3/driver/DR012', 'PTU3', 'GAGAS', 'ACTIVE', '2024-06-27 05:22:54'),
+('PTU3/driver/DR013', 'PTU3', 'YUSUF', 'ACTIVE', '2024-06-27 05:23:11'),
+('PTU3/driver/DR014', 'PTU3', 'MAHMUDI', 'ACTIVE', '2024-06-27 05:23:27'),
+('PTU3/driver/DR015', 'PTU3', 'DION', 'ACTIVE', '2024-06-27 05:23:37');
 
 -- --------------------------------------------------------
 
@@ -227,7 +228,7 @@ CREATE TABLE `tb_export` (
   `uid_export` varchar(25) NOT NULL,
   `jenis_bagian_export` varchar(100) NOT NULL,
   `jabatan_ttd` varchar(20) NOT NULL,
-  `shift` int(3) NOT NULL,
+  `shift` varchar(3) NOT NULL,
   `date` date NOT NULL,
   `danru_export` varchar(100) NOT NULL,
   `ttd_danru` text NOT NULL,
@@ -239,19 +240,41 @@ CREATE TABLE `tb_export` (
 --
 
 INSERT INTO `tb_export` (`uid_export`, `jenis_bagian_export`, `jabatan_ttd`, `shift`, `date`, `danru_export`, `ttd_danru`, `dibuat_pada`) VALUES
-('PTU1/export/EX001', 'B009', '', 0, '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
-('PTU1/export/EX002', 'B009', '', 0, '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b882fdc001.png', '2024-06-26 03:17:03'),
-('PTU1/export/EX003', 'B009', '', 0, '2024-06-21', 'KUAT PURWANTO', 'upload/signature_commander_667b88cc4dad5.png', '2024-06-26 03:19:40'),
-('PTU1/export/EX004', 'B009', '', 0, '2024-06-21', 'MARYANTO ', 'upload/signature_667b9f4ad38a3.png', '2024-06-26 04:55:38'),
-('PTU1/export/EX005', 'B009', '', 0, '2024-06-22', 'MARYANTO ', 'upload/signature_667babd159e56.png', '2024-06-26 05:49:05'),
-('PTU1/export/EX006', 'B009', '', 0, '2024-06-05', 'MARYANTO ', 'upload/signature_667bad1e34fa3.png', '2024-06-26 05:54:38'),
-('PTU1/export/EX007', 'B009', 'DANRU', 0, '2024-06-25', 'APRILLIA', 'upload/signature_667c48f629d2f.png', '2024-06-26 16:59:34'),
-('PTU1/export/EX010', 'CCTV', 'SECURITY', 1, '2024-06-28', 'ANGELIKA KUSUMA', 'upload/signature_667dc2ce9c93a.png', '2024-06-27 19:51:42'),
-('PTU1/export/EX012', 'B009', 'DITERIMA', 1, '2024-06-28', 'BAGAS DANISWARA', 'upload/signature_667ddc5c25711.png', '2024-06-27 21:40:44'),
-('PTU1/export/EX013', 'B009', 'DISERAHKAN', 2, '2024-06-28', 'AGUS ANGGORO ', 'upload/signature_667ddf1399437.png', '2024-06-27 21:52:19'),
-('PTU1/export/EX014', 'B011', 'PETUGAS', 1, '2024-06-28', 'ADI ARDIANSYAH', 'upload/signature_667de36c9ebff.png', '2024-06-27 22:10:52'),
-('PTU1/export/EX015', 'B011', 'DANRU', 1, '2024-06-28', '', 'upload/signature_667de6730ba35.png', '2024-06-27 22:23:47'),
-('PTU1/export/EX016', 'B011', 'DANRU', 1, '2024-06-28', 'NAWOLO PRASETYO', 'upload/signature_667de6bdaab74.png', '2024-06-27 22:25:01');
+('PTU1/export/EX001', 'B009', '', '', '2024-06-13', 'APRILLIA', 'upload/3456789', '2024-06-12 02:56:38'),
+('PTU1/export/EX002', 'KEYROOM', 'DITERIMA', '1', '2024-06-28', 'ARI PRABOWO', 'upload/signature_667e85de0891f.png', '2024-06-28 09:43:58'),
+('PTU1/export/EX003', 'KEYROOM', 'DITERIMA', '1', '2024-06-28', 'ASTI MAULINA AZAHRA', 'upload/signature_667e860dd283e.png', '2024-06-28 09:44:45'),
+('PTU1/export/EX004', 'KEYROOM', 'DITERIMA', '2', '2024-06-28', 'HARDI PRAJOYO', 'upload/signature_667e889eef516.png', '2024-06-28 09:55:42'),
+('PTU1/export/EX005', 'KEYROOM', 'DITERIMA', '3', '2024-06-28', 'HARIYONO', 'upload/signature_667e88b73fd09.png', '2024-06-28 09:56:07'),
+('PTU1/export/EX006', 'CEK MUTASI SHIFT 1 & 2', 'DANRU', '1', '2024-06-28', 'KUAT PURWANTO', 'upload/signature_667e8aced9277.png', '2024-06-28 10:05:02'),
+('PTU1/export/EX007', 'CEK MUTASI SHIFT 1 & 2', 'DITERIMA', '1', '2024-06-28', 'DINI NURINJANI', 'upload/signature_667e8ae6115ad.png', '2024-06-28 10:05:26'),
+('PTU1/export/EX008', 'CEK MUTASI SHIFT 1 & 2', 'DISERAHKAN', '2', '2024-06-28', 'HERU SUSANTO', 'upload/signature_667e8afc54118.png', '2024-06-28 10:05:48'),
+('PTU1/export/EX009', 'CEK MUTASI SHIFT 1 & 2', 'PETUGAS', '1', '2024-06-28', 'ADITYA BUDI SAPUTRA', 'upload/signature_667e8b12930ae.png', '2024-06-28 10:06:10'),
+('PTU1/export/EX010', 'B009', 'DANRU', '1', '2024-06-28', 'KUAT PURWANTO', 'upload/signature_667e95e758968.png', '2024-06-28 10:52:23'),
+('PTU1/export/EX011', 'B009', 'DITERIMA', '1', '2024-06-28', 'ADIAT NUGROHO', 'upload/signature_667e95f70e032.png', '2024-06-28 10:52:39'),
+('PTU1/export/EX012', 'B009', 'DISERAHKAN', '2', '2024-06-28', 'LUHADI ', 'upload/signature_667e960469afe.png', '2024-06-28 10:52:52'),
+('PTU1/export/EX013', 'B009', 'DITERIMA', '1', '2024-06-28', 'ADITYA BUDI SAPUTRA', 'upload/signature_667e9662446ff.png', '2024-06-28 10:54:26'),
+('PTU1/export/EX014', 'B009', 'DANRU', '1', '2024-06-28', 'MARYANTO ', 'upload/signature_667e966f29147.png', '2024-06-28 10:54:39'),
+('PTU1/export/EX015', 'B011', 'DANRU', '2', '2024-06-28', 'APRILYA PUSPITASARI', 'upload/signature_667e96ddec5d9.png', '2024-06-28 10:56:29'),
+('PTU1/export/EX016', 'B011', 'PETUGAS', '2', '2024-06-28', 'AGUS ANGGORO ', 'upload/signature_667e96f537b95.png', '2024-06-28 10:56:53'),
+('PTU1/export/EX017', 'B001', 'DANRU', '2', '2024-06-28', 'MARYANTO ', 'upload/signature_667e984c03b79.png', '2024-06-28 11:02:36'),
+('PTU1/export/EX018', 'B001', 'PETUGAS', '1', '2024-06-28', 'ADIAT NUGROHO', 'upload/signature_667e985ddd7b0.png', '2024-06-28 11:02:53'),
+('PTU1/export/EX019', 'KENDARAAN UMUM', 'DITERIMA', '1', '2024-06-28', 'ADITYA BUDI SAPUTRA', 'upload/signature_667e999660379.png', '2024-06-28 11:08:06'),
+('PTU1/export/EX020', 'KENDARAAN UMUM', 'DISERAHKAN', '1', '2024-06-28', 'ADITYA BUDI SAPUTRA', 'upload/signature_667e9a8ce4bb8.png', '2024-06-28 11:12:12'),
+('PTU1/export/EX023', 'KENDARAAN SHIPMENT', 'DITERIMA', '1', '2024-07-01', 'ARTIN WAHYU NINGSIH', 'upload/signature_6681fddb9019c.png', '2024-07-01 00:52:43'),
+('PTU1/export/EX024', 'KENDARAAN SHIPMENT', 'DISERAHKAN', '1', '2024-07-01', 'DIMAS SULISTYO', 'upload/signature_6681fdea83469.png', '2024-07-01 00:52:58'),
+('PTU1/export/EX025', 'KEYROOM', 'DITERIMA', '1', '2024-07-01', 'BAYU SETYO ADI', 'upload/signature_66820e276193f.png', '2024-07-01 02:02:15'),
+('PTU1/export/EX026', 'KEYROOM', 'DITERIMA', '2', '2024-07-01', 'BAGAS DANISWARA', 'upload/signature_66820e391b623.png', '2024-07-01 02:02:33'),
+('PTU1/export/EX027', 'KEYROOM', 'DITERIMA', '3', '2024-07-01', 'NOVANT PRABOWO EKO. S', 'upload/signature_66820e47965d0.png', '2024-07-01 02:02:47'),
+('PTU1/export/EX028', 'CEK MUTASI SHIFT 1 & 2', 'DITERIMA', '1', '2024-07-01', 'RENDI ARGA SAPUTRA', 'upload/signature_66822c7b1874f.png', '2024-07-01 04:11:39'),
+('PTU1/export/EX029', 'CEK MUTASI SHIFT 1 & 2', 'DISERAHKAN', '2', '2024-07-01', 'SURYA WIJAYA', 'upload/signature_66822c8e2d6b5.png', '2024-07-01 04:11:58'),
+('PTU1/export/EX030', 'CEK MUTASI SHIFT 1 & 2', 'DANRU', '1', '2024-07-01', 'NAWOLO PRASETYO', 'upload/signature_66822c9ddacaa.png', '2024-07-01 04:12:13'),
+('PTU1/export/EX031', 'CEK MUTASI SHIFT 1 & 2', 'PETUGAS', '2', '2024-07-01', 'BAYU SETYO ADI', 'upload/signature_66822caecb3d9.png', '2024-07-01 04:12:30'),
+('PTU1/export/EX032', 'CEK MUTASI SHIFT 3', 'DANRU', '2', '2024-07-01', 'KUAT PURWANTO', 'upload/signature_6682332901000.png', '2024-07-01 04:40:09'),
+('PTU1/export/EX033', 'CEK MUTASI SHIFT 3', 'DITERIMA', '3', '2024-07-01', 'ANGELIKA KUSUMA', 'upload/signature_6682333907170.png', '2024-07-01 04:40:25'),
+('PTU1/export/EX034', 'CEK MUTASI SHIFT 3', 'DISERAHKAN', '1', '2024-07-01', 'BAGAS DANISWARA', 'upload/signature_6682334f4e6f6.png', '2024-07-01 04:40:47'),
+('PTU1/export/EX035', 'CEK MUTASI SHIFT 3', 'PETUGAS', 'GS', '2024-07-01', 'SRI RAHAYU', 'upload/signature_66823362c12ab.png', '2024-07-01 04:41:06'),
+('PTU1/export/EX036', 'KENDARAAN UMUM', 'DITERIMA', '1', '2024-07-01', 'ASTI MAULINA AZAHRA', 'upload/signature_66825404ee762.png', '2024-07-01 07:00:20'),
+('PTU1/export/EX037', 'KENDARAAN UMUM', 'DISERAHKAN', '2', '2024-07-01', 'NOVANT PRABOWO EKO. S', 'upload/signature_668254890f8b4.png', '2024-07-01 07:02:33');
 
 -- --------------------------------------------------------
 
@@ -347,7 +370,9 @@ CREATE TABLE `tb_kendaraan` (
 
 INSERT INTO `tb_kendaraan` (`tbrk_uid`, `tbrk_tanggal`, `tbrk_masuk`, `tbrk_tanggal_out`, `tbrk_keluar`, `tbrk_jns_kendaraan`, `tbrk_nama_supir`, `tbrk_nomor_plat`, `tbrk_nmr_kontainer`, `tbrk_cek_mirror`, `tbrk_nmr_seal`, `tbrk_ket`, `tbrk_jns_sim`, `tbrk_no_sim`, `tbrk_no_card`, `tbrk_nama_transporter`, `tbrk_nama_buyer`, `tbrk_qty_kirim`, `tbrk_no_gp`, `tbrk_tujuan`, `tbrk_nm_pengawal`, `tbrk_surat_jalan`, `tbrk_no_eseal`, `tbrk_ttd`) VALUES
 ('REPVEHICLE/12/2024/06/21', '2024-06-21', '14:33:00', '2024-06-21', '14:18:00', 'PTU1/KS/002', 'MUKIDI', 'B 6898 RT', '12', 'YES', '1', NULL, 'B', '123456789', 'IDSHIP01', 'SDADAS', 'ADSAD', '2', 'GP1', 'QWERTYU', 'QWERT', '1234567', '123456', 'upload/123456789_667525c598c62.'),
-('REPVEHICLE/12/2024/06/22', '2024-06-22', '09:04:00', NULL, NULL, 'PTU1/KS/002', 'MUKIDI', 'B 6898 RT', '12', 'YES', '1', NULL, 'B1', '123489', 'IDSHIP01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'upload/signature_66763c1892896.png'),
+('REPVEHICLE/12/2024/06/22', '2024-06-22', '09:04:00', '2024-06-28', '09:42:00', 'PTU1/KS/002', 'MUKIDI', 'B 6898 RT', '12', 'YES', '1', NULL, 'B1', '123489', 'IDSHIP01', 'SDADAS', 'ADSAD', '2', 'GP1', 'QWERTYU', 'QWERT', '1234567', '123456', 'upload/signature_66763c1892896.png'),
+('REPVEHICLE/12/2024/06/28', '2024-06-28', '09:23:00', '2024-07-01', '07:16:00', 'PTU1/KS/007', 'GANI', 'B 4890 RT', '12', 'YES', '2', NULL, 'B2', '123489', 'IDSHIP01', 'SDADAS', 'ADSAD', '2', 'GP1', 'QWERTYU', 'QWERT', '1234567', '123456', 'upload/signature_667e21e3bfac4.png'),
+('REPVEHICLE/12/2024/07/01', '2024-07-01', '07:54:00', '2024-07-01', '07:30:00', 'PTU1/KS/006', 'IBNU', 'B 6374 RT', '12', 'YES', '2', NULL, 'B2', '123489', 'IDSHIP04', 'SDADAS', 'ADSAD', '2', 'GP1', 'QWERTYU', 'QWERT', '1234567', '123456', 'upload/signature_6681fdaae22ca.png'),
 ('REPVEHICLE/CIKU789345/2024/06/', '2024-06-22', '15:45:00', '2024-06-22', '15:21:00', 'PTU1/KS/004', 'SASTRO', 'AE7484NG', 'CIKU789345', 'YES', 'CIKU12345', NULL, 'B2-UMUM', '1234567890', 'IDSHIP04', 'SCP', 'JJIL', '1000 CTN', '0501062024', 'AMERIKA', 'DAVID', 'USG12/2025', 'DIPO_05', 'upload/signature_66768999ebb8d.png'),
 ('REPVEHICLE/ctn123/2024/06/03', '2024-06-03', '11:00:00', '2024-06-03', '12:55:00', 'PTU1/KS/003', 'YUDO DRIVER', 'H1234DI', 'CTN123', 'YES', '1234', NULL, 'B1', '1234567', 'IDSHIP01', 'JNT', 'DILLARD', '100', 'GP1234', 'AMERICA LATIN', 'IBNU', 'TN123', 'ESEAL123', 'upload/1234567_665d468c6c9dd.png'),
 ('REPVEHICLE/CTN1234/2024/06/14', '2024-06-14', '17:17:00', '2024-06-14', '17:35:00', 'PTU1/KS/002', 'INDRO', 'AB1234A', 'CTN1234', 'YES', 'UG123', NULL, 'B1', '12345', 'IDSHIP03', 'DHL', 'LULUEMON', '10', 'GP1234', 'AMERICA', 'PENGAWAL1', 'TN1234', 'UG1234', 'upload/12345_666c1d5d4d31d.png'),
@@ -386,12 +411,14 @@ CREATE TABLE `tb_kendaraan_umum` (
 
 INSERT INTO `tb_kendaraan_umum` (`tbu_uid`, `tbu_tgl_masuk`, `tbu_jam_masuk`, `tbu_tgl_keluar`, `tbu_jam_keluar`, `tbu_jns_kendaraan`, `tbu_no_kartu`, `tbu_no_identitas`, `tbu_nm_supir`, `tbu_nmr_plat`, `tbu_nmr_kontainer`, `tbu_nmr_seal`, `tbu_bc_masuk`, `tbu_brg_masuk`, `tbu_bc_keluar`, `tbu_brg_keluar`, `tbu_nm_security`, `tbu_ttd`) VALUES
 ('PTU1/KU/1', '2024-06-05', '13:05:00', '2024-06-25', NULL, 'PTU1/KS/001', 'IDSHIP01', '1234567890', 'YUDO', 'AB1234CD', 'CTN123', 'SEAL1234', 'PTU1/001', 'BARANG MASUK DARI LUAR', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
-('PTU1/KU/10', '2024-06-25', '11:06:00', '2024-06-25', '11:29:00', 'PTU1/KS/007', 'IDSHIP02', '12345678', 'ARDGA', 'B 4890 RT', '12', '2', 'PTU1/006', 'KAYU OK', 'PTU1/008', 'KAYU OK', 'ZAHRA FIRSTA OKTAVIANA', 'upload/signature_667a49ea48df7.png'),
+('PTU1/KU/10', '2024-06-28', '08:34:00', '2024-06-28', '09:19:00', 'PTU1/KS/007', 'IDSHIP02', '12345678', 'IMAN', 'B 4890 RT', '12', '2', 'PTU1/008', 'FABRIC OKE', 'PTU1/003', 'MANTAP', 'APRILYA PUSPITASARI', 'upload/signature_667e188ea6172.png'),
 ('PTU1/KU/2', '2024-06-07', '11:22:00', '2024-06-25', NULL, 'PTU1/KS/001', 'IDSHIP01', '1234567890', 'PUBLIC', 'H1234DI', 'MCHU2000005', 'ID5555550', 'PTU1/001', 'BARANG MASUK', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
 ('PTU1/KU/3', '2024-06-07', '16:40:00', '2024-06-25', NULL, 'PTU1/KS/001', 'IDSHIP01', '12345767', 'MUKIDI', 'B1234DI', 'CTN1234', 'SEAL1234', 'PTU1/004', 'KAIN 20 KG', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
 ('PTU1/KU/4', '2024-06-14', '17:06:00', '2024-06-25', NULL, 'PTU1/KS/002', 'IDSHIP03', '123456778', 'YUDO', 'H1234B', 'CTN3211', 'UG111', 'PTU1/002', 'FABRIC', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
 ('PTU1/KU/5', '2024-06-21', '13:37:00', '2024-06-25', NULL, 'PTU1/KS/006', 'IDSHIP02', '12345678', 'MUKIDI', 'B 6898 RT', '12', '1', 'PTU1/003', 'FABRIC MASUK', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
 ('PTU1/KU/6', '2024-06-21', '17:52:00', '2024-06-25', NULL, 'PTU1/KS/004', 'IDSHIP02', '12345678', 'MUKIDI', 'B 6374 RT', '12', '1', 'PTU1/008', 'DRESS MANTAP', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', NULL),
+('PTU1/KU/667E1B869B315', '2024-06-28', '09:14:00', '2024-07-01', '07:06:00', 'PTU1/KS/008', 'IDSHIP03', '12345678', 'GANI', 'B 6374 RT', '12', '1', 'PTU1/004', 'ASDFASAF', 'PTU1/006', 'FABRIC LORENG', 'ARI PRABOWO', 'upload/signature_667e1b869b31e.png'),
+('PTU1/KU/6681FCAF564DB', '2024-07-01', '07:43:00', '2024-07-01', '07:19:00', 'PTU1/KS/004', 'IDSHIP02', '12345678', 'GANI', 'B 6898 RT', '12', '2', 'PTU1/005', 'FABRIC LORENG', 'PTU1/008', 'FABRIC LORENG', 'RIYAN ISMAWAN', 'upload/signature_6681fcaf564e8.png'),
 ('PTU1/KU/7', '2024-06-22', '09:09:00', '2024-06-25', NULL, 'PTU1/KS/007', 'IDSHIP02', '', 'MUKIDI', 'B 6898 RT', '12', '1', 'PTU1/008', 'AFASAFS', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', 'upload/signature_66763d0d2bb2e.png'),
 ('PTU1/KU/8', '2024-06-22', '15:15:00', '2024-06-25', NULL, 'PTU1/KS/002', 'IDSHIP05', '1234567890', 'PAIJO', 'AE 7484 NG', 'ESMUMANIS100000', 'USG54321', 'PTU1/001', 'FABRIC', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', 'upload/signature_6676879bd7fca.png'),
 ('PTU1/KU/9', '2024-06-25', '09:29:00', '2024-06-25', NULL, 'PTU1/KS/008', 'IDSHIP02', '12345678', 'ARDGA', 'B 4890 RT', '12', '1', 'PTU1/005', 'FABRIC DRESS', 'PTU1/004', 'FABRIC DRESS', 'BAGAS DANISWARA', 'upload/signature_667a32198caf1.png');
@@ -407,6 +434,12 @@ CREATE TABLE `tb_kontrol_pagar` (
   `shift` int(4) NOT NULL,
   `time_kontrol_created` time NOT NULL,
   `uraian` text NOT NULL,
+  `kondisi_pagar_keliling` text NOT NULL,
+  `kondisi_pintu_gerbang` text NOT NULL,
+  `kondisi_kawat_berduri` text NOT NULL,
+  `kondisi_bangunan` text NOT NULL,
+  `kondisi_linkungan` text NOT NULL,
+  `kondisi_tanaman_liar_dan_dahan_pohon` text NOT NULL,
   `time_kontrol_finished` time NOT NULL,
   `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -415,15 +448,15 @@ CREATE TABLE `tb_kontrol_pagar` (
 -- Dumping data for table `tb_kontrol_pagar`
 --
 
-INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `time_kontrol_finished`, `dibuat_pada`) VALUES
-('KonPag001', 3, '09:52:00', 'harus OKE', '10:44:01', '2024-06-14 03:44:11'),
-('KonPag002', 3, '10:01:40', 'harus OK', '10:42:53', '2024-06-14 03:44:01'),
-('KonPag003', 1, '13:08:31', 'asfasff', '13:09:40', '2024-06-14 06:09:44'),
-('KonPag004', 2, '13:09:29', 'qwrwrqw', '13:09:34', '2024-06-14 06:09:40'),
-('KonPag005', 1, '16:12:44', '', '00:00:00', '2024-06-14 09:13:08'),
-('KonPag006', 1, '16:12:27', '', '00:00:00', '2024-06-14 09:13:11'),
-('KonPag007', 1, '13:33:23', '', '00:00:00', '2024-06-22 06:33:29'),
-('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '16:06:35', '2024-06-22 09:09:00');
+INSERT INTO `tb_kontrol_pagar` (`id_opr_kontrol_pagar`, `shift`, `time_kontrol_created`, `uraian`, `kondisi_pagar_keliling`, `kondisi_pintu_gerbang`, `kondisi_kawat_berduri`, `kondisi_bangunan`, `kondisi_linkungan`, `kondisi_tanaman_liar_dan_dahan_pohon`, `time_kontrol_finished`, `dibuat_pada`) VALUES
+('KonPag001', 3, '09:52:00', 'harus OKE', '', '', '', '', '', '', '10:44:01', '2024-06-14 03:44:11'),
+('KonPag002', 3, '10:01:40', 'harus OK', '', '', '', '', '', '', '10:42:53', '2024-06-14 03:44:01'),
+('KonPag003', 1, '13:08:31', 'asfasff', '', '', '', '', '', '', '13:09:40', '2024-06-14 06:09:44'),
+('KonPag004', 2, '13:09:29', 'qwrwrqw', '', '', '', '', '', '', '13:09:34', '2024-06-14 06:09:40'),
+('KonPag005', 1, '16:12:44', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:08'),
+('KonPag006', 1, '16:12:27', '', '', '', '', '', '', '', '00:00:00', '2024-06-14 09:13:11'),
+('KonPag007', 1, '13:33:23', '', '', '', '', '', '', '', '00:00:00', '2024-06-22 06:33:29'),
+('KonPag008', 1, '16:06:25', 'Kawat berduri kondisi baik\r\nPenerangan malam baik', '', '', '', '', '', '', '16:06:35', '2024-06-22 09:09:00');
 
 -- --------------------------------------------------------
 
@@ -481,7 +514,10 @@ INSERT INTO `tb_kunci_kendaraan` (`id_vehicle_key`, `id_no_pol`, `no_police`, `k
 ('keyvehicle021', 'KeyV012', 'B 2550 SZL', 'CONGOL', 'DISERAHKAN', '2024-06-21', '14:52:06', 'RITA', '6675315b8a4fa.png', 'YUDHO', 1, 'qwrqrq', '2024-06-21', '14:53:12', 'ARDHA', '', 'DHUHA', 1, '1'),
 ('keyvehicle022', 'KeyV006', 'B 2734 SZX', 'UNGARAN', 'DISERAHKAN', '2024-06-21', '17:30:23', 'RITA', '6675566c78da0.png', 'YUDHO', 1, 'qwrqrq', '2024-06-21', '17:31:29', 'ARDHA', '', 'DHUHA', 1, 'asda'),
 ('keyvehicle023', 'KeyV001', 'B 1809 SYN', 'UNGARAN', 'DIAMBIL', '2024-06-22', '13:33:58', 'RFF', 'upload/signature_66767076ed7bc.png', 'HUDA', 1, '', '0000-00-00', '00:00:00', '', '', '', 0, ''),
-('keyvehicle024', 'KeyV007', 'B 1993 SAO', 'UNGARAN', 'DISERAHKAN', '2024-06-22', '15:50:15', 'ERNA', 'upload/signature_667691713be57.png', 'KUAT PURWANTO', 1, '', '2024-06-22', '15:53:53', 'IMAN', 'upload/signature_667691b12fc37.png', 'NAWOLO', 1, '');
+('keyvehicle024', 'KeyV007', 'B 1993 SAO', 'UNGARAN', 'DISERAHKAN', '2024-06-22', '15:50:15', 'ERNA', 'upload/signature_667691713be57.png', 'KUAT PURWANTO', 1, '', '2024-06-22', '15:53:53', 'IMAN', 'upload/signature_667691b12fc37.png', 'NAWOLO', 1, ''),
+('keyvehicle025', 'KeyV007', 'B 1993 SAO', 'UNGARAN', 'DISERAHKAN', '2024-06-28', '09:48:31', 'ERNA', 'upload/signature_667e249101199.png', 'YUDHO', 1, 'qwrqrq', '2024-06-28', '09:50:51', 'ERNA', 'upload/signature_667e250bef3be.png', 'DHUHA', 1, 'asda'),
+('keyvehicle026', 'KeyV012', 'B 2550 SZL', 'CONGOL', 'DISERAHKAN', '2024-06-28', '09:50:52', 'FAISAL', 'upload/signature_667e274acdbd9.png', 'YUDHO', 1, 'qwe', '2024-06-28', '10:00:40', 'FAISAL', 'upload/signature_667e2758f235c.png', 'DHUHA', 1, 'asda'),
+('keyvehicle027', 'KeyV011', 'H 8400 GC', 'UNGARAN', 'DISERAHKAN', '2024-06-28', '16:31:54', 'ERNA', 'upload/signature_667e8385042ca.png', 'APPRILIA', 1, 'KONDISI BAIK', '2024-06-28', '16:32:23', 'ERNA', 'upload/signature_667e83c303f52.png', 'KUAT', 1, 'KONDISI BAIK');
 
 -- --------------------------------------------------------
 
@@ -813,7 +849,17 @@ INSERT INTO `tb_kunci_ruangan` (`ID_kunci_ruangan`, `id_key_room`, `name_of_key`
 ('keyruang056', 'KeyR010', 'R.BUYER', 4, '2', 'SERAH TERIMA', '2024-06-22', '11:06:52', 'DHUHA ARDHA SAPUTRA', 4, 'upload/signature_66764df369eba.png', '2024-06-22', '11:10:03', 'KANIA', 4, 'upload/signature_66764e9c7238b.png', '2024-06-22', '11:10:44', 'RATERI', 4, 'upload/signature_66764ec4e5cdd.png'),
 ('keyruang057', 'KeyR002', 'DRESS 1', 23, '1', 'PENGEMBALIAN', '2024-06-22', '15:40:51', 'APRILYA', 23, 'upload/signature_66768e4270da1.png', '2024-06-22', '15:40:24', 'APRILYA', 23, 'upload/signature_66768e8832b7f.png', '0000-00-00', '00:00:00', '', 0, ''),
 ('keyruang058', 'KeyR002', 'DRESS 1', 23, '2', 'SERAH TERIMA', '2024-06-22', '15:42:48', 'DINI NURINJANI', 23, 'upload/signature_66768ecf127cd.png', '2024-06-22', '15:41:58', 'DINI NURINJANI', 23, 'upload/signature_66768ee6c99ef.png', '2024-06-22', '15:42:23', 'NAWOLO', 23, 'upload/signature_66768effdcf62.png'),
-('keyruang059', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-06-25', '16:15:23', 'KUAT', 9, 'upload/signature_667a8b1e53d38.png', '2024-06-25', '16:15:56', 'YUDHO', 9, 'upload/signature_667a8b2c62fc8.png', '0000-00-00', '00:00:00', '', 0, '');
+('keyruang059', 'KeyR007', 'POLY', 9, '1', 'PENGEMBALIAN', '2024-06-25', '16:15:23', 'KUAT', 9, 'upload/signature_667a8b1e53d38.png', '2024-06-25', '16:15:56', 'YUDHO', 9, 'upload/signature_667a8b2c62fc8.png', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang060', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-06-28', '13:17:26', 'KUAT', 12, 'upload/signature_667e57ae9ff8d.png', '2024-06-28', '13:28:30', 'KANIA', 12, 'upload/signature_667e580ebc071.png', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang061', 'KeyR007', 'POLY', 9, '2', 'SERAH TERIMA', '2024-06-28', '13:28:31', 'ARDHA', 9, 'upload/signature_667e59694eadf.png', '2024-06-28', '13:34:39', 'KANIA', 9, 'upload/signature_667e59802d32d.png', '2024-06-28', '13:34:44', 'RATERI', 9, 'upload/signature_667e59854642b.png'),
+('keyruang062', 'KeyR001', 'SHIRT', 12, '1', 'PENGAMBILAN', '2024-06-28', '16:44:31', '', 12, 'upload/signature_667e86f6da969.png', '2024-06-28', '00:00:00', '', 12, '', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang063', 'KeyR001', 'SHIRT', 12, '1', 'PENGEMBALIAN', '2024-06-28', '16:48:50', 'APRILLIA', 12, 'upload/signature_667e87784b415.png', '2024-06-28', '16:48:50', 'APRILLIA', 12, 'upload/signature_667e879d10033.png', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang064', 'KeyR001', 'SHIRT', 12, '2', 'SERAH TERIMA', '2024-06-28', '16:50:48', 'KUAT', 12, 'upload/signature_667e87cd3100f.png', '2024-06-28', '16:51:15', 'APRILLIA', 12, 'upload/signature_667e882ee03c8.png', '2024-06-28', '16:52:02', 'KUAT', 12, 'upload/signature_667e885d63573.png'),
+('keyruang065', 'KeyR011', 'LABORAT', 1, '1', 'PENGEMBALIAN', '2024-07-01', '07:55:06', 'ARDHA', 1, 'upload/signature_6681fe796d886.png', '2024-07-01', '07:55:27', 'KANIA', 1, 'upload/signature_6681fe7fe5732.png', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang066', 'KeyR011', 'LABORAT', 1, '2', 'SERAH TERIMA', '2024-07-01', '08:03:43', 'DHUHA ARDHA SAPUTRA', 1, 'upload/signature_6682007cc5736.png', '2024-07-01', '08:04:03', 'JARWO', 1, 'upload/signature_66820084bab8f.png', '2024-07-01', '08:04:11', 'RATERI', 1, 'upload/signature_6682008b28719.png'),
+('keyruang067', 'KeyR014', 'UJI', 9, '1', 'PENGEMBALIAN', '2024-07-01', '08:59:32', 'DANI', 9, 'upload/signature_66820d93ba933.png', '2024-07-01', '09:01:48', 'JARWO', 9, 'upload/signature_66820e0d92c2b.png', '0000-00-00', '00:00:00', '', 0, ''),
+('keyruang068', 'KeyR014', 'UJI', 9, '2', 'SERAH TERIMA', '2024-07-01', '09:11:34', 'KUAT', 9, 'upload/signature_6682106a44507.png', '2024-07-01', '09:13:01', 'JARWO', 9, 'upload/signature_668210adc0dfb.png', '2024-07-01', '09:13:07', 'RATERI', 9, 'upload/signature_668210b4932d6.png'),
+('keyruang069', 'KeyR008', 'BEA CUKAI', 2, '2', 'PENGAMBILAN', '2024-07-01', '09:23:35', 'HONO', 2, 'upload/signature_6682133b27ec3.png', '0000-00-00', '00:00:00', '', 2, '', '0000-00-00', '00:00:00', '', 2, '');
 
 -- --------------------------------------------------------
 
@@ -890,16 +936,16 @@ CREATE TABLE `tb_list_card` (
 --
 
 INSERT INTO `tb_list_card` (`tblic_uid`, `tblic_jns_kartu`, `tblic_no_id`, `tblic_status`) VALUES
-('IDSHIP01', NULL, '1', 'NOT READY'),
-('IDSHIP02', NULL, '2', 'READY'),
-('IDSHIP03', NULL, '3', 'READY'),
-('IDSHIP04', NULL, '4', 'READY'),
-('IDSHIP05', NULL, '5', 'READY'),
+('IDSHIP01', 'KENDARAAN', '1', 'READY'),
+('IDSHIP02', 'KENDARAAN', '2', 'READY'),
+('IDSHIP03', 'KENDARAAN', '3', 'READY'),
+('IDSHIP04', 'KENDARAAN', '4', 'READY'),
+('IDSHIP05', 'KENDARAAN', '5', 'READY'),
 ('PTU1/006', 'PELAMAR KERJA', '1', 'NOT READY'),
 ('PTU1/007', 'PELAMAR KERJA', '2', 'READY'),
 ('PTU1/008', 'PELAMAR KERJA', '3', 'READY'),
 ('PTU1/009', 'PELAMAR KERJA', '4', 'READY'),
-('PTU1/010', 'PELAMAR KERJA', '5', 'READY'),
+('PTU1/010', 'PELAMAR KERJA', '5', 'NOT READY'),
 ('PTU1/011', 'PELAMAR KERJA', '6', 'READY'),
 ('PTU1/012', 'PELAMAR KERJA', '7', 'READY'),
 ('PTU1/013', 'PELAMAR KERJA', '8', 'READY');
@@ -915,7 +961,7 @@ CREATE TABLE `tb_list_cctv` (
   `tblc_lokasi` varchar(10) NOT NULL,
   `tblc_nama_cctv` varchar(50) NOT NULL,
   `tblc_status` varchar(10) NOT NULL,
-  `tblc_cek_cctv` varchar(10) DEFAULT NULL
+  `tblc_cek_cctv` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -923,21 +969,21 @@ CREATE TABLE `tb_list_cctv` (
 --
 
 INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_status`, `tblc_cek_cctv`) VALUES
-('PTU1/001', 'PTU1', 'POS INDUK', 'INACTIVE', '2024-06-28'),
-('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', ''),
-('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', ''),
-('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', ''),
-('PTU1/005', 'PTU1', 'STORE ACCESSORIES', 'ACTIVE', ''),
-('PTU1/006', 'PTU1', 'STORE ACCESSORIES DALAM', 'ACTIVE', ''),
-('PTU1/007', 'PTU1', 'RUANG SERVER', 'ACTIVE', ''),
-('PTU1/008', 'PTU1', 'PACKING DRESS 1', 'ACTIVE', ''),
-('PTU1/009', 'PTU1', 'POLYBAG DRESS 1', 'ACTIVE', ''),
-('PTU1/010', 'PTU1', 'STORE FABRIC', 'ACTIVE', ''),
+('PTU1/001', 'PTU1', 'POS INDUK', 'ACTIVE', '2024-06-28'),
+('PTU1/002', 'PTU1', 'LOBBY', 'ACTIVE', '2024-06-28'),
+('PTU1/003', 'PTU1', 'EXPORT DRESS 1', 'ACTIVE', '2024-06-27'),
+('PTU1/004', 'PTU1', 'PINTU LOADING 2 DRESS 1', 'ACTIVE', '2024-06-22'),
+('PTU1/005', 'PTU1', 'STORE ACCESSORIES', 'ACTIVE', '2024-05-31'),
+('PTU1/006', 'PTU1', 'STORE ACCESSORIES DALAM', 'ACTIVE', '2024-05-31'),
+('PTU1/007', 'PTU1', 'RUANG SERVER', 'ACTIVE', '2024-05-30'),
+('PTU1/008', 'PTU1', 'PACKING DRESS 1', 'ACTIVE', '2024-05-30'),
+('PTU1/009', 'PTU1', 'POLYBAG DRESS 1', 'ACTIVE', '2024-05-30'),
+('PTU1/010', 'PTU1', 'STORE FABRIC', 'ACTIVE', NULL),
 ('PTU1/011', 'PTU1', 'STORE FABRIC DALAM', 'ACTIVE', NULL),
-('PTU1/012', 'PTU1', 'EXPORT DRESS 2', 'ACTIVE', ''),
+('PTU1/012', 'PTU1', 'EXPORT DRESS 2', 'ACTIVE', '2024-05-24'),
 ('PTU1/013', 'PTU1', 'PINTU LOADING 2 DRESS 2', 'ACTIVE', NULL),
-('PTU1/014', 'PTU1', 'PINTU LOADING SHIRT', 'ACTIVE', ''),
-('PTU1/015', 'PTU1', 'EXPORT SHIRT', 'ACTIVE', ''),
+('PTU1/014', 'PTU1', 'PINTU LOADING SHIRT', 'ACTIVE', '2024-06-22'),
+('PTU1/015', 'PTU1', 'EXPORT SHIRT', 'ACTIVE', '2024-06-22'),
 ('PTU1/016', 'PTU1', 'GUDANG BARANG JADI', 'ACTIVE', NULL),
 ('PTU1/017', 'PTU1', 'GUDANG AVAL', 'ACTIVE', NULL),
 ('PTU1/018', 'PTU1', 'POLYBAG SHIRT', 'ACTIVE', NULL),
@@ -964,14 +1010,14 @@ INSERT INTO `tb_list_cctv` (`tblc_uid`, `tblc_lokasi`, `tblc_nama_cctv`, `tblc_s
 ('PTU1/039', 'PTU1', 'AREA WASHING & QC', 'ACTIVE', NULL),
 ('PTU1/040', 'PTU1', 'PINTU DARURAT 1', 'ACTIVE', NULL),
 ('PTU1/041', 'PTU1', 'CUTTING DRESS 2', 'ACTIVE', NULL),
-('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', NULL),
+('PTU1/042', 'PTU1', 'PINTU DARURAT 2', 'ACTIVE', '2024-06-27'),
 ('PTU1/043', 'PTU1', 'AREA LOKER', 'ACTIVE', NULL),
 ('PTU1/044', 'PTU1', 'SEWING LINE 1', 'ACTIVE', NULL),
 ('PTU1/045', 'PTU1', 'KANTIN LT.2', 'ACTIVE', NULL),
 ('PTU1/046', 'PTU1', 'DEPAN TUKANG KAYU', 'ACTIVE', NULL),
 ('PTU1/047', 'PTU1', 'DEPAN LINE PRESS', 'ACTIVE', NULL),
-('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', ''),
-('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '');
+('PTU1/048', 'PTU1', 'COBA CCTV', 'ACTIVE', '0000-00-00'),
+('PTU1/049', 'PTU1', 'APRIL', 'ACTIVE', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1190,7 +1236,16 @@ INSERT INTO `tb_logs_activity_mutasi_shift` (`id_logs_activity_shift`, `shift`, 
 ('uraian024', '1', '16:22:39', 'asjdhakjdh', '16:22:45', '2024-06-21 09:23:01'),
 ('uraian025', '1', '13:27:47', 'Mantap\r\n', '13:27:54', '2024-06-22 06:28:18'),
 ('uraian026', '1', '13:27:47', 'Mantap bosss\r\n', '13:28:18', '2024-06-22 06:28:35'),
-('uraian027', '1', '13:30:53', '', '00:00:00', '2024-06-22 06:30:59');
+('uraian027', '1', '13:30:53', '', '00:00:00', '2024-06-22 06:30:59'),
+('uraian028', '1', '17:03:43', 'KONDISI AMAN', '17:01:40', '2024-06-28 10:04:15'),
+('uraian029', '1', '17:14:10', 'GJFHGJFJGFDNGDNF\r\nJKGHJKJH', '17:25:31', '2024-06-28 10:28:06'),
+('uraian030', '1', '17:14:12', 'JKHGJHFDJKGHKDFGFNHJGFKHJGF\r\n,KHLGKJLGHJLKGHL;JKL\r\nGHJLGH;LKJ;LGHKJLKGHLKJ;L', '17:25:20', '2024-06-28 10:27:55'),
+('uraian031', '1', '17:27:19', 'kARYASHFDJGHFDHJFDJFHKFGKBHGFKMHBGF', '17:25:08', '2024-06-28 10:27:43'),
+('uraian032', '1', '17:28:06', 'DSFHJSDHJFDSGFDGFD', '17:25:48', '2024-06-28 10:28:23'),
+('uraian033', '1', '12:35:17', 'masih oke', '12:54:32', '2024-07-01 05:54:33'),
+('uraian034', '1', '12:54:53', 'wdasda', '12:56:03', '2024-07-01 05:56:03'),
+('uraian035', '1', '12:56:03', 'dfvasv', '12:58:42', '2024-07-01 05:58:42'),
+('uraian036', '1', '13:01:18', 'qwertyuioasdfghjkxcvbnmwertyuisdfghcvbnuiuhadshaihdausdhaiudhaiudhaiushdaunna cs cs scancajcnasjcnakcnakjcnajscnakcnakcnakcnacnakjscasudasdoaisduoaiduoaisudasoidaoiduaoiduaoidaoidaoidauoidaoiuaasda', '13:02:08', '2024-07-01 06:02:09');
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1280,20 @@ INSERT INTO `tb_logs_barang_inventaris_mutasi_shift` (`ID_logs_barang_inventaris
 ('LogInv011', 'BInv001', 'KOMPUTER', 1, '1', '2024-06-21 09:23:27'),
 ('LogInv012', 'BInv006', 'HT & CHARGER', 1, '1', '2024-06-22 07:40:25'),
 ('LogInv013', 'BInv004', 'MONITOR E-SEAL', 2, '3', '2024-06-22 07:40:43'),
-('LogInv014', 'BInv001', 'KOMPUTER', 2, '1', '2024-06-22 07:41:14');
+('LogInv014', 'BInv001', 'KOMPUTER', 2, '1', '2024-06-22 07:41:14'),
+('LogInv015', 'BInv001', 'KOMPUTER', 2, '1', '2024-06-28 10:03:05'),
+('LogInv016', 'BInv002', 'PRINTER', 1, '1', '2024-06-28 10:03:25'),
+('LogInv017', 'BInv005', 'TELEPHONE', 1, '1', '2024-06-28 10:03:34'),
+('LogInv018', 'BInv003', 'MONITOR CCTV', 3, '1', '2024-06-28 10:25:08'),
+('LogInv019', 'BInv004', 'MONITOR E-SEAL', 1, '1', '2024-06-28 10:25:20'),
+('LogInv020', 'BInv006', 'HT & CHARGER', 2, '1', '2024-06-28 10:25:32'),
+('LogInv021', 'BInv007', 'KAMERA & CHARGER', 1, '1', '2024-06-28 10:25:43'),
+('LogInv022', 'BInv008', 'JAM DINDING', 1, '1', '2024-06-28 10:25:58'),
+('LogInv023', 'BInv012', 'SENTER PENYEBRANGAN', 2, '1', '2024-06-28 10:26:11'),
+('LogInv024', 'BInv013', 'SEPATU BOOTS', 5, '1', '2024-06-28 10:26:22'),
+('LogInv025', 'BInv014', 'JAS HUJAN', 3, '1', '2024-06-28 10:26:32'),
+('LogInv026', 'BInv016', 'UNDER MIRROR', 1, '1', '2024-06-28 10:26:41'),
+('LogInv027', 'BInv017', 'METAL DETECTOR', 1, '1', '2024-06-28 10:26:53');
 
 -- --------------------------------------------------------
 
@@ -1291,7 +1359,20 @@ INSERT INTO `tb_mutasi_shift_1_to_gs` (`id_mutasi_1_to_GS`, `jenis`, `nama`, `NI
 ('ShiftMut039', '1', 'KUAT PURWANTO', 1121233, 'ANGGOTA', '1', 'upload/signature_667636615eca8.png', '', '2024-06-22 02:26:41'),
 ('ShiftMut040', '1', 'KUAT PURWANTO', 202456987, 'KOMANDAN REGU', '1', 'upload/signature_66766d4b5749b.png', '', '2024-06-22 06:20:59'),
 ('ShiftMut041', '1', 'ADIAT NUGROHO', 1596, 'KETUA', '1', 'upload/signature_667a882e72861.png', '', '2024-06-25 09:04:46'),
-('ShiftMut042', '1', 'ARI PRABOWO', 2147483647, 'ANGGOTA', '1', 'upload/signature_667b63b4ba592.png', '', '2024-06-26 00:41:24');
+('ShiftMut042', '1', 'ARI PRABOWO', 2147483647, 'ANGGOTA', '1', 'upload/signature_667b63b4ba592.png', '', '2024-06-26 00:41:24'),
+('ShiftMut043', '1', 'APRILYA PUSPITASARI', 200604122, 'DANRU', '1', 'upload/signature_667e31c0cfa55.png', '', '2024-06-28 03:45:04'),
+('ShiftMut044', '1', 'AGUS ANGGORO ', 200604124, 'ANGGOTA', '1', 'upload/signature_667e89930a217.png', '', '2024-06-28 09:59:47'),
+('ShiftMut045', '1', 'ARTIN WAHYU NINGSIH', 201804072, 'ANGGOTA', '1', 'upload/signature_667e8e919fc8f.png', '', '2024-06-28 10:21:05'),
+('ShiftMut046', '1', 'ADI ARDIANSYAH', 202206040, 'ANGGOTA', '1', 'upload/signature_667e8eb40ed87.png', '', '2024-06-28 10:21:40'),
+('ShiftMut047', '1', 'ADI ARDIANSYAH', 202206040, 'ANGGOTA', '1', 'upload/signature_667e8ec39c81c.png', '', '2024-06-28 10:21:55'),
+('ShiftMut048', '1', 'ANGELIKA KUSUMA', 202211100, 'ANGGOTA', '1', 'upload/signature_667e8ed52b30c.png', '', '2024-06-28 10:22:13'),
+('ShiftMut049', '1', 'ARI PRABOWO', 201908021, 'ANGGOTA', '1', 'upload/signature_667e8ee4ee145.png', '', '2024-06-28 10:22:28'),
+('ShiftMut050', '1', 'ARTIN WAHYU NINGSIH', 201804072, 'ANGGOTA', '2', 'upload/signature_667e8ef5aaf31.png', '', '2024-06-28 10:22:45'),
+('ShiftMut051', '1', 'M MAULANA YUSUF', 202107227, 'ANGGOTA', '4/5', 'upload/signature_667e8f0a7eaee.png', '', '2024-06-28 10:23:06'),
+('ShiftMut052', '1', 'ADI ARDIANSYAH', 202206040, 'ANGGOTA', '1', 'upload/signature_667e8f184c006.png', '', '2024-06-28 10:23:20'),
+('ShiftMut053', '1', 'AGUS ANGGORO ', 200604124, 'ANGGOTA', '1', 'upload/signature_667e8f31c8212.png', '', '2024-06-28 10:23:45'),
+('ShiftMut054', '1', 'ASTI MAULINA AZAHRA', 0, '', '1', 'upload/signature_66822c20efed8.png', '', '2024-07-01 04:10:08'),
+('ShiftMut055', '1', 'RENDI ARGA SAPUTRA', 20230205, 'ANGGOTA', '2', 'upload/signature_66822c653dfee.png', '', '2024-07-01 04:11:17');
 
 -- --------------------------------------------------------
 
@@ -1338,9 +1419,6 @@ CREATE TABLE `tb_mutasi_shift_3` (
 
 INSERT INTO `tb_mutasi_shift_3` (`ID_mutasi_shift_3`, `date`, `nama`, `NIK`, `jabatan`, `jam_operasional_10`, `jam_operasional_11`, `jam_operasional_12`, `jam_operasional_01`, `jam_operasional_02`, `jam_operasional_03`, `jam_operasional_04`, `jam_operasional_05`, `pos_10`, `paraf_10`, `pos_11`, `paraf_11`, `pos_12`, `paraf_12`, `pos_01`, `paraf_01`, `pos_02`, `paraf_02`, `pos_03`, `paraf_03`, `pos_04`, `paraf_04`, `pos_05`, `paraf_05`, `keterangan`) VALUES
 ('ShiftMlm001', '2024-06-06', 'Ardha', 202465654, 'anggota', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'fasfafaf'),
-('register002', '2024-06-06', 'NAWOLO PRASETYO', 12414, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-('register002', '2024-06-07', 'RENDI ARGA SAPUTRA', 290675343, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-('register002', '2024-06-07', '', 0, '', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '', '', '1', 'signature_6662a5be98ed7.png', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 ('ShiftMlm002', '2024-06-07', 'ADIAT NUGROHO', 3538355, 'KETUA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', 'K', '', '4/5', 'signature_6662a7819c2b1.png', '2', 'signature_6662b572dfde0.png', 'K', 'signature_6662b57a24e9e.png', '', '', '', '', '', '', '', '', ''),
 ('ShiftMlm003', '2024-06-07', 'LUHADI ', 346363, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', 'K', '', '2', 'signature_6662b321c6d8a.png', '4/5', 'signature_6662b3592df45.png', '4/5', 'signature_6662b26545059.png', 'K', '', '2', '', '1', 'signature_6662b35d982da.png', 'K', 'signature_6662b361ce243.png', ''),
 ('ShiftMlm004', '2024-06-07', 'DINI NURINJANI', 12345678, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '2', '', 'K', 'signature_6662d2700d567.png', '2', 'signature_6662d2bda4c03.png', '', '', '', '', '', '', '', '', '', '', ''),
@@ -1356,7 +1434,32 @@ INSERT INTO `tb_mutasi_shift_3` (`ID_mutasi_shift_3`, `date`, `nama`, `NIK`, `ja
 ('ShiftMlm014', '2024-06-21', 'NAWOLO PRASETYO', 123456789, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '1', 'upload/signature_66751adb35829.png', 'K', 'upload/signature_667537114fa32.png', '2', 'upload/signature_667537172318c.png', '4/5', 'upload/signature_6675371d23dc4.png', '4/5', 'upload/signature_667537228204d.png', 'K', 'upload/signature_66753726bab49.png', 'K', 'upload/signature_6675372c8142d.png', '2', 'upload/signature_667537336747a.png', ''),
 ('ShiftMlm015', '2024-06-22', 'AGUS ANGGORO ', 0, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '1', 'upload/signature_66767f2757edb.png', 'K', 'upload/signature_66767f4b0838a.png', '2', 'upload/signature_66767f5291bee.png', '4/5', 'upload/signature_66767f5f86a07.png', 'K', 'upload/signature_66767f6726b0d.png', 'K', 'upload/signature_66767f6e7f17b.png', 'K', 'upload/signature_66767f7eb174e.png', '2', 'upload/signature_66767f88bb7a3.png', ''),
 ('ShiftMlm016', '2024-06-25', 'ADITYA BUDI SAPUTRA', 123456789, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '', 'upload/signature_667a2bc7b7436.png', '1', 'upload/signature_667a60e385f06.png', '2', 'upload/signature_667a6234d7d1d.png', '2', 'upload/signature_667a6252ac394.png', '1', 'upload/signature_667a626642e83.png', '4/5', 'upload/signature_667a62775fa27.png', 'K', 'upload/signature_667a628ed7dcf.png', '1', 'upload/signature_667a62aac15c8.png', ''),
-('ShiftMlm017', '2024-06-26', 'ARI PRABOWO', 124152, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '1', 'upload/signature_667ba76485bc5.png', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+('ShiftMlm017', '2024-06-26', 'ARI PRABOWO', 124152, 'ANGGOTA', '22:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '1', 'upload/signature_667ba76485bc5.png', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+('ShiftMlm018', '2024-06-28', 'ADITYA BUDI SAPUTRA', 2023081, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '1', 'upload/signature_667e3cb2a2d1f.png', '4/5', 'upload/signature_667e3cba8b656.png', '1', 'upload/signature_667e3cbfa19d5.png', '2', 'upload/signature_667e3cc5058d3.png', '4/5', 'upload/signature_667e3ccaaf5b1.png', '4/5', 'upload/signature_667e3cd01071d.png', '4/5', 'upload/signature_667e3cd611ea3.png', '2', 'upload/signature_667e3cdbc5a5f.png', ''),
+('ShiftMlm019', '2024-06-28', 'BAGAS DANISWARA', 202311086, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '1', 'upload/signature_667e945f8131a.png', '2', 'upload/signature_667e947605421.png', '2', 'upload/signature_667e94841c92d.png', '4/5', 'upload/signature_667e94935b245.png', '1', 'upload/signature_667e949ef1405.png', 'K', 'upload/signature_667e94a8940cd.png', 'K', 'upload/signature_667e94b29f247.png', 'K', 'upload/signature_667e94b9d1f0a.png', ''),
+('ShiftMlm020', '2024-07-01', 'HARDI PRAJOYO', 20220234, 'ANGGOTA', '22:00:00', '23:00:00', '23:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '1', 'upload/signature_668230720a32b.png', '1', 'upload/signature_66823080b0eca.png', '4/5', 'upload/signature_6682308bb8da9.png', '2', 'upload/signature_668232c6ba470.png', '2', 'upload/signature_668232d10aa0f.png', 'K', 'upload/signature_668232d898754.png', '2', 'upload/signature_668232e3b7a47.png', '4/5', 'upload/signature_668232eb1b3a4.png', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pos_inventaris`
+--
+
+CREATE TABLE `tb_pos_inventaris` (
+  `tb_uid_pos_inventaris` varchar(20) NOT NULL,
+  `pos` int(13) NOT NULL,
+  `barang_inventaris_pos` varchar(50) NOT NULL,
+  `jumlah_barang_inventaris` int(5) NOT NULL,
+  `dibuat_pada` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_pos_inventaris`
+--
+
+INSERT INTO `tb_pos_inventaris` (`tb_uid_pos_inventaris`, `pos`, `barang_inventaris_pos`, `jumlah_barang_inventaris`, `dibuat_pada`) VALUES
+('PTU1/posinv/brinv001', 1, 'KOMPUTER', 2, '2024-07-01 06:15:43'),
+('PTU1/posinv/brinv002', 2, 'PRINTER', 1, '2024-07-01 06:15:43');
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1509,8 @@ INSERT INTO `tb_register_surat_transit` (`ID_register`, `jenis_transit`, `date`,
 ('register019', '', '2024-06-21', '08:38:34', 'JNT', 'YUNI', 'ARDHA', 'BAIK', 'KUAT', 'upload/signature_6674d9ff1e6e1.png', 'ADITYA BUDI SAPUTRA', 1, ''),
 ('register020', '', '2024-06-21', '17:39:42', 'JNT', 'MUKIDI', 'ARDHA', 'BAIK', 'KUAT', 'upload/signature_6675587736118.png', 'ANGELIKA KUSUMA', 1, ''),
 ('register021', '', '2024-06-22', '16:00:45', 'DHL1234567', 'JOKO', 'ELIZABETH', 'BAIK', 'ARI PRABOWO', 'upload/signature_667693a1249f7.png', 'ADIAT NUGROHO', 1, 'Sample'),
-('register022', '', '2024-06-24', '15:20:38', 'JNT', 'MUKIDI', 'YUDHO', 'BAIK', 'ASTI MAULINA AZAHRA', 'upload/signature_66792c610e303.png', 'ARTIN WAHYU NINGSIH', 1, '');
+('register022', '', '2024-06-24', '15:20:38', 'JNT', 'MUKIDI', 'YUDHO', 'BAIK', 'ASTI MAULINA AZAHRA', 'upload/signature_66792c610e303.png', 'ARTIN WAHYU NINGSIH', 1, ''),
+('register023', 'SURAT PERUSAHAAN', '2024-06-28', '10:11:24', 'JNT', 'KARMIN', 'YUDHO', 'BAIK', 'ADITYA BUDI SAPUTRA', 'upload/signature_667e2d44486de.png', 'runi', 1, 'qrq');
 
 -- --------------------------------------------------------
 
@@ -1467,7 +1571,10 @@ INSERT INTO `tb_report_cctv` (`tbrc_uid`, `tbrc_uid_cctv`, `tbrc_tgl_cek`, `tbrc
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/004', '2024-06-22', 'OK'),
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/014', '2024-06-22', 'OK'),
 ('REPCCTV/PTU1/2024/06/22', 'PTU1/015', '2024-06-22', 'OK'),
-('REPCCTV/PTU1/2024/06/28', 'PTU1/001', '2024-06-28', 'OK');
+('REPCCTV/PTU1/2024/06/27', 'PTU1/003', '2024-06-27', 'OK'),
+('REPCCTV/PTU1/2024/06/27', 'PTU1/042', '2024-06-27', 'OK'),
+('REPCCTV/PTU1/2024/06/28', 'PTU1/001', '2024-06-28', 'OK'),
+('REPCCTV/PTU1/2024/06/28', 'PTU1/002', '2024-06-28', 'OK');
 
 -- --------------------------------------------------------
 
@@ -1496,14 +1603,19 @@ INSERT INTO `tb_report_patroli` (`tbrp_uid`, `tbrp_jns_report`, `tbrp_tgl_mulai`
 ('PTU1/B001/2024-06-14', 'B001', '2024-06-14', '04:44:47', '2024-06-14', '04:48:27', '23', 'GS', 'SITUASI AMAN'),
 ('PTU1/B001/2024-06-19', 'B001', '2024-06-19', '10:47:26', '2024-06-21', '02:36:46', '', '1', 'ASDADAD'),
 ('PTU1/B001/2024-06-21', 'B001', '2024-06-21', '02:44:46', '2024-06-21', '02:50:11', '', '2', 'SUDAH MANTAP'),
-('PTU1/B001/2024-06-28', 'B001', '2024-06-28', '06:38:45', '2024-06-28', '06:39:03', '199910010', '1', 'MANTAP'),
+('PTU1/B001/2024-06-28', 'B001', '2024-06-28', '08:02:49', '2024-06-28', '08:02:56', '2023081U5', '1', 'JOSS'),
+('PTU1/B001/66826677A153D', 'B001', '2024-07-01', '03:19:03', '2024-07-01', '03:19:20', '2023081U5', '1', 'TYU'),
+('PTU1/B001/66826680CD757', 'B001', '2024-07-01', '03:19:12', '2024-07-01', '03:19:26', '202209164', '2', 'TYU'),
+('PTU1/B002/2024-06-28', 'B002', '2024-06-28', '08:28:03', '2024-06-28', '08:28:09', '2022101T9', '1', 'JOSS'),
 ('PTU1/B003/2024-06-13', 'B003', '2024-06-13', '09:24:57', '2024-06-14', '02:25:08', '13', '2', '~MPROFMEA'),
 ('PTU1/B003/2024-06-14', 'B003', '2024-06-14', '04:44:47', '2024-06-14', '04:48:10', '18', '1', 'ADA SHIPMENT DI SHIRT BELUM SELESAI DAN KONDISI AMAN '),
 ('PTU1/B003/2024-06-19', 'B003', '2024-06-19', '10:50:44', '2024-06-21', '02:36:59', '', '1', 'ASDADA'),
 ('PTU1/B003/2024-06-21', 'B003', '2024-06-21', '02:37:27', '2024-06-21', '02:37:32', '', '1', 'ASDASDAS'),
 ('PTU1/B003/2024-06-22', 'B003', '2024-06-22', '03:01:10', '2024-06-22', '03:01:54', '', '1', 'SITUASI AMAN'),
+('PTU1/B003/2024-06-28', 'B003', '2024-06-28', '08:33:57', '2024-06-28', '08:34:03', '202211101', '1', 'JOSS'),
 ('PTU1/B004/2024-06-20', 'B004', '2024-06-20', '02:54:08', '2024-06-21', '02:37:19', '', '1', 'SADADS'),
 ('PTU1/B004/2024-06-21', 'B004', '2024-06-21', '05:02:07', '2024-06-21', '05:02:50', '', '1', 'AFASSFA'),
+('PTU1/B004/2024-06-28', 'B004', '2024-06-28', '08:39:49', '2024-06-28', '08:39:54', '201712126', '1', 'JOSS'),
 ('PTU1/B005/2024-06-21', 'B005', '2024-06-21', '03:50:31', '2024-06-21', '03:51:33', '', '3', 'DASDA');
 
 -- --------------------------------------------------------
@@ -1563,7 +1675,11 @@ INSERT INTO `tb_report_tamu` (`tbrt_uid`, `tbrt_jns_kunjungan`, `tbrt_tgl_masuk`
 ('PTU1/B009/2024-06-22/6676806FA', 'B009', '2024-06-22', '02:42:39', '2024-06-24', '10:04:36', 'BEDA', 'JAUH', 'YUDHO', 'LAMAR KERJA', 'YES', 'YES', '12345767', 'PTU1/009', 'upload/signature_6676806fa5a67.png'),
 ('PTU1/B006/2024-06-22/6676809EC', 'B006', '2024-06-22', '02:43:26', '2024-06-22', '02:46:31', 'NATHAN TJOE A ON', 'BELANDA', 'JUSTIN HUBNER', 'FACTORY VISIT', 'YES', 'YES', '23', 'PTU1/012', 'upload/signature_6676809ecc314.png'),
 ('PTU1/B009/2024-06-24/6678F0C78', 'B009', '2024-06-24', '11:06:31', '2024-06-24', '11:10:14', 'YUI', 'TUHUY', 'KAMIS', 'QSDWAD', 'YES', 'YES', '12345678', 'PTU1/006', 'upload/signature_6678f0c78e9ee.png'),
-('PTU1/0/2024-06-25/667A89033489', '0', '2024-06-25', '04:08:19', NULL, NULL, 'ARDHA', 'UNGARAN', 'MAHMUDI', 'DGNDFNFC', 'YES', 'YES', '1234567890', 'PTU1/006', 'upload/signature_667a8903308a0.png');
+('PTU1/0/2024-06-25/667A89033489', '0', '2024-06-25', '04:08:19', NULL, NULL, 'ARDHA', 'UNGARAN', 'MAHMUDI', 'DGNDFNFC', 'YES', 'YES', '1234567890', 'PTU1/006', 'upload/signature_667a8903308a0.png'),
+('PTU1/B009/2024-06-28/667E3EB3B', 'B009', '2024-06-28', '11:40:19', '2024-06-28', '11:40:28', 'ARDHA', 'TUHUY', 'KAMIS', 'ASDASASFAS', 'YES', 'YES', '12345678', 'PTU1/007', 'upload/signature_667e3eb3b41ee.png'),
+('PTU1/B009/2024-06-28/667E95926', 'B009', '2024-06-28', '05:50:58', '2024-06-28', '05:51:55', 'DANI', 'SEMARANG', 'INDRO', 'LAMAR KERJA', 'YES', 'YES', '1234567', 'PTU1/011', 'upload/signature_667e9592620b1.png'),
+('PTU1/B011/2024-06-28/667E971CD', 'B011', '2024-06-28', '05:57:32', NULL, NULL, 'DANI', 'SEMARANG', 'INDRO', 'ASGDJSADGA', 'YES', 'YES', '1234567', 'PTU1/010', 'upload/signature_667e971cd738c.png'),
+('PTU1/B011/2024-06-28/667E977A8', 'B011', '2024-06-28', '05:59:06', NULL, NULL, 'DANI', 'SEMARANG', '', 'ASDFAFSA', 'YES', 'YES', '1234567', 'PTU1/008', 'upload/signature_667e977a8e09c.png');
 
 -- --------------------------------------------------------
 
@@ -1675,12 +1791,6 @@ ALTER TABLE `tb_list_card`
   ADD PRIMARY KEY (`tblic_uid`);
 
 --
--- Indexes for table `tb_list_cctv`
---
-ALTER TABLE `tb_list_cctv`
-  ADD PRIMARY KEY (`tblc_uid`);
-
---
 -- Indexes for table `tb_list_kendaraan`
 --
 ALTER TABLE `tb_list_kendaraan`
@@ -1705,16 +1815,22 @@ ALTER TABLE `tb_list_security`
   ADD PRIMARY KEY (`tbls_uid`);
 
 --
+-- Indexes for table `tb_mutasi_shift_3`
+--
+ALTER TABLE `tb_mutasi_shift_3`
+  ADD PRIMARY KEY (`ID_mutasi_shift_3`);
+
+--
+-- Indexes for table `tb_pos_inventaris`
+--
+ALTER TABLE `tb_pos_inventaris`
+  ADD PRIMARY KEY (`tb_uid_pos_inventaris`);
+
+--
 -- Indexes for table `tb_report_patroli`
 --
 ALTER TABLE `tb_report_patroli`
   ADD PRIMARY KEY (`tbrp_uid`);
-
---
--- Indexes for table `tb_unit`
---
-ALTER TABLE `tb_unit`
-  ADD PRIMARY KEY (`tbu_uid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
