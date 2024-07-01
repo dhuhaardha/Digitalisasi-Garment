@@ -145,7 +145,7 @@
                 <h6 class="collapse-header">Administrasi :</h6>
                 <a class="collapse-item" style="font-size: 15px;" href="user_register_umum.php">Input Kendaraan Umum</a>
                 <a class="collapse-item" style="font-size: 15px;"href="data_kendaraan_umum.php">Kendaraan Umum</a>
-                <a class="collapse-item" style="font-size: 15px;"href="user_register_kendaraan.php">Input Kendaraan Shipment</a>
+                <a class="collapse-item" style="font-size: 15px;"href="user_register_kendaraan.php">Input Shipment</a>
                 <a class="collapse-item" style="font-size: 15px;"href="data_register_kendaraan.php">Shipment</a>
                 <a class="collapse-item" style="font-size: 15px;"href="login_cek_cctv.php">CCTV Check</a>
                 <a class="collapse-item" style="font-size: 15px;"href="cek_keyroom.php">Kunci Ruangan Check</a>
