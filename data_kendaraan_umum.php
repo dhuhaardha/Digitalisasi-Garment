@@ -32,11 +32,13 @@ session_start();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                 <div class="row d-flex align-items-stretch">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="card mb-4 h-100">
-            <div class="card-header py-3">
+            <div class="card-header py-3 d-flex justify-content-center align-items-center">
                 <h5 class="m-0 font-weight-bold text-primary">Status Tanda Tangan</h5>
+                
             </div>
+            
             <div class="card-body">
     <?php
     $current_date = date('Y-m-d');
@@ -112,56 +114,77 @@ session_start();
         }
     }
     
-    // // Display status based on the gathered information
-    // echo "<p><strong>DANRU:</strong> ";
-    // echo $danru_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
     
-    // echo "<p><strong>DITERIMA:</strong> ";
-    // echo $diterima_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
-    
-    // echo "<p><strong>DISERAHKAN:</strong> ";
-    // echo $diserahkan_signed ? "Sudah melakukan tanda tangan." : "Belum melakukan tanda tangan.";
-    // echo "</p>";
 
     // Display status and signer details for each role
-    
-    echo "<p><strong>DITERIMA:</strong> ";
+    echo "<div class='d-flex justify-content-between'>";
     if ($signature_status['DITERIMA']['signed']) {
-        echo "Sudah melakukan tanda tangan oleh {$signature_status['DITERIMA']['signer']} pada shift {$signature_status['DITERIMA']['shift']}.";
+        echo "<div class='col-sm-6'>";
+        echo "<span class='badge-lg d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-success-subtle border border-primary-subtle rounded-pill'>";
+        echo "<i class='fa-solid fa-circle-check fa-lg me-1'></i>";
+        echo "<strong>DITERIMA </strong>";
+        echo "<span class='vr mx-2'></span>";
+        echo "<strong>{$signature_status['DITERIMA']['signer']} ( SHIFT {$signature_status['DITERIMA']['shift']} ).</strong>";
+        echo "</span>";
+        echo "</div>";
     } else {
-        echo "Belum melakukan tanda tangan.";
+        echo "<div class='col-sm-6'>";
+        echo "<span class='badge-lg d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-danger-subtle border border-primary-subtle rounded-pill'>";
+        echo "<i class='fa-solid fa-circle-xmark fa-lg me-1'></i>";
+        echo "<strong>DITERIMA </strong>";
+        echo "<span class='vr mx-2'></span>";
+        echo "<strong>Belum  tanda tangan. </strong>";
+        echo "</span>";
+        echo "</div>";
     }
-    echo "</p>";
     
-    echo "<p><strong>DISERAHKAN:</strong> ";
+    
+    
     if ($signature_status['DISERAHKAN']['signed']) {
-        echo "Sudah melakukan tanda tangan oleh {$signature_status['DISERAHKAN']['signer']} pada shift {$signature_status['DISERAHKAN']['shift']}.";
+        echo "<div class='col-sm-6'>";
+        echo "<span class='badge-lg d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-success-subtle border border-primary-subtle rounded-pill'>";
+        echo "<i class='fa-solid fa-circle-check fa-lg me-1'></i>";
+        echo "<strong>DISERAHKAN </strong>";
+        echo "<span class='vr mx-2'></span>";
+        echo "<strong>{$signature_status['DISERAHKAN']['signer']} ( SHIFT {$signature_status['DISERAHKAN']['shift']} ).</strong>";
+        echo "</span>";
+        echo "</div>";
     } else {
-        echo "Belum melakukan tanda tangan.";
+        echo "<span class='badge-lg d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-danger-subtle border border-primary-subtle rounded-pill'>";
+        echo "<i class='fa-solid fa-circle-xmark fa-lg me-1'></i>";
+        echo "<strong>DISERAHKAN </strong>";
+        echo "<span class='vr mx-2'></span>";
+        echo "<strong>Belum  tanda tangan. </strong>";
+        echo "</span>";
     }
-    echo "</p>";
+    echo "</div>";
     ?>
+    <br>
+    <div class="d-flex justify-content-center">
+
+<div class="w-20">
+    <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
+        <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
+    </button>
+</div>
+
+<div class="w-20 ml-2"> 
+    <button type="button" class="btn-lg btn-success btn-block" data-toggle="modal" data-target="#modalTambah">
+        <i class="fa-solid fa-signature"></i>&nbsp; TTD Export
+    </button>
+</div>
+
+</div>
 </div>
         </div>
+        </div>
     </div>
-    <div class="col-sm-6">
+    <!-- <div class="col-sm-6">
         <div class="card mb-4 h-100">
             <div class="card-header py-3">
                 <h5 class="m-0 font-weight-bold text-primary">Proses Tanda Tangan</h5>
             </div>
             <div class="card-body">
-                <!-- <div class="text-center">
-
-                    <button type="button" class="btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modalPDF">
-                        <i class="fa-solid fa-file-pdf"></i>&nbsp; Export PDF
-                    </button>
-                    <button type="button" class="btn-lg btn-success" data-toggle="modal" data-target="#modalTambah">
-                        <i class="fa-solid fa-signature">&nbsp</i>
-                        TTD Export
-                    </button>
-                </div> -->
                 <div class="d-flex justify-content-between">
 
     <div class="w-50">
@@ -170,7 +193,7 @@ session_start();
         </button>
     </div>
 
-    <div class="w-50 ml-2"> <!-- ml-2 untuk memberi jarak antar tombol -->
+    <div class="w-50 ml-2"> 
         <button type="button" class="btn-lg btn-success btn-block" data-toggle="modal" data-target="#modalTambah">
             <i class="fa-solid fa-signature"></i>&nbsp; TTD Export
         </button>
@@ -181,16 +204,15 @@ session_start();
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
                 <br>
+                <p></p>
                     <!-- Container Data Karyawan -->
                         <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h3 class="m-0 text-dark">Public Vehicle Registration</h3>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPDF">
-                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Export PDF Pada Tanggal
-                        </button>
+                                    <h3 class="m-0 text-dark">Kendaraan Umum</h3>
+                        
 </div>
 
                             <div class="card-body">
