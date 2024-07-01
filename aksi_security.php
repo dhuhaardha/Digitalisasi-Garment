@@ -668,7 +668,7 @@ if (isset($_POST['tombol_register_patroli'])){
     $InputHariMulai = date("Y-m-d");
     $InputNamaSecurity = $_POST['input_nama_security'];
     $InputShift = $_POST['input_shift'];
-    $InputUID = "PTU1/" . $InputJenisReport . "/" . $InputHariMulai;
+    $InputUID = "PTU1/" . $InputJenisReport . "/" . uniqid();   
 
     $queryTambah = mysqli_query($koneksi,"INSERT INTO tb_report_patroli (tbrp_uid,
                                                                             tbrp_jns_report,
