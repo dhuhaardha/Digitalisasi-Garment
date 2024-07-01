@@ -499,34 +499,24 @@ echo "</ul>";
                                         <div class="row mb-3">
                                             <label for="inputState" class="col-sm-2 col-form-label">Operasional</label>
                                             <div class="col-sm-10">
-                                                <select id="inputState" class="form-select" name="part_operasional" onchange="toggleFields()">
-                                                    <option selected disabled>Choose Dept...</option>
-                                                    <option value="1">Operational 1</option>
-                                                    <option value="2">Operational 2</option>
+                                                <select id="inputState" class="form-select" name="part_operasional" required>
+                                                    <option value="">PILIH OPERASIONAL...</option>
+                                                    <option value="1">OPERASIONAL 1</option>
+                                                    <option value="2">OPERASIONAL 2</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div id="operational1Fields" style="display: none;">
+                                        <div id="operational1Fields" >
                                             <div class="row mb-3">
                                                 <label for="operational1Type" class="col-sm-2 col-form-label">Type</label>
                                                 <div class="col-sm-10">
-                                                    <select id="operational1Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option value="pengambilan">Pengambilan</option>
+                                                    <select id="operational1Type" class="form-select" name="status" disabled>
+                                                        <option value="pengambilan">PENGAMBILAN</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="operational2Fields" style="display: none;">
-                                            <div class="row mb-3">
-                                                <label for="operational2Type" class="col-sm-2 col-form-label">Type</label>
-                                                <div class="col-sm-10">
-                                                    <select id="operational2Type" class="form-select" onchange="toggleFields()" name="status">
-                                                        <option value="pengambilan">Pengambilan</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="pengambilanFields" style="display: none;">
+                                        <div id="pengambilanFields" >
                                             
                                                     <input type="hidden" class="form-control" id="pengambilanDate" name="date_retrieval" value="<?php echo date('Y-m-d'); ?>">
                                             
@@ -562,10 +552,17 @@ echo "</ul>";
                                                 setInterval(updateTime, 1000); // Update every second
                                             </script>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
-                                                    Pengambilan</label>
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas Pengambilan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="worker_retrieval">
+                                                    <select class="form-control selectpicker" name="worker_retrieval" data-live-search="true">
+                                                        <option value="" selected>PILIH ANGGOTA...</option>
+                                                        <?php
+                                                        $querySecurity = mysqli_query($koneksi, "SELECT * FROM tb_list_security WHERE tb_pangkat LIKE 'ANGGOTA' ORDER BY tbls_nama ASC");
+                                                        while ($tabelSecurity = mysqli_fetch_array($querySecurity)) {
+                                                            echo "<option value='{$tabelSecurity['tbls_nama']}'>{$tabelSecurity['tbls_nik']} - {$tabelSecurity['tbls_nama']}</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -606,78 +603,14 @@ echo "</ul>";
                                                 
                                                     </style>
                                                 <div class="col-sm-10">
-                                                    <canvas id="signatureCanvas" width="300" height="150"></canvas>
-                                                    <input type="hidden" class="form-control" id="signatureData" name="signatureData">
-                                                </div>
-                                            </div>
-                                            <!-- Add other fields related to pengambilan here -->
-                                        </div>
-                                        <div id="pengembalianFields" style="display: none;">
-                                           
-                                                    <input type="hidden" class="form-control" id="pengembalianDate" name="date_returned" value="<?php echo date('Y-m-d'); ?>">
-                                           
-                                            
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="worker_returned">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Pengembalian</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_returned">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature
-                                                    Pengembalian</label>
-                                                    <input type="text" class="form-control" id="input_name" name="signature_returned">
-                                                </div>
-                                            </div>
-                                            <!-- Add other fields related to pengembalian here -->
-                                        </div>
-                                        <div id="serahTerimaFields" style="display: none;">
-                                           
-                                                    <input type="hidden" class="form-control" id="serahTerimaDate" name="date_handover" value="<?php echo date('Y-m-d'); ?>">
-                                           
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jam
-                                                    Serah Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="time_handover" value="<?php echo date('H:i:s'); ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Petugas
-                                                    Serah Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="handover_to">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Jumlah
-                                                    Serah Terima</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="input_nik" name="amount_handover">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Signature</label>
-                                                <style>
-                                                    canvas {
-                                                        border: 1px solid #000;
-                                                    }
-                                                </style>
-                                                <div class="col-sm-10">
                                                         <canvas id="signatureCanvasPengambilan" width="300" height="150"></canvas>
                                                     <input type="hidden" class="form-control" id="signatureFilenamePengambilan" name="signatureFilenamePengambilan">
                                                 </div>
                                             </div>
-                                            <!-- Add other fields related to serah terima here -->
+                                            <!-- Add other fields related to pengambilan here -->
                                         </div>
+                                       
+                                        
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" name="tombol_tambah_operasional_keyroom" class="btn btn-success" id="saveSignatureBtnPengambilan">Add</button>
@@ -690,7 +623,7 @@ echo "</ul>";
     // Wait for the document to be fully loaded
     document.addEventListener("DOMContentLoaded", function() {
         // Initialize Signature Pad
-        var canvasPengambilan = document.getElementById('signatureCanvas');
+        var canvasPengambilan = document.getElementById('signatureCanvasPengambilan');
         var signaturePadPengambilan = new SignaturePad(canvasPengambilan, {
             backgroundColor: 'rgb(255, 255, 255)' // set background color
         });
